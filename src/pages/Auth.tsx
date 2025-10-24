@@ -58,7 +58,7 @@ const Auth = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success("Welcome to Terra Vita! Check your email to verify.");
+        toast.success("Welcome to Ecomart! Check your email to verify.");
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({
@@ -86,16 +86,16 @@ const Auth = () => {
           <div className="mb-8">
             <Leaf className="w-24 h-24 animate-pulse" />
           </div>
-          <h2 className="text-3xl font-bold mb-4 text-center">Terra Vita</h2>
-          <p className="text-center text-lg opacity-90">
-            Snap your cart — TerraBot will find greener swaps!
+          <h2 className="text-3xl font-bold mb-4 text-center">Ecomart</h2>
+          <p className="text-center text-lg opacity-90 font-semibold">
+            Shop Clean. Live Green.
           </p>
         </div>
 
         {/* Right side - Auth form */}
         <div className="p-12 flex flex-col justify-center bg-card">
           <h1 className="text-3xl font-bold mb-2 text-card-foreground">
-            {isSignUp ? "Join Terra Vita" : "Welcome Back"}
+            {isSignUp ? "Join Ecomart" : "Welcome Back"}
           </h1>
           <p className="text-muted-foreground mb-8">
             {isSignUp 

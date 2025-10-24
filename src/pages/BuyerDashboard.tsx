@@ -2,19 +2,74 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, List, Award, LogOut } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Upload, List, Award, LogOut, Leaf } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import FluidRibbons from "@/components/FluidRibbons";
+import { HourglassLoader } from "@/components/HourglassLoader";
+
+const DEMO_PRODUCTS = [
+  {
+    id: "1",
+    name: "Recycled Water Bottle",
+    brand: "EcoFlow",
+    price: 12.99,
+    image: "🌊",
+    eco_reason: "Made from 100% recycled ocean plastic",
+    sustainability_score: 95
+  },
+  {
+    id: "2",
+    name: "Bamboo Toothbrush Set",
+    brand: "GreenSmile",
+    price: 8.50,
+    image: "🦷",
+    eco_reason: "Biodegradable bamboo handle, zero plastic",
+    sustainability_score: 92
+  },
+  {
+    id: "3",
+    name: "Organic Cotton Tote",
+    brand: "EarthCarry",
+    price: 15.00,
+    image: "👜",
+    eco_reason: "100% organic cotton, fair trade certified",
+    sustainability_score: 88
+  },
+  {
+    id: "4",
+    name: "Solar Power Bank",
+    brand: "SunCharge",
+    price: 29.99,
+    image: "🔋",
+    eco_reason: "Solar powered, reduces electronic waste",
+    sustainability_score: 90
+  }
+];
 
 const BuyerDashboard = () => {
   const navigate = useNavigate();
   const [points, setPoints] = useState(50); // Starter points
+  const [loading, setLoading] = useState(false);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate("/auth");
     toast.success("Signed out successfully");
+  };
+
+  const handleScan = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("Demo scan complete! Check suggested products below.");
+    }, 2000);
+  };
+
+  const handleAddToCart = (productName: string) => {
+    setPoints(points + 10);
+    toast.success(`${productName} added! +10 EcoPoints earned 🎉`);
   };
 
   return (
@@ -25,8 +80,10 @@ const BuyerDashboard = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">Welcome, Eco Warrior! 🌱</h1>
-            <p className="text-muted-foreground text-lg">Scan your cart and discover greener alternatives</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+              Ecomart Buyer
+            </h1>
+            <p className="text-muted-foreground text-lg font-semibold">Shop Clean. Live Green.</p>
           </div>
           <Button variant="outline" onClick={handleSignOut}>
             <LogOut className="w-4 h-4 mr-2" />
@@ -68,7 +125,7 @@ const BuyerDashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" size="lg">
+              <Button className="w-full" size="lg" onClick={handleScan}>
                 Start Scan
               </Button>
             </CardContent>
@@ -94,15 +151,49 @@ const BuyerDashboard = () => {
           </Card>
         </div>
 
-        {/* Recent Activity */}
+        {/* Loading State */}
+        {loading && (
+          <Card className="mb-8">
+            <CardContent className="py-8">
+              <HourglassLoader />
+              <p className="text-center text-muted-foreground mt-4">Scanning your cart...</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Demo Products */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Your latest eco-friendly actions</CardDescription>
+            <div className="flex items-center gap-2">
+              <Leaf className="w-5 h-5 text-accent" />
+              <CardTitle>Eco-Friendly Products</CardTitle>
+            </div>
+            <CardDescription>Discover sustainable alternatives</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No scans yet. Start by uploading your first cart!</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {DEMO_PRODUCTS.map((product) => (
+                <Card key={product.id} className="card-glow hover:shadow-lg transition-all">
+                  <CardContent className="p-4">
+                    <div className="text-5xl mb-3 text-center">{product.image}</div>
+                    <h3 className="font-semibold mb-1 text-sm">{product.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2">{product.brand}</p>
+                    <Badge variant="secondary" className="mb-2 text-xs">
+                      Score: {product.sustainability_score}
+                    </Badge>
+                    <p className="text-xs text-muted-foreground mb-3">{product.eco_reason}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-accent">${product.price}</span>
+                      <Button 
+                        size="sm" 
+                        onClick={() => handleAddToCart(product.name)}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </CardContent>
         </Card>

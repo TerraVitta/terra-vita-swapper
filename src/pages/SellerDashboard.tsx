@@ -23,8 +23,10 @@ const SellerDashboard = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">Seller Dashboard 🌿</h1>
-            <p className="text-muted-foreground text-lg">Manage your eco-friendly products</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+              Ecomart Seller
+            </h1>
+            <p className="text-muted-foreground text-lg font-semibold">List. Deliver. Earn.</p>
           </div>
           <Button variant="outline" onClick={handleSignOut}>
             <LogOut className="w-4 h-4 mr-2" />

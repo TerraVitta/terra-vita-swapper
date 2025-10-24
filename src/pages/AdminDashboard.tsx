@@ -23,8 +23,10 @@ const AdminDashboard = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard 🔧</h1>
-            <p className="text-muted-foreground text-lg">Platform management and analytics</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+              Ecomart Admin
+            </h1>
+            <p className="text-muted-foreground text-lg font-semibold">Oversee. Moderate. Optimize.</p>
           </div>
           <Button variant="outline" onClick={handleSignOut}>
             <LogOut className="w-4 h-4 mr-2" />
@@ -127,7 +129,7 @@ const AdminDashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle>Recent Platform Activity</CardTitle>
-            <CardDescription>Latest actions across Terra Vita</CardDescription>
+            <CardDescription>Latest actions across Ecomart</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-center py-12 text-muted-foreground">

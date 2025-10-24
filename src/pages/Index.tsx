@@ -45,7 +45,7 @@ const Index = () => {
         <FluidRibbons />
         <div className="text-center relative z-10">
           <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading Terra Vita...</p>
+          <p className="text-muted-foreground">Loading Ecomart...</p>
         </div>
       </div>
     );

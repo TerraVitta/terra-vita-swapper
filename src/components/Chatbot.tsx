@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { Send, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -66,9 +67,14 @@ const Chatbot = ({ open, onClose }: Props) => {
 
   if (!open) return null;
 
-  return (
-    <div className="chatbot-panel fixed top-16 right-4 z-50 w-80 max-w-sm">
-      <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
+  const panel = (
+    <>
+      <div
+        className="chatbot-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+        onClick={() => onClose?.()}
+      />
+      <div className="chatbot-panel fixed top-16 right-4 z-50 w-80 max-w-sm">
+        <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
         <div className="flex-1 overflow-y-auto mb-4 space-y-3">
           {messages.map((message) => (
             <div
@@ -112,9 +118,12 @@ const Chatbot = ({ open, onClose }: Props) => {
             )}
           </button>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
+
+  return createPortal(panel, document.body);
 };
 
 export default Chatbot;

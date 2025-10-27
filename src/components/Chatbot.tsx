@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Message {
   id: number;
@@ -12,60 +14,94 @@ export const Chatbot = () => {
     { id: 1, text: "Hello! How can I help you find sustainable products today?", isBot: true }
   ]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
     
-    const newMessage: Message = {
+    const userMessage: Message = {
       id: messages.length + 1,
       text: input,
       isBot: false
     };
     
-    setMessages([...messages, newMessage]);
+    setMessages(prev => [...prev, userMessage]);
+    const userInput = input;
     setInput("");
+    setLoading(true);
     
-    // Simulate bot response
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { message: userInput }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        setMessages(prev => [...prev, {
+          id: prev.length + 1,
+          text: data.reply,
+          isBot: true
+        }]);
+      } else {
+        throw new Error('Failed to get response');
+      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast.error('Failed to get response. Please try again.');
       setMessages(prev => [...prev, {
         id: prev.length + 1,
-        text: "I'm here to help you shop sustainably! This is a demo response.",
+        text: "Sorry, I'm having trouble connecting. Please try again later.",
         isBot: true
       }]);
-    }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col h-full bg-black/50 rounded-2xl p-5 shadow-[0_0_25px_rgba(179,200,144,0.3)] backdrop-blur-sm">
+    <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
       <div className="flex-1 overflow-y-auto mb-4 space-y-3">
         {messages.map((message) => (
           <div
             key={message.id}
             className={`p-3 rounded-lg max-w-[70%] ${
               message.isBot
-                ? "bg-white/10 self-start"
-                : "bg-primary/20 self-end ml-auto"
+                ? "bg-muted/50 text-foreground self-start"
+                : "bg-primary/20 text-foreground self-end ml-auto"
             }`}
           >
             {message.text}
           </div>
         ))}
+        {loading && (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="text-sm">Thinking...</span>
+          </div>
+        )}
       </div>
       
-      <div className="flex items-center gap-3 bg-white/10 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_rgba(179,200,144,0.3)]">
+      <div className="flex items-center gap-3 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          placeholder="Type your message..."
-          className="flex-1 bg-transparent outline-none text-white placeholder:text-white/50"
+          onKeyPress={(e) => e.key === "Enter" && !loading && handleSend()}
+          placeholder="Ask about sustainable products..."
+          disabled={loading}
+          className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
         />
         <button
           onClick={handleSend}
-          className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all hover:scale-110"
+          disabled={loading}
+          className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Send className="w-5 h-5 text-black" />
+          {loading ? (
+            <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
+          ) : (
+            <Send className="w-5 h-5 text-primary-foreground" />
+          )}
         </button>
       </div>
     </div>

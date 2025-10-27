@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { HourglassLoader } from "@/components/HourglassLoader";
 import { Chatbot } from "@/components/Chatbot";
 import { ProjectsSidebar } from "@/components/ProjectsSidebar";
+import { SustainabilityResults } from "@/components/SustainabilityResults";
 
 const DEMO_PRODUCTS = [
   {
@@ -51,8 +52,10 @@ const DEMO_PRODUCTS = [
 
 const BuyerDashboard = () => {
   const navigate = useNavigate();
-  const [points, setPoints] = useState(50); // Starter points
+  const [points, setPoints] = useState(50);
   const [loading, setLoading] = useState(false);
+  const [sustainabilityResults, setSustainabilityResults] = useState<any[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -61,11 +64,58 @@ const BuyerDashboard = () => {
   };
 
   const handleScan = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
     setLoading(true);
-    setTimeout(() => {
+    setSustainabilityResults([]);
+
+    try {
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = reader.result as string;
+        
+        // Call OCR function
+        toast.info("Scanning your cart...");
+        const { data: ocrData, error: ocrError } = await supabase.functions.invoke('scan-cart', {
+          body: { imageData: base64 }
+        });
+
+        if (ocrError) throw ocrError;
+
+        if (ocrData?.success && ocrData.items?.length > 0) {
+          toast.success(`Found ${ocrData.items.length} items!`);
+          
+          // Check sustainability
+          toast.info("Analyzing sustainability...");
+          const { data: sustainData, error: sustainError } = await supabase.functions.invoke('check-sustainability', {
+            body: { items: ocrData.items }
+          });
+
+          if (sustainError) throw sustainError;
+
+          if (sustainData?.success) {
+            setSustainabilityResults(sustainData.analysis);
+            toast.success("Analysis complete!");
+          }
+        } else {
+          toast.error("No items found in the image. Please try again.");
+        }
+      };
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Scan error:', error);
+      toast.error('Failed to scan cart. Please try again.');
+    } finally {
       setLoading(false);
-      toast.success("Demo scan complete! Check suggested products below.");
-    }, 2000);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleAddToCart = (productName: string) => {
@@ -74,7 +124,7 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_center,_hsl(var(--background)),_hsl(var(--background-dark)))] text-foreground overflow-hidden relative">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
       {/* Glowing Grid Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" 
            style={{
@@ -82,6 +132,15 @@ const BuyerDashboard = () => {
                          linear-gradient(180deg, hsl(var(--primary) / 0.05) 1px, transparent 1px)`,
              backgroundSize: '40px 40px'
            }} 
+      />
+
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        className="hidden"
       />
       
       <div className="relative z-10 flex h-screen w-[95%] mx-auto my-[5vh] backdrop-blur-[20px] rounded-[20px] overflow-hidden shadow-[0_0_40px_hsl(var(--primary)_/_0.4)] bg-card/5">
@@ -173,9 +232,14 @@ const BuyerDashboard = () => {
                 <Card className="bg-card/40 backdrop-blur-sm border-primary/30">
                   <CardContent className="py-8">
                     <HourglassLoader />
-                    <p className="text-center text-muted-foreground mt-4">Scanning your cart...</p>
+                    <p className="text-center text-muted-foreground mt-4">Analyzing your cart...</p>
                   </CardContent>
                 </Card>
+              )}
+
+              {/* Sustainability Results */}
+              {sustainabilityResults.length > 0 && (
+                <SustainabilityResults results={sustainabilityResults} />
               )}
 
               {/* Demo Products */}

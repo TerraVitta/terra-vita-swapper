@@ -11,10 +11,11 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import TopRightControls from "./components/TopRightControls";
+import Silk from "./components/Silk";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+function App() {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -97,6 +98,6 @@ const App = () => {
       </TooltipProvider>
     </QueryClientProvider>
   );
-};
+}
 
 export default App;

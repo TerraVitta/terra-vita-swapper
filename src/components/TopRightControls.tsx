@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Chatbot from "./Chatbot";
+import Chatbot from "@/components/Chatbot";
 import { useTheme } from "next-themes";
 
 const TopRightControls = () => {

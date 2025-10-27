@@ -10,7 +10,6 @@ All colors MUST be HSL.
   :root {
     /* Terra Vita Design System - Light Mode */
     --background: 42 47% 90%;
-    --background-dark: 96 30% 8%;
     --foreground: 96 44% 21%;
     
     --card: 30 38% 97%;

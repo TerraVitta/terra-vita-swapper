@@ -1,69 +1,117 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Send, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 type Props = {
   open: boolean;
   onClose?: () => void;
 };
 
+interface Message {
+  id: number;
+  text: string;
+  isBot: boolean;
+}
+
 const Chatbot = ({ open, onClose }: Props) => {
-  const [text, setText] = useState("");
-  const [messages, setMessages] = useState<string[]>([]);
-  const [generating, setGenerating] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    { id: 1, text: "Hello! How can I help you find sustainable products today?", isBot: true }
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!open) return;
-    // focus behavior could be added
-  }, [open]);
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
 
-  const handleGenerate = async () => {
-    if (!text.trim()) return;
-    setGenerating(true);
-    const prompt = text.trim();
-    // Simulate a small generation delay
-    setTimeout(() => {
-      setMessages((m) => [...m, `You: ${prompt}`, `AI: Echo -> ${prompt}`]);
-      setGenerating(false);
-      setText("");
-    }, 800);
+    const userMessage: Message = {
+      id: messages.length + 1,
+      text: input,
+      isBot: false
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    const userInput = input;
+    setInput("");
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { message: userInput }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        setMessages(prev => [...prev, {
+          id: prev.length + 1,
+          text: data.reply,
+          isBot: true
+        }]);
+      } else {
+        throw new Error('Failed to get response');
+      }
+    } catch (err) {
+      console.error('Chat error:', err);
+      toast.error('Failed to get response. Please try again.');
+      setMessages(prev => [...prev, {
+        id: prev.length + 1,
+        text: "Sorry, I'm having trouble connecting. Please try again later.",
+        isBot: true
+      }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!open) return null;
 
   return (
-    <div className="chatbot-panel fixed top-16 right-4 z-50 w-80 max-w-sm bg-card border rounded-lg shadow-lg p-3">
-      <div className="flex items-center justify-between mb-2">
-        <strong>AI Assistant</strong>
-        <div className="flex items-center gap-2">
-          <button onClick={() => { setMessages([]); }} className="text-sm text-muted-foreground">Clear</button>
-          <button onClick={() => onClose?.()} className="text-sm">Close</button>
+    <div className="chatbot-panel fixed top-16 right-4 z-50 w-80 max-w-sm">
+      <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
+        <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`p-3 rounded-lg max-w-[70%] ${
+                message.isBot
+                  ? "bg-muted/50 text-foreground self-start"
+                  : "bg-primary/20 text-foreground self-end ml-auto"
+              }`}
+            >
+              {message.text}
+            </div>
+          ))}
+          {loading && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span className="text-sm">Thinking...</span>
+            </div>
+          )}
         </div>
-      </div>
 
-      <div className="chat-history mb-3 max-h-40 overflow-y-auto text-sm space-y-1">
-        {messages.length === 0 ? (
-          <div className="text-muted-foreground">No messages yet. Ask something!</div>
-        ) : (
-          messages.map((m, i) => (
-            <div key={i} className="p-1 rounded text-xs bg-muted/20">{m}</div>
-          ))
-        )}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <input
-          className="flex-1 rounded px-2 py-1 bg-transparent border border-border text-sm"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Type a prompt..."
-        />
-        <button
-          onClick={handleGenerate}
-          disabled={generating}
-          className="btn generate-btn px-3 py-1 rounded"
-          aria-label="Generate"
-        >
-          {generating ? "Generating..." : "Generate"}
-        </button>
+        <div className="flex items-center gap-3 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && !loading && handleSend()}
+            placeholder="Ask about sustainable products..."
+            disabled={loading}
+            className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+          />
+          <button
+            onClick={handleSend}
+            disabled={loading}
+            className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
+            ) : (
+              <Send className="w-5 h-5 text-primary-foreground" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

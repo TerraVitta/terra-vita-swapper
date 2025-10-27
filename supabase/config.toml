@@ -1,1 +1,13 @@
 project_id = "mwethfwmhimqqplgfuzc"
+
+[functions.scan-cart]
+verify_jwt = false
+
+[functions.check-sustainability]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false
+
+[functions.admin-login]
+verify_jwt = false

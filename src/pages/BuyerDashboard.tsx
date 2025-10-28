@@ -7,9 +7,10 @@ import { Upload, List, Award, LogOut, Leaf } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { HourglassLoader } from "@/components/HourglassLoader";
-import { Chatbot } from "@/components/Chatbot";
+import { ChatbotDialog } from "@/components/ChatbotDialog";
 import { ProjectsSidebar } from "@/components/ProjectsSidebar";
 import { SustainabilityResults } from "@/components/SustainabilityResults";
+import Aurora from "@/components/Aurora";
 
 const DEMO_PRODUCTS = [
   {
@@ -125,14 +126,13 @@ const BuyerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
-      {/* Glowing Grid Backdrop */}
-      <div className="absolute inset-0 pointer-events-none z-0" 
-           style={{
-             background: `linear-gradient(90deg, hsl(var(--primary) / 0.05) 1px, transparent 1px),
-                         linear-gradient(180deg, hsl(var(--primary) / 0.05) 1px, transparent 1px)`,
-             backgroundSize: '40px 40px'
-           }} 
+      <Aurora
+        colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
       />
+      <ChatbotDialog />
 
       {/* Hidden file input */}
       <input
@@ -280,10 +280,6 @@ const BuyerDashboard = () => {
               </Card>
             </div>
 
-            {/* Chatbot Section */}
-            <div className="w-[400px] flex-shrink-0 hidden lg:block">
-              <Chatbot />
-            </div>
           </div>
         </div>
       </div>

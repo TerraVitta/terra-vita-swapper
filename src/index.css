@@ -7,7 +7,7 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
+  .light {
     /* Terra Vita Design System - Light Mode */
     --background: 42 47% 90%;
     --background-dark: 96 30% 8%;
@@ -64,8 +64,8 @@ All colors MUST be HSL.
     --sidebar-ring: 35 91% 53%;
   }
 
-  .dark {
-    /* Terra Vita Design System - Dark Mode */
+  :root {
+    /* Terra Vita Design System - Dark Mode (Default) */
     --background: 96 30% 8%;
     --foreground: 42 47% 90%;
     

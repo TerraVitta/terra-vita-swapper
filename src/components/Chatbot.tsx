@@ -31,11 +31,23 @@ export const Chatbot = () => {
     setLoading(true);
     
     try {
-      const { data, error } = await supabase.functions.invoke('chat', {
-        body: { message: userInput }
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+          },
+          body: JSON.stringify({ message: userInput })
+        }
+      );
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
 
       if (data?.success) {
         setMessages(prev => [...prev, {

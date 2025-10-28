@@ -1,13 +1,7 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import { Send, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-
-type Props = {
-  open: boolean;
-  onClose?: () => void;
-};
 
 interface Message {
   id: number;
@@ -15,7 +9,7 @@ interface Message {
   isBot: boolean;
 }
 
-const Chatbot = ({ open, onClose }: Props) => {
+export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: "Hello! How can I help you find sustainable products today?", isBot: true }
   ]);
@@ -24,18 +18,18 @@ const Chatbot = ({ open, onClose }: Props) => {
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
-
+    
     const userMessage: Message = {
       id: messages.length + 1,
       text: input,
       isBot: false
     };
-
+    
     setMessages(prev => [...prev, userMessage]);
     const userInput = input;
     setInput("");
     setLoading(true);
-
+    
     try {
       const { data, error } = await supabase.functions.invoke('chat', {
         body: { message: userInput }
@@ -52,8 +46,8 @@ const Chatbot = ({ open, onClose }: Props) => {
       } else {
         throw new Error('Failed to get response');
       }
-    } catch (err) {
-      console.error('Chat error:', err);
+    } catch (error) {
+      console.error('Chat error:', error);
       toast.error('Failed to get response. Please try again.');
       setMessages(prev => [...prev, {
         id: prev.length + 1,
@@ -65,65 +59,51 @@ const Chatbot = ({ open, onClose }: Props) => {
     }
   };
 
-  if (!open) return null;
-
-  const panel = (
-    <>
-      <div
-        className="chatbot-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
-        onClick={() => onClose?.()}
-      />
-      <div className="chatbot-panel fixed top-16 right-4 z-50 w-80 max-w-sm">
-        <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
-        <div className="flex-1 overflow-y-auto mb-4 space-y-3">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`p-3 rounded-lg max-w-[70%] ${
-                message.isBot
-                  ? "bg-muted/50 text-foreground self-start"
-                  : "bg-primary/20 text-foreground self-end ml-auto"
-              }`}
-            >
-              {message.text}
-            </div>
-          ))}
-          {loading && (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span className="text-sm">Thinking...</span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center gap-3 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && !loading && handleSend()}
-            placeholder="Ask about sustainable products..."
-            disabled={loading}
-            className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
-          />
-          <button
-            onClick={handleSend}
-            disabled={loading}
-            className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+  return (
+    <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`p-3 rounded-lg max-w-[70%] ${
+              message.isBot
+                ? "bg-muted/50 text-foreground self-start"
+                : "bg-primary/20 text-foreground self-end ml-auto"
+            }`}
           >
-            {loading ? (
-              <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
-            ) : (
-              <Send className="w-5 h-5 text-primary-foreground" />
-            )}
-          </button>
-        </div>
-        </div>
+            {message.text}
+          </div>
+        ))}
+        {loading && (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="text-sm">Thinking...</span>
+          </div>
+        )}
       </div>
-    </>
+      
+      <div className="flex items-center gap-3 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && !loading && handleSend()}
+          placeholder="Ask about sustainable products..."
+          disabled={loading}
+          className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+        />
+        <button
+          onClick={handleSend}
+          disabled={loading}
+          className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {loading ? (
+            <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
+          ) : (
+            <Send className="w-5 h-5 text-primary-foreground" />
+          )}
+        </button>
+      </div>
+    </div>
   );
-
-  return createPortal(panel, document.body);
 };
-
-export default Chatbot;

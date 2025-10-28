@@ -116,7 +116,12 @@ interface AuroraProps {
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#008080', '#17B169', '#004953'], amplitude = 1.0, blend = 0.5 } = props;
+  const {
+    colorStops = ['#008080', '#17B169', '#004953'], // 🌈 new colors here
+    amplitude = 1.0,
+    blend = 0.5
+  } = props;
+
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
@@ -155,7 +160,8 @@ export default function Aurora(props: AuroraProps) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
+    // ✅ Force the new color stops
+    const colorStopsArray = ['#008080', '#17B169', '#004953'].map(hex => {
       const c = new Color(hex);
       return [c.r, c.g, c.b];
     });
@@ -183,11 +189,6 @@ export default function Aurora(props: AuroraProps) {
         program.uniforms.uTime.value = time * speed * 0.1;
         program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
         program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
-        const stops = propsRef.current.colorStops ?? colorStops;
-        program.uniforms.uColorStops.value = stops.map((hex: string) => {
-          const c = new Color(hex);
-          return [c.r, c.g, c.b];
-        });
         renderer.render({ scene: mesh });
       }
     };

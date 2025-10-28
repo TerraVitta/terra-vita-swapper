@@ -123,6 +123,9 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    /* Prefer an explicit --text variable (set in index.html) but fall back to --foreground from the design system */
+    background: var(--background, hsl(var(--background)));
+    color: var(--text, hsl(var(--foreground)));
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }
@@ -238,4 +241,13 @@ All colors MUST be HSL.
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
   }
+}
+
+/* Strong fallback: ensure readable text when an external aurora background component is used.
+   This enforces the --text variable (set in index.html) across the rendered app while
+   still allowing component-level colors when they explicitly set color and don't rely
+   on inherited text color. Use sparingly — it's a defensive override until components
+   are individually audited. */
+#root, #root * {
+  color: var(--text, hsl(var(--foreground))) !important;
 }

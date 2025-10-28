@@ -21,11 +21,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
       <style>
         :root {
-          --primary: #7f5af0;
-          --secondary: #2cb67d;
-          --background: #10172a;
-          --text: #f3f7fa;
-          --surface: #1b2336;
+          /* Use HSL token formats to match the project's design system (index.css expects space-separated H S% L% values)
+             These mirror the dark-mode values defined in src/index.css :root so hsl(var(--...)) works correctly. */
+          --primary: 35 91% 53%;
+          --secondary: 96 20% 18%;
+          --background: 96 30% 8%;
+          --foreground: 42 47% 90%;
+          --text: hsl(42 47% 90%);
+          --surface: 96 25% 12%;
         }
         html, body {
           margin: 0;

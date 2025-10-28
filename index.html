@@ -20,11 +20,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
       <style>
-        body {
+        :root {
+          --primary: #7f5af0;
+          --secondary: #2cb67d;
+          --background: #10172a;
+          --text: #f3f7fa;
+          --surface: #1b2336;
+        }
+        html, body {
           margin: 0;
+          padding: 0;
           min-height: 100vh;
-          background: #10172a;
-          color: #f3f7fa;
+          background: var(--background);
+          color: var(--text);
           font-family: 'Inter', sans-serif;
           letter-spacing: 0.01em;
           transition: background 0.5s;
@@ -36,20 +44,20 @@
           flex-direction: column;
         }
         ::selection {
-          background: #7f5af0;
+          background: var(--primary);
           color: #fff;
         }
         a {
-          color: #7f5af0;
+          color: var(--primary);
           text-decoration: none;
           transition: color 0.2s;
         }
         a:hover {
-          color: #2cb67d;
+          color: var(--secondary);
         }
         /* Button base style for contrast */
         button, .btn {
-          background: linear-gradient(90deg, #7f5af0 0%, #2cb67d 100%);
+          background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
           color: #fff;
           border: none;
           border-radius: 8px;
@@ -60,14 +68,14 @@
           transition: background 0.3s, box-shadow 0.3s;
         }
         button:hover, .btn:hover {
-          background: linear-gradient(90deg, #2cb67d 0%, #7f5af0 100%);
+          background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
           box-shadow: 0 4px 16px rgba(44, 182, 125, 0.18);
         }
         /* Input fields for contrast */
         input, textarea, select {
-          background: #1b2336;
-          color: #f3f7fa;
-          border: 1px solid #7f5af0;
+          background: var(--surface);
+          color: var(--text);
+          border: 1px solid var(--primary);
           border-radius: 6px;
           padding: 0.5em 1em;
           margin-bottom: 1em;
@@ -75,7 +83,7 @@
           transition: border 0.2s;
         }
         input:focus, textarea:focus, select:focus {
-          border-color: #2cb67d;
+          border-color: var(--secondary);
           outline: none;
         }
       </style>

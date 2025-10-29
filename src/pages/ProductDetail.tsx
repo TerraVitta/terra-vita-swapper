@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Award, Leaf } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Award, Leaf, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,11 +8,13 @@ import { useCart } from '@/hooks/useCart';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { CartDrawer } from '@/components/CartDrawer';
 import productsData from '@/data/products.json';
+import { useState } from 'react';
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const product = productsData.find(p => p.id === id);
 
@@ -39,10 +41,10 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground transition-theme">
       {/* Header */}
-      <header className="border-b border-border/20 sticky top-0 bg-background/80 backdrop-blur-lg z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 transition-theme">
+        <div className="container flex items-center justify-between py-4">
           <Button variant="ghost" onClick={() => navigate('/buyer')}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Shop
@@ -55,15 +57,32 @@ export default function ProductDetail() {
       </header>
 
       {/* Product Detail */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="container py-12">
         <div className="grid md:grid-cols-2 gap-12">
           {/* Product Image */}
           <div className="space-y-4">
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full aspect-square object-cover rounded-lg shadow-lg"
-            />
+            <div className="relative overflow-hidden rounded-lg aspect-square">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-full h-full object-cover"
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute top-4 right-4 bg-background/80 backdrop-blur"
+                onClick={() => {
+                  setIsFavorite(!isFavorite);
+                  toast.success(isFavorite ? 'Removed from favorites' : 'Added to favorites');
+                }}
+              >
+                <Heart 
+                  className={`h-5 w-5 transition-colors ${
+                    isFavorite ? 'fill-red-500 text-red-500' : ''
+                  }`} 
+                />
+              </Button>
+            </div>
           </div>
 
           {/* Product Info */}
@@ -75,26 +94,26 @@ export default function ProductDetail() {
             </div>
 
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-bold text-accent">
+              <span className="text-4xl font-bold text-primary">
                 {product.currency === 'INR' ? '₹' : 'AED'} {product.price.toFixed(2)}
               </span>
               <span className="text-muted-foreground">{product.currency}</span>
             </div>
 
-            <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30">
+            <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 transition-theme">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-accent" />
+                  <Award className="h-5 w-5 text-primary" />
                   Sustainability Score
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-4">
-                  <div className="text-5xl font-bold text-accent">{product.eco_score}</div>
+                  <div className="text-5xl font-bold text-primary">{product.eco_score}</div>
                   <div className="flex-1">
                     <div className="h-4 bg-muted rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-primary to-accent transition-all"
+                        className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
                         style={{ width: `${product.eco_score}%` }}
                       />
                     </div>
@@ -110,7 +129,7 @@ export default function ProductDetail() {
               </CardContent>
             </Card>
 
-            <Card className="bg-card/40 backdrop-blur-sm border-primary/20">
+            <Card className="transition-theme">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Leaf className="h-5 w-5 text-primary" />
@@ -118,7 +137,7 @@ export default function ProductDetail() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-foreground/90">{product.eco_reason}</p>
+                <p className="text-foreground/90 leading-relaxed">{product.eco_reason}</p>
               </CardContent>
             </Card>
 

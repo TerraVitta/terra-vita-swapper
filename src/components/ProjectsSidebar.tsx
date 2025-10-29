@@ -1,46 +1,63 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Leaf, Droplet, Sprout, Bus } from "lucide-react";
-
-const projects = [
-  { id: 1, name: "Solar Energy", icon: Leaf },
-  { id: 2, name: "Water Conservation", icon: Droplet },
-  { id: 3, name: "Urban Farming", icon: Sprout },
-  { id: 4, name: "Eco Transport", icon: Bus },
-];
+import { Leaf, Award, Sparkles, ShoppingBag } from "lucide-react";
 
 export const ProjectsSidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
   return (
-    <aside
-      className={`bg-sidebar border-r border-sidebar-border p-5 transition-all duration-300 ${
-        collapsed ? "w-16" : "w-64"
-      }`}
-    >
-      <div className="flex items-center justify-between mb-6">
-        {!collapsed && <h2 className="text-xl font-semibold text-sidebar-primary">Sustainable Projects</h2>}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="text-sidebar-primary hover:scale-110 transition-transform"
-        >
-          {collapsed ? <ChevronRight className="w-6 h-6" /> : <ChevronLeft className="w-6 h-6" />}
-        </button>
+    <aside className="w-64 bg-sidebar border-r border-sidebar-border overflow-y-auto">
+      <div className="p-6 border-b border-border/20">
+        <h2 className="text-xl font-bold flex items-center gap-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <Leaf className="w-5 h-5 text-accent" />
+          Ecomart
+        </h2>
+        <p className="text-xs text-muted-foreground mt-2">Smart Sustainable Shopping</p>
       </div>
-      
-      <ul className="space-y-2">
-        {projects.map((project) => {
-          const Icon = project.icon;
-          return (
-            <li
-              key={project.id}
-              className="flex items-center gap-3 p-3 border-b border-sidebar-border cursor-pointer hover:text-sidebar-primary hover:scale-105 transition-all text-sidebar-foreground"
-            >
-              <Icon className="w-5 h-5 flex-shrink-0" />
-              {!collapsed && <span>{project.name}</span>}
+
+      <div className="p-6 space-y-6">
+        <div>
+          <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            What We Offer
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              40+ Curated Eco Products
             </li>
-          );
-        })}
-      </ul>
+            <li className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              India & UAE Selections
+            </li>
+            <li className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              Verified Sustainability Scores
+            </li>
+            <li className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              Rewards on Every Purchase
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+            <Award className="w-4 h-4 text-primary" />
+            Shop Smart
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <ShoppingBag className="w-3 h-3 text-accent" />
+              Browse by category
+            </li>
+            <li className="flex items-center gap-2">
+              <ShoppingBag className="w-3 h-3 text-accent" />
+              Compare sustainability
+            </li>
+            <li className="flex items-center gap-2">
+              <ShoppingBag className="w-3 h-3 text-accent" />
+              Earn EcoPoints
+            </li>
+          </ul>
+        </div>
+      </div>
     </aside>
   );
 };

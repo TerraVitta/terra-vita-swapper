@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
+    const { message, matchedProducts } = await req.json();
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
 
     if (!GEMINI_API_KEY) {
@@ -23,14 +23,26 @@ serve(async (req) => {
       );
     }
 
-    const systemPrompt = `You are Ecomart's helpful shopping assistant. You help users with:
+    let systemPrompt = `You are ShopBuddy, a helpful shopping assistant for our UAE/India sustainable marketplace. 
+Display all prices in AED (د.إ) format.
+
+You help users with:
 - Finding sustainable and eco-friendly products
 - Explaining product sustainability scores
 - Recommending eco alternatives
 - Answering questions about green shopping
-- Information about products available on Ecomart
+- Processing scanned receipts and matching products
 
-Keep responses friendly, concise, and focused on helping users shop sustainably.`;
+Keep responses friendly, short (2-3 sentences max), and focused on helping users shop sustainably.`;
+
+    // If we have matched products from a receipt scan, customize the prompt
+    if (matchedProducts && matchedProducts.length > 0) {
+      const productList = matchedProducts.map((p: any) => 
+        `- ${p.name} by ${p.brand || 'N/A'} | AED ${p.price} د.إ | Eco-Score: ${p.sustainability_score}/100`
+      ).join('\n');
+      
+      systemPrompt += `\n\nThe user scanned a receipt and we found these matching products in our store:\n${productList}\n\nHelp them understand what products we found and guide them to add items to cart. If some items weren't found, let them know politely.`;
+    }
 
     console.log('Calling Gemini API with message:', message);
 

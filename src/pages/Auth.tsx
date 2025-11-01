@@ -110,8 +110,8 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <FluidRibbons />
       
-      {/* AI Chat and Theme Toggle */}
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
+      {/* AI Chat and Theme Toggle - Increased z-index */}
+      <div className="fixed top-4 right-4 z-[100] flex items-center gap-3">
         <ThemeToggle />
         <AIChatButton />
       </div>

@@ -13,7 +13,8 @@ serve(async (req) => {
 
   try {
     const { message, matchedProducts } = await req.json();
-    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    // Hardcoded API key for prototype testing
+    const GEMINI_API_KEY = 'AIzaSyBqL4AYmf6fo5VEAjSMbc7D2E_EYsgvSXI';
 
     if (!GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY not configured');

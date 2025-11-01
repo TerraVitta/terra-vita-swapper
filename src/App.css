@@ -1,8 +1,363 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* AI Chat Button Styles */
+.ai-chat-button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ai-chat-btn {
+  --border-radius: 24px;
+  --padding: 4px;
+  --transition: 0.4s;
+  --button-color: hsl(var(--background));
+  --highlight-color-hue: 210deg;
+
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em 0.5em 0.5em 1.1em;
+  font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+
+  background-color: var(--button-color);
+
+  box-shadow:
+    inset 0px 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0px 2px 2px rgba(255, 255, 255, 0.15),
+    inset 0px 4px 4px rgba(255, 255, 255, 0.1),
+    inset 0px 8px 8px rgba(255, 255, 255, 0.05),
+    inset 0px 16px 16px rgba(255, 255, 255, 0.05),
+    0px -1px 1px rgba(0, 0, 0, 0.02),
+    0px -2px 2px rgba(0, 0, 0, 0.03),
+    0px -4px 4px rgba(0, 0, 0, 0.05),
+    0px -8px 8px rgba(0, 0, 0, 0.06),
+    0px -16px 16px rgba(0, 0, 0, 0.08);
+
+  border: solid 1px hsl(var(--border) / 0.2);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+
+  transition:
+    box-shadow var(--transition),
+    border var(--transition),
+    background-color var(--transition);
+}
+
+.ai-chat-btn::before {
+  content: "";
+  position: absolute;
+  top: calc(0px - var(--padding));
+  left: calc(0px - var(--padding));
+  width: calc(100% + var(--padding) * 2);
+  height: calc(100% + var(--padding) * 2);
+  border-radius: calc(var(--border-radius) + var(--padding));
+  pointer-events: none;
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+
+  z-index: -1;
+  transition:
+    box-shadow var(--transition),
+    filter var(--transition);
+  box-shadow:
+    0 -8px 8px -6px transparent inset,
+    0 -16px 16px -8px transparent inset,
+    1px 1px 1px hsl(var(--border) / 0.2),
+    2px 2px 2px hsl(var(--border) / 0.1),
+    -1px -1px 1px rgba(0,0,0,0.2),
+    -2px -2px 2px rgba(0,0,0,0.1);
+}
+
+.ai-chat-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: linear-gradient(
+    0deg,
+    hsl(var(--primary)),
+    hsl(var(--primary) / 0.7),
+    hsla(var(--highlight-color-hue), 100%, 70%, 50%),
+    8%,
+    transparent
+  );
+  background-position: 0 0;
+  opacity: 0;
+  transition:
+    opacity var(--transition),
+    filter var(--transition);
+}
+
+.ai-chat-btn-letter {
+  position: relative;
+  display: inline-block;
+  color: hsl(var(--foreground) / 0.5);
+  animation: letter-anim 2s ease-in-out infinite;
+  transition:
+    color var(--transition),
+    text-shadow var(--transition),
+    opacity var(--transition);
+}
+
+@keyframes letter-anim {
+  50% {
+    text-shadow: 0 0 3px hsl(var(--foreground) / 0.8);
+    color: hsl(var(--foreground));
+  }
+}
+
+.ai-chat-btn-svg {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 24px;
+  width: 24px;
+  margin-right: 0.5rem;
+  fill: none;
+  stroke: hsl(var(--primary));
+  stroke-width: 2;
+  animation: flicker 2s linear infinite;
+  animation-delay: 0.5s;
+  filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.9));
+  transition:
+    fill var(--transition),
+    stroke var(--transition),
+    filter var(--transition),
+    opacity var(--transition);
+}
+
+@keyframes flicker {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.ai-chat-txt-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 4em;
+}
+
+.ai-chat-txt-1,
+.ai-chat-txt-2 {
+  position: absolute;
+  word-spacing: -1em;
+}
+
+.ai-chat-txt-1 {
+  animation: appear-anim 1s ease-in-out forwards;
+}
+
+.ai-chat-txt-2 {
+  opacity: 0;
+}
+
+@keyframes appear-anim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ai-chat-btn:focus .ai-chat-txt-1 {
+  animation: opacity-anim 0.3s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
+.ai-chat-btn:focus .ai-chat-txt-2 {
+  animation: opacity-anim 0.3s ease-in-out reverse forwards;
+  animation-delay: 1s;
+}
+
+@keyframes opacity-anim {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ai-chat-btn:focus .ai-chat-btn-letter {
+  animation:
+    focused-letter-anim 1s ease-in-out forwards,
+    letter-anim 1.2s ease-in-out infinite;
+  animation-delay: 0s, 1s;
+}
+
+@keyframes focused-letter-anim {
+  0%,
+  100% {
+    filter: blur(0px);
+  }
+  50% {
+    transform: scale(2);
+    filter: blur(10px) brightness(150%)
+      drop-shadow(-36px 12px 12px hsl(var(--primary)));
+  }
+}
+
+.ai-chat-btn:focus .ai-chat-btn-svg {
+  animation-duration: 1.2s;
+  animation-delay: 0.2s;
+}
+
+.ai-chat-btn:focus::before {
+  box-shadow:
+    0 -8px 12px -6px hsl(var(--primary) / 0.3) inset,
+    0 -16px 16px -8px hsl(var(--primary) / 0.2) inset,
+    1px 1px 1px hsl(var(--border) / 0.3),
+    2px 2px 2px hsl(var(--border) / 0.1),
+    -1px -1px 1px rgba(0,0,0,0.2),
+    -2px -2px 2px rgba(0,0,0,0.1);
+}
+
+.ai-chat-btn:focus::after {
+  opacity: 0.6;
+  mask-image: linear-gradient(0deg, #fff, transparent);
+  filter: brightness(100%);
+}
+
+.ai-chat-btn-letter:nth-child(1),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(1) {
+  animation-delay: 0s;
+}
+.ai-chat-btn-letter:nth-child(2),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.ai-chat-btn-letter:nth-child(3),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.ai-chat-btn-letter:nth-child(4),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(4) {
+  animation-delay: 0.24s;
+}
+.ai-chat-btn-letter:nth-child(5),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(5) {
+  animation-delay: 0.32s;
+}
+.ai-chat-btn-letter:nth-child(6),
+.ai-chat-btn:focus .ai-chat-btn-letter:nth-child(6) {
+  animation-delay: 0.4s;
+}
+
+.ai-chat-btn:active {
+  border: solid 1px hsl(var(--primary) / 0.7);
+  background-color: hsl(var(--primary) / 0.1);
+}
+
+.ai-chat-btn:active::before {
+  box-shadow:
+    0 -8px 12px -6px hsl(var(--primary) / 0.6) inset,
+    0 -16px 16px -8px hsl(var(--primary) / 0.8) inset,
+    1px 1px 1px hsl(var(--border) / 0.4),
+    2px 2px 2px hsl(var(--border) / 0.2),
+    -1px -1px 1px rgba(0,0,0,0.2),
+    -2px -2px 2px rgba(0,0,0,0.1);
+}
+
+.ai-chat-btn:active::after {
+  opacity: 1;
+  mask-image: linear-gradient(0deg, #fff, transparent);
+  filter: brightness(200%);
+}
+
+.ai-chat-btn:active .ai-chat-btn-letter {
+  text-shadow: 0 0 1px hsl(var(--primary) / 0.9);
+  animation: none;
+}
+
+.ai-chat-btn:hover {
+  border: solid 1px hsl(var(--primary) / 0.4);
+}
+
+.ai-chat-btn:hover::before {
+  box-shadow:
+    0 -8px 8px -6px hsl(var(--primary) / 0.6) inset,
+    0 -16px 16px -8px hsl(var(--primary) / 0.3) inset,
+    1px 1px 1px hsl(var(--border) / 0.2),
+    2px 2px 2px hsl(var(--border) / 0.1),
+    -1px -1px 1px rgba(0,0,0,0.2),
+    -2px -2px 2px rgba(0,0,0,0.1);
+}
+
+.ai-chat-btn:hover::after {
+  opacity: 1;
+  mask-image: linear-gradient(0deg, #fff, transparent);
+}
+
+.ai-chat-btn:hover .ai-chat-btn-svg {
+  stroke: hsl(var(--primary));
+  filter: drop-shadow(0 0 3px hsl(var(--primary)))
+    drop-shadow(0 -4px 6px rgba(0,0,0,0.6));
+  animation: none;
+}
+
+/* EcoMart AI Button Styles */
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ecomart-ai-outer-cont {
+  padding: 12px 20px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+  background: linear-gradient(90deg, #5bfcc4, #f593e4, #71a4f0);
+  border-radius: 12px;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow:
+    inset 0px 0px 5px #ffffffa9,
+    inset 0px 35px 30px #000,
+    0px 5px 10px #000000cc;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ecomart-ai-outer-cont::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 12px;
+  filter: blur(0);
+  z-index: -1;
+  box-shadow: none;
+  background: conic-gradient(
+    #00000000 80deg,
+    #40baf7,
+    #f34ad7,
+    #5bfcc4,
+    #00000000 280deg
+  );
+  transition: all 0.3s ease;
+}
+
+.ecomart-ai-outer-cont:hover::before {
+  filter: blur(15px);
+}
+
+.ecomart-ai-outer-cont:active::before {
+  filter: blur(5px);
+  transform: translateY(1px);
+}
+
+.ecomart-ai-outer-cont:active {
+  box-shadow:
+    inset 0px 0px 5px #ffffffa9,
+    inset 0px 35px 30px #000;
+  margin-top: 3px;
 }
 
 .logo {

@@ -10,6 +10,9 @@ import SellerDashboard from "./pages/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
+import { AIChatButton } from "./components/AIChatButton";
+import { ThemeToggle } from "./components/ThemeToggle";
+import "./App.css";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +22,10 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
+          <ThemeToggle />
+          <AIChatButton />
+        </div>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />

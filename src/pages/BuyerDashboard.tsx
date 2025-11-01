@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, Award, Leaf, ShoppingBag, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { ChatbotDialog } from "@/components/ChatbotDialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 
@@ -70,7 +70,11 @@ const BuyerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-theme">
-      <ChatbotDialog />
+      {/* AI Chat and Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
+        <ThemeToggle />
+        <AIChatButton />
+      </div>
 
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-theme">
@@ -86,7 +90,6 @@ const BuyerDashboard = () => {
               <span className="text-sm font-semibold">{points} Points</span>
             </div>
             <CartDrawer />
-            <ThemeToggle />
             <Button onClick={handleSignOut} variant="outline" size="sm">
               <LogOut className="mr-2 h-4 w-4" />
               <span className="hidden sm:inline">Sign Out</span>

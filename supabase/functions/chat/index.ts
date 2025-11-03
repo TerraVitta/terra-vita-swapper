@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const { message, matchedProducts } = await req.json();
     // Hardcoded API key for prototype testing
-    const GEMINI_API_KEY = 'AIzaSyBqL4AYmf6fo5VEAjSMbc7D2E_EYsgvSXI';
+    const GEMINI_API_KEY = 'AIzaSyDV6AX09oy3QJoXhYExYATI9tGW2Jlt7IQ';
 
     if (!GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY not configured');

@@ -8,8 +8,6 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Leaf, Mail, Lock } from "lucide-react";
 import FluidRibbons from "@/components/FluidRibbons";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { AIChatButton } from "@/components/AIChatButton";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -109,12 +107,6 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <FluidRibbons />
-      
-      {/* AI Chat and Theme Toggle - Increased z-index */}
-      <div className="fixed top-4 right-4 z-[100] flex items-center gap-3">
-        <ThemeToggle />
-        <AIChatButton />
-      </div>
       
       <Card className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden shadow-2xl relative z-10">
         {/* Left side - Illustration */}

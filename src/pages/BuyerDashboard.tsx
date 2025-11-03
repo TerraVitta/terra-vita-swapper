@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, Award, Leaf, ShoppingBag, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
+import FluidRibbons from "@/components/FluidRibbons";
 import { useCart } from "@/hooks/useCart";
 
 const BuyerDashboard = () => {
@@ -70,11 +69,7 @@ const BuyerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-theme">
-      {/* AI Chat and Theme Toggle - Increased z-index */}
-      <div className="fixed top-4 right-4 z-[100] flex items-center gap-3">
-        <ThemeToggle />
-        <AIChatButton />
-      </div>
+      <FluidRibbons />
 
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-theme">

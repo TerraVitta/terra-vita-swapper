@@ -111,7 +111,7 @@ const Auth = () => {
       <FluidRibbons />
       
       {/* AI Chat and Theme Toggle - Increased z-index */}
-      <div className="fixed top-4 right-4 z-[100] flex items-center gap-3">
+      <div className="fixed top-6 right-6 z-[100] flex items-center gap-4">
         <ThemeToggle />
         <AIChatButton />
       </div>

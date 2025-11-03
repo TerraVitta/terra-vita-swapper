@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, Award, Leaf, ShoppingBag, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
 import FluidRibbons from "@/components/FluidRibbons";
 import { useCart } from "@/hooks/useCart";
@@ -79,11 +81,13 @@ const BuyerDashboard = () => {
             <h1 className="text-2xl font-bold">Ecomart</h1>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
               <Award className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold">{points} Points</span>
             </div>
+            <ThemeToggle />
+            <AIChatButton />
             <CartDrawer />
             <Button onClick={handleSignOut} variant="outline" size="sm">
               <LogOut className="mr-2 h-4 w-4" />

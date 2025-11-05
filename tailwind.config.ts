@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import animate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: ["class"],
@@ -87,21 +86,15 @@ const config: Config = {
           "100%": { transform: "translateX(100%)" }
         }
       },
-    animation: {
+      animation: {
         float: "float 6s ease-in-out infinite",
         "fade-up": "fade-up 0.5s ease-out",
         "fade-down": "fade-down 0.5s ease-out",
-        shimmer: "shimmer 2s infinite",
+        shimmer: "shimmer 2s infinite"
       }
     }
   },
-  plugins: [animate]
-};
-  },
-  plugins: [animate]
-    }
-  },
-  plugins: [animate]
+  plugins: []
 };
 
 export default config;

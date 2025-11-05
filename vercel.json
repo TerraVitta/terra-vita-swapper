@@ -1,13 +1,9 @@
 {
-  "framework": "vite",
   "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
   "outputDirectory": "dist",
-  "installCommand": "npm install",
+  "cleanUrls": true,
   "routes": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

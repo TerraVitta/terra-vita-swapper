@@ -132,6 +132,7 @@
     transform: rotate(360deg);
   }
 }
+}
 
 .ai-chat-btn::before {
   content: "";

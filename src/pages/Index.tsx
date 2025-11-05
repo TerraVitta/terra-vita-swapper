@@ -167,5 +167,10 @@ const Index = () => {
     </div>
   );
 };
+    );
+  }
+
+  return null;
+};
 
 export default Index;

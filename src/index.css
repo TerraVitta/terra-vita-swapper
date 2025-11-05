@@ -1,93 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
-@import url('https://rsms.me/inter/inter.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  html {
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  body {
-    @apply font-sans antialiased;
-  }
-}
-
-@layer utilities {
-  .glass-hover {
-    @apply hover:bg-glass-hover hover:border-glass-border-hover;
-  }
-  
-  .glass-glow {
-    @apply shadow-lg shadow-terra-500/20;
-  }
-}
-
-@layer components {
-  .glass-input {
-    @apply glass rounded-lg border border-glass-border bg-transparent px-4 py-2 outline-none ring-offset-background focus:ring-2 focus:ring-offset-2 focus:ring-terra-500/20;
-  }
-  
-  .glass-card {
-    @apply glass rounded-lg border border-glass-border bg-glass backdrop-blur-glass transition-all duration-300 hover:bg-glass-hover hover:border-glass-border-hover;
-  }
-  
-  .glass-button {
-    @apply glass rounded-lg border border-glass-border px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-glass-hover hover:border-glass-border-hover active:scale-95 disabled:pointer-events-none disabled:opacity-50;
-  }
-}
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
 @layer base {
-  :root {
-    --background: 150 30% 96%;
-    --foreground: 150 30% 10%;
-    --card: 150 30% 98%;
-    --card-foreground: 150 30% 10%;
-    --popover: 150 30% 98%;
-    --popover-foreground: 150 30% 10%;
-    --primary: 150 62% 20%;
-    --primary-foreground: 150 10% 98%;
-    --secondary: 150 30% 96%;
-    --secondary-foreground: 150 30% 10%;
-    --muted: 150 30% 96%;
-    --muted-foreground: 150 30% 45%;
-    --accent: 150 30% 96%;
-    --accent-foreground: 150 30% 10%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 150 30% 90%;
-    --input: 150 30% 90%;
-    --ring: 150 62% 20%;
-    --radius: 0.75rem;
-  }
- 
-  .dark {
-    --background: 150 30% 5%;
-    --foreground: 150 30% 98%;
-    --card: 150 30% 7%;
-    --card-foreground: 150 30% 98%;
-    --popover: 150 30% 7%;
-    --popover-foreground: 150 30% 98%;
-    --primary: 150 62% 50%;
-    --primary-foreground: 150 10% 5%;
-    --secondary: 150 30% 15%;
-    --secondary-foreground: 150 30% 98%;
-    --muted: 150 30% 15%;
-    --muted-foreground: 150 30% 65%;
-    --accent: 150 30% 15%;
-    --accent-foreground: 150 30% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 150 30% 15%;
-    --input: 150 30% 15%;
-    --ring: 150 62% 50%;
-  }
+  /* Light Mode - Glass Theme */
   :root {
     /* Brand Colors */
     --verdigris: #38A3A5;
@@ -233,8 +153,8 @@
   }
 
   .glass-input {
-    @apply glass rounded-lg border border-glass-border bg-transparent px-4 py-2 
-           focus:outline-none focus:ring-2 focus:ring-terra-500/20;
+    @apply glass rounded-lg border-glass-border bg-transparent px-4 py-2 
+           focus:outline-none focus:ring-2 focus:ring-primary/20;
   }
 
   .glass-panel {
@@ -299,44 +219,7 @@
     }
   }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    color-scheme: dark;
-  }
-  * {
-    @apply border-glass-border;
-  }
-}
-
-@layer components {
-  .glass {
-    @apply bg-glass dark:bg-glass-dark backdrop-blur-md;
-  }
-  
-  .glass-hover {
-    @apply hover:bg-glass/50 dark:hover:bg-glass-dark/50;
-  }
-  
-  .glass-glow {
-    @apply shadow-[0_0_15px_rgba(56,163,165,0.5)];
-  }
-}
-
-@layer utilities {
-  .glass-border {
-    @apply border-glass-border dark:border-glass-border-dark;
-  }
-  
-  .glass-glow-hover {
-    @apply hover:shadow-[0_0_15px_rgba(56,163,165,0.5)];
-  }
-}
-
-/* Reduced Motion */
+  /* Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: 0.01ms !important;
@@ -345,15 +228,13 @@
       scroll-behavior: auto !important;
     }
   }
-
-  /* Smooth Transitions */
-  * {
+}
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   /* Default to dark mode */
-  :root {
-    color-scheme: dark;
+  html {
+    @apply dark;
   }
 }
 

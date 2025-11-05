@@ -109,6 +109,7 @@ const Auth = () => {
   };
 
   return (
+    return (
     <div className="min-h-screen relative overflow-hidden grid place-items-center p-6">
       {/* Background Effects */}
       <div className="app-background" />

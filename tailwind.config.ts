@@ -15,25 +15,71 @@ export default {
     },
     // Custom glass effect variants
     backdropBlur: {
-      'glass': 'blur(12px)',
-      'glass-sm': 'blur(8px)',
-      'glass-lg': 'blur(16px)',
+      'DEFAULT': '12px',
+      'sm': '8px',
+      'md': '12px',
+      'lg': '16px',
+      'xl': '24px',
+      '2xl': '32px',
+      '3xl': '48px',
+      'glass': '12px',
+      'glass-sm': '8px',
+      'glass-lg': '16px',
     },
     extend: {
+      ringColor: ({ theme }) => ({
+        ...theme('colors'),
+        DEFAULT: theme('colors.terra.500', '#1A4D2E'),
+      }),
+      ringOpacity: ({ theme }) => ({
+        ...theme('opacity'),
+        DEFAULT: '0.2',
+      }),
       colors: {
         // Core brand colors
-        verdigris: '#38A3A5',
-        emerald: '#57CC99',
-        'light-green': '#80ED99',
+        terra: {
+          DEFAULT: '#1A4D2E',
+          50: '#F1F8F3',
+          100: '#D8EBDE',
+          200: '#B1D7BC',
+          300: '#89C39A',
+          400: '#62AF78',
+          500: '#3B9B56',
+          600: '#1A4D2E',
+          700: '#153F26',
+          800: '#0F311E',
+          900: '#0A2316',
+        },
+        accent: {
+          DEFAULT: '#4CAF50',
+          50: '#E8F5E9',
+          100: '#C8E6C9',
+          200: '#A5D6A7',
+          300: '#81C784',
+          400: '#66BB6A',
+          500: '#4CAF50',
+          600: '#43A047',
+          700: '#388E3C',
+          800: '#2E7D32',
+          900: '#1B5E20',
+        },
         
         // Glass effect colors
-        glass: {
-          light: 'rgba(255, 255, 255, 0.1)',
-          dark: 'rgba(0, 0, 0, 0.1)',
-          border: {
-            light: 'rgba(255, 255, 255, 0.2)',
-            dark: 'rgba(0, 0, 0, 0.2)',
-          }
+        'glass': {
+          DEFAULT: 'rgba(26, 77, 46, 0.08)',
+          dark: 'rgba(26, 77, 46, 0.12)',
+          hover: 'rgba(26, 77, 46, 0.16)',
+          active: 'rgba(26, 77, 46, 0.24)',
+        },
+        'glass-border': {
+          DEFAULT: 'rgba(255, 255, 255, 0.1)',
+          dark: 'rgba(0, 0, 0, 0.08)',
+          hover: 'rgba(255, 255, 255, 0.15)',
+        },
+        'glass-ring': {
+          DEFAULT: 'rgba(76, 175, 80, 0.2)',
+          dark: 'rgba(76, 175, 80, 0.3)',
+          hover: 'rgba(76, 175, 80, 0.4)',
         },
         
         // System colors with glass effects

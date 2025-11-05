@@ -4,13 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import BuyerDashboard from "./pages/BuyerDashboard";
 import SellerDashboard from "./pages/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
+import { AIChatButton } from "./components/AIChatButton";
+import { ThemeToggle } from "./components/ThemeToggle";
 import "./App.css";
 
 const queryClient = new QueryClient();
@@ -23,7 +24,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/landing" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/buyer" element={<BuyerDashboard />} />
           <Route path="/product/:id" element={<ProductDetail />} />

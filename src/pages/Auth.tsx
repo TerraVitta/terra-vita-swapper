@@ -31,16 +31,18 @@ const Auth = () => {
   }, [navigate]);
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/`,
-      },
-    });
+    try {
+      setLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
+      });
 
-    if (error) {
-      toast.error(error.message);
+      if (error) throw error;
+    } catch (error: any) {
+      toast.error(error.message || "Failed to sign in with Google");
       setLoading(false);
     }
   };
@@ -107,58 +109,59 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative">
-      <FluidRibbons />
+    return (
+    <div className="min-h-screen relative overflow-hidden grid place-items-center p-6">
+      {/* Background Effects */}
+      <div className="app-background" />
       
-      {/* Theme Toggle and AI Chat Button */}
-      <div className="fixed top-6 right-6 z-[100] flex items-center gap-3">
+      {/* Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
-        <AIChatButton />
       </div>
-      
-      <Card className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden shadow-2xl relative z-10">
-        {/* Left side - Illustration */}
-        <div className="bg-gradient-to-br from-primary to-accent p-12 flex flex-col justify-center items-center text-primary-foreground">
-          <div className="mb-8">
-            <Leaf className="w-24 h-24 animate-pulse" />
+
+      {/* Auth Card */}
+      <Card className="w-full max-w-md relative z-10">
+        <div className="p-8">
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center p-3 rounded-full glass-glow mb-4">
+              <Leaf className="h-8 w-8 text-verdigris" />
+            </div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-verdigris via-emerald to-light-green bg-clip-text text-transparent mb-2">
+              TerraVita
+            </h1>
+            <p className="text-muted-foreground">
+              {isAdminLogin 
+                ? "Admin Access" 
+                : isSignUp 
+                ? "Create your account" 
+                : "Welcome back"
+              }
+            </p>
           </div>
-          <h2 className="text-3xl font-bold mb-4 text-center">Ecomart</h2>
-          <p className="text-center text-lg opacity-90 font-semibold">
-            Shop Clean. Live Green.
-          </p>
-        </div>
 
-        {/* Right side - Auth form */}
-        <div className="p-12 flex flex-col justify-center bg-card">
-          <h1 className="text-3xl font-bold mb-2 text-card-foreground">
-            {isAdminLogin ? "Admin Login" : isSignUp ? "Join Ecomart" : "Welcome Back"}
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            {isAdminLogin 
-              ? "Access the admin dashboard" 
-              : isSignUp 
-                ? "Start earning EcoPoints for sustainable choices" 
-                : "Continue your eco-friendly journey"}
-          </p>
-
+          {/* Auth Forms */}
           {isAdminLogin ? (
-            <form onSubmit={handleAdminLogin} className="space-y-4">
+            <form onSubmit={handleAdminLogin} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  type="text"
-                  placeholder="admin"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
+                <Label htmlFor="username" className="text-sm font-medium">Username</Label>
+                <div className="relative">
+                  <Input
+                    id="username"
+                    type="text"
+                    placeholder="admin"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                  <Mail className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="adminPassword">Password</Label>
+                <Label htmlFor="adminPassword" className="text-sm font-medium">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                   <Input
                     id="adminPassword"
                     type="password"
@@ -168,19 +171,27 @@ const Auth = () => {
                     className="pl-10"
                     required
                   />
+                  <Lock className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                 </div>
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full" size="lg">
-                {loading ? "Loading..." : "Admin Sign In"}
+              <Button type="submit" disabled={loading} className="w-full glass-glow" size="lg">
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <span>Authenticating...</span>
+                  </div>
+                ) : (
+                  "Admin Sign In"
+                )}
               </Button>
             </form>
           ) : (
-            <>
-              <form onSubmit={handleEmailAuth} className="space-y-4">
+            <div className="space-y-6">
+              <form onSubmit={handleEmailAuth} className="space-y-6">
                 {isSignUp && (
                   <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="fullName" className="text-sm font-medium">Full Name</Label>
                     <Input
                       id="fullName"
                       type="text"
@@ -193,9 +204,8 @@ const Auth = () => {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                     <Input
                       id="email"
                       type="email"
@@ -205,13 +215,13 @@ const Auth = () => {
                       className="pl-10"
                       required
                     />
+                    <Mail className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                     <Input
                       id="password"
                       type="password"
@@ -221,46 +231,79 @@ const Auth = () => {
                       className="pl-10"
                       required
                     />
+                    <Lock className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                   </div>
                 </div>
 
-                <Button type="submit" disabled={loading} className="w-full" size="lg">
-                  {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
+                <Button type="submit" disabled={loading} className="w-full glass-glow" size="lg">
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      <span>Authenticating...</span>
+                    </div>
+                  ) : (
+                    isSignUp ? "Create Account" : "Sign In"
+                  )}
                 </Button>
               </form>
-            </>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full glass-divider" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                </div>
+              </div>
+
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full" 
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+              >
+                <img src="/google.svg" alt="Google" className="w-5 h-5 mr-2" />
+                Google
+              </Button>
+            </div>
           )}
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            {isAdminLogin ? (
+          <div className="glass-divider" />
+          
+          <div className="flex flex-col items-center gap-4 mt-6">
+            <p className="text-sm text-muted-foreground">
+              {isAdminLogin ? (
+                <button
+                  onClick={() => setIsAdminLogin(false)}
+                  className="text-verdigris hover:text-verdigris-hover font-medium transition-colors"
+                  type="button"
+                >
+                  Back to user login
+                </button>
+              ) : (
+                <>
+                  {isSignUp ? "Already have an account? " : "Don't have an account? "}
+                  <button
+                    onClick={() => setIsSignUp(!isSignUp)}
+                    className="text-verdigris hover:text-verdigris-hover font-medium transition-colors"
+                    type="button"
+                  >
+                    {isSignUp ? "Sign in" : "Sign up"}
+                  </button>
+                </>
+              )}
+            </p>
+            {!isAdminLogin && (
               <button
-                onClick={() => setIsAdminLogin(false)}
-                className="text-accent font-medium hover:underline"
+                onClick={() => setIsAdminLogin(true)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 type="button"
               >
-                Back to user login
+                Admin Access
               </button>
-            ) : (
-              <>
-                {isSignUp ? "Already have an account? " : "Don't have an account? "}
-                <button
-                  onClick={() => setIsSignUp(!isSignUp)}
-                  className="text-accent font-medium hover:underline"
-                  type="button"
-                >
-                  {isSignUp ? "Sign in" : "Sign up"}
-                </button>
-                {" | "}
-                <button
-                  onClick={() => setIsAdminLogin(true)}
-                  className="text-accent font-medium hover:underline"
-                  type="button"
-                >
-                  Admin
-                </button>
-              </>
             )}
-          </p>
+          </div>
         </div>
       </Card>
     </div>

@@ -10,7 +10,7 @@ import SellerDashboard from "./pages/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
-import { AIChatButton } from "./components/AIChatButton";
+import { FloatingAIControl } from "./components/FloatingAIControl";
 import { ThemeToggle } from "./components/ThemeToggle";
 import "./App.css";
 
@@ -32,6 +32,10 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
+        <FloatingAIControl />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

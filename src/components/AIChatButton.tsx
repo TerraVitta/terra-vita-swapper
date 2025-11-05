@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Chatbot } from "./Chatbot";
-import { useMediaQuery } from "@/hooks/use-mobile";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { FloatingAIChat } from "./ui/glass";
+import { cn } from "@/lib/utils";
+import { MessageSquare } from "lucide-react";
 
 export const AIChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,42 +45,33 @@ export const AIChatButton = () => {
   };
 
   return (
-    <div
+    <FloatingAIChat
       ref={containerRef}
-      className={`ai-chat-container ${isOpen ? 'expanded' : ''}`}
-      style={{ 
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        width: isOpen ? '384px' : 'auto',
-        height: isOpen ? '600px' : 'auto'
+      expanded={isOpen}
+      onToggle={() => setIsOpen(!isOpen)}
+      className={cn(
+        "overflow-hidden transition-[width,height] duration-500",
+        {
+          "w-auto h-auto": !isOpen,
+          "w-96 h-[600px]": isOpen
+        }
+      )}
+      style={{
+        transform: `translate3d(${position.x}px, ${position.y}px, 0)`
       }}
       onMouseDown={handleDragStart}
-      role="region"
-      aria-label="AI Chat"
     >
       {!isOpen ? (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="flex items-center gap-3 text-primary"
-          aria-expanded={isOpen}
-        >
-          <svg
-            className="w-5 h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-          <span className="text-sm font-medium">Ask Terra AI...</span>
-        </button>
+        <div className="flex items-center gap-3 text-primary">
+          <MessageSquare className="w-5 h-5" />
+          <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent animate-gradient">
+            Ask Terra AI...
+          </span>
+        </div>
       ) : (
         <Chatbot onClose={() => setIsOpen(false)} />
       )}
-    </div>
+    </FloatingAIChat>
   );
 };
 

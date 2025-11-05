@@ -1,23 +1,23 @@
 import { Moon, Sun } from 'lucide-react';
-import { Button } from './ui/button';
+import { GlassButton } from './ui/glass';
 import { useTheme } from '@/hooks/useTheme';
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
+    <GlassButton
+      variant="primary"
+      size="sm"
       onClick={toggleTheme}
-      className="border-primary/50 hover:bg-primary/10"
+      className="aspect-square hover:scale-105 transition-transform"
       aria-label="Toggle theme"
     >
       {theme === 'dark' ? (
-        <Sun className="h-5 w-5 text-primary" />
+        <Sun className="h-5 w-5 animate-pulse" />
       ) : (
-        <Moon className="h-5 w-5 text-primary" />
+        <Moon className="h-5 w-5 animate-pulse" />
       )}
-    </Button>
+    </GlassButton>
   );
 }

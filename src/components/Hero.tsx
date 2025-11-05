@@ -24,7 +24,7 @@ const Hero = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-terra-900 via-terra-800 to-terra-700"
+      className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-terra-900/90 via-terra-800/90 to-terra-700/90 dark:from-terra-950/90 dark:via-terra-900/90 dark:to-terra-800/90"
     >
       {/* Background Effects */}
       <div className="absolute inset-0">
@@ -45,7 +45,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl font-bold tracking-tight text-white sm:text-6xl"
+            className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
           >
             Shop Smarter.{' '}
             <span className="text-nature-400">Live Greener.</span>
@@ -55,7 +55,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300"
+            className="mx-auto mt-6 max-w-xl text-lg leading-8 text-muted-foreground"
           >
             Discover products that help you and the planet thrive.
           </motion.p>
@@ -68,7 +68,7 @@ const Hero = () => {
           >
             <a
               href="#products"
-              className="glass-card group px-8 py-3 text-base font-semibold leading-7 text-white"
+              className="glass-card group px-8 py-3 text-base font-semibold leading-7 text-foreground hover:text-primary"
             >
               Explore Products
               <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1">
@@ -77,7 +77,7 @@ const Hero = () => {
             </a>
             <a
               href="#about"
-              className="glass-card px-8 py-3 text-base font-semibold leading-7 text-white hover:text-nature-400"
+              className="glass-card px-8 py-3 text-base font-semibold leading-7 text-foreground hover:text-primary"
             >
               Learn More
             </a>
@@ -96,7 +96,7 @@ const Hero = () => {
               { label: 'Happy Customers', value: '10k+' },
             ].map((stat) => (
               <div key={stat.label} className="mx-auto glass-card px-8 py-4">
-                <div className="text-2xl font-bold tracking-tight text-white">
+                <div className="text-2xl font-bold tracking-tight text-foreground">
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-300">{stat.label}</div>

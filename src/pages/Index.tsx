@@ -29,7 +29,7 @@ const Index = () => {
   useEffect(() => {
     if (!sessionLoading && !roleLoading) {
       if (!user) {
-        navigate("/auth");
+        navigate("/landing");
       } else if (role) {
         // Route based on role
         if (role === "admin") navigate("/admin");

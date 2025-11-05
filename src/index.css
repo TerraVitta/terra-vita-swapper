@@ -7,86 +7,102 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  /* Light Mode - Clean White Theme */
+  /* Light Mode - Warm Eco Theme with Gradient */
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 0 0% 10%;
     
     --card: 0 0% 98%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 10%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 0 0% 10%;
     
-    --primary: 142 76% 36%;
+    /* Primary: Warm Orange-Red #FF4C29 */
+    --primary: 11 100% 58%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 11 100% 68%;
     
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    /* Secondary: Lighter Coral #FF7E50 */
+    --secondary: 14 100% 65%;
+    --secondary-foreground: 0 0% 100%;
     
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
     
-    --accent: 35 91% 53%;
+    /* Accent: Deep Orange */
+    --accent: 14 100% 65%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 142 76% 36%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 11 100% 58%;
     
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(11, 100%, 58%), hsl(14, 100%, 65%));
+    --gradient-hover: linear-gradient(135deg, hsl(11, 100%, 63%), hsl(14, 100%, 70%));
     
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 10% 3.9%;
-    --sidebar-primary: 142 76% 36%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 11 100% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 11 100% 58%;
   }
 
-  /* Dark Mode - Clean Black Theme */
+  /* Dark Mode - Deep Green to Black Gradient */
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
     
-    --card: 240 10% 8%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
     
-    --popover: 240 10% 8%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 142 76% 36%;
+    /* Primary: Dark Green #006400 */
+    --primary: 120 100% 20%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 120 100% 30%;
     
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary: Lighter Green */
+    --secondary: 120 80% 25%;
+    --secondary-foreground: 0 0% 100%;
     
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
     
-    --accent: 35 91% 53%;
+    /* Accent: Brighter Green */
+    --accent: 120 100% 30%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 142 76% 36%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 120 100% 20%;
     
-    --sidebar-background: 240 10% 8%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(120, 100%, 20%), hsl(0, 0%, 4%));
+    --gradient-hover: linear-gradient(135deg, hsl(120, 100%, 25%), hsl(0, 0%, 8%));
+    
+    --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary: 120 100% 20%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 120 100% 20%;
   }
 }
 
@@ -113,9 +129,9 @@ All colors MUST be HSL.
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  /* Card hover effects */
+  /* Enhanced Card hover effects with depth */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02];
   }
   
   /* Smooth scroll */
@@ -123,18 +139,53 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
   }
 
-  /* Fluid Ribbon Styles */
+  /* Floating animation for cards */
+  .card-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-hover {
+    background: var(--gradient-hover);
+  }
+
+  /* Button glow effect */
+  .btn-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.6);
+    transform: scale(1.05);
+  }
+
+  /* Fluid Ribbon Styles - More subtle and elegant */
   .fluid-ribbon {
     position: absolute;
     width: 200%;
     height: 200%;
     background: linear-gradient(135deg, 
-      hsl(var(--primary) / 0.05) 0%, 
-      hsl(var(--accent) / 0.05) 50%, 
-      hsl(var(--primary) / 0.05) 100%);
-    animation: fluid-move 20s ease-in-out infinite;
-    opacity: 0.6;
+      hsl(var(--primary) / 0.03) 0%, 
+      hsl(var(--accent) / 0.03) 50%, 
+      hsl(var(--primary) / 0.03) 100%);
+    animation: fluid-move 25s ease-in-out infinite;
+    opacity: 0.5;
     z-index: 0;
+    filter: blur(60px);
   }
 
   .fluid-ribbon-left {
@@ -147,7 +198,7 @@ All colors MUST be HSL.
     bottom: -50%;
     right: -100%;
     transform: rotate(15deg);
-    animation-delay: -10s;
+    animation-delay: -12s;
   }
 
   @keyframes fluid-move {
@@ -155,8 +206,37 @@ All colors MUST be HSL.
       transform: translateX(0) translateY(0) rotate(-15deg);
     }
     50% {
-      transform: translateX(50px) translateY(30px) rotate(-10deg);
+      transform: translateX(60px) translateY(40px) rotate(-10deg);
     }
+  }
+
+  /* Shimmer effect for loading */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.1),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Search bar focus effect */
+  .search-focus {
+    @apply transition-all duration-300;
+  }
+
+  .search-focus:focus {
+    @apply ring-4 ring-primary/20 scale-105;
   }
 }
 

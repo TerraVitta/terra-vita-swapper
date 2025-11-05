@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Send, Loader2, Camera, X, Mic, ChevronDown } from "lucide-react";
+import { Send, Loader2, Camera, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -11,11 +11,7 @@ interface Message {
   products?: any[];
 }
 
-interface ChatbotProps {
-  onClose: () => void;
-}
-
-export const Chatbot = ({ onClose }: ChatbotProps) => {
+export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: "Hello! I'm ShopBuddy. Scan a receipt or ask me about sustainable products!", isBot: true }
   ]);
@@ -163,50 +159,36 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
   };
 
   return (
-    <div className="glass-card flex flex-col h-full">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-glass-border">
-        <h2 className="text-sm font-medium text-primary">Terra AI Assistant</h2>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={onClose}
-            className="glass-button p-1.5 rounded-full hover:bg-glass-hover"
-            aria-label="Close chat"
-          >
-            <ChevronDown className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-4 scrollbar-thin scrollbar-thumb-glass scrollbar-track-transparent">
+    <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3">
         {messages.map((message) => (
-          <div key={message.id} className="flex flex-col">
+          <div key={message.id}>
             <div
-              className={`glass-panel p-3 rounded-2xl max-w-[80%] ${
+              className={`p-3 rounded-lg max-w-[70%] ${
                 message.isBot
-                  ? "self-start bg-glass"
-                  : "self-end bg-primary-glass"
+                  ? "bg-muted/50 text-foreground self-start"
+                  : "bg-primary/20 text-foreground self-end ml-auto"
               }`}
             >
-              <p className="text-sm">{message.text}</p>
+              {message.text}
             </div>
             
+            {/* Show matched products if available */}
             {message.products && message.products.length > 0 && (
-              <div className="mt-2 space-y-2 self-start max-w-[80%]">
+              <div className="mt-2 space-y-2">
                 {message.products.map((product: any) => (
                   <div 
                     key={product.id}
-                    className="glass-panel glass-panel-hover rounded-xl p-3 flex items-center gap-3"
+                    className="bg-muted/30 rounded-lg p-3 flex items-center gap-3"
                   >
                     <img 
                       src={product.image_url} 
                       alt={product.name}
-                      className="w-12 h-12 rounded-lg object-cover"
+                      className="w-12 h-12 rounded object-cover"
                     />
                     <div className="flex-1">
                       <p className="font-medium text-sm">{product.name}</p>
-                      <p className="text-xs text-foreground/70">
+                      <p className="text-xs text-muted-foreground">
                         AED {product.price} د.إ | Eco-Score: {product.sustainability_score}/100
                       </p>
                     </div>
@@ -217,15 +199,14 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
           </div>
         ))}
         {(loading || scanning) && (
-          <div className="glass-panel self-start p-2 px-3 rounded-full flex items-center gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-primary" />
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="w-4 h-4 animate-spin" />
             <span className="text-sm">{scanning ? 'Scanning receipt...' : 'Thinking...'}</span>
           </div>
         )}
       </div>
       
-      {/* Input Area */}
-      <div className="glass-panel mt-4 p-2 rounded-full flex items-center gap-2">
+      <div className="flex items-center gap-2 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
         <input
           ref={fileInputRef}
           type="file"
@@ -234,42 +215,35 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
           className="hidden"
         />
         
-        <button
+        <Button
           onClick={handleScanReceipt}
           disabled={loading || scanning}
-          className="glass-button-secondary p-2 rounded-full"
-          aria-label="Scan receipt"
+          variant="ghost"
+          size="icon"
+          className="shrink-0"
         >
           <Camera className="w-5 h-5" />
-        </button>
-        
-        <button
-          className="glass-button-secondary p-2 rounded-full"
-          aria-label="Voice input"
-        >
-          <Mic className="w-5 h-5" />
-        </button>
+        </Button>
         
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && !loading && !scanning && handleSend()}
-          placeholder="Ask me anything..."
+          placeholder="Ask about products or scan a receipt..."
           disabled={loading || scanning}
-          className="flex-1 bg-transparent px-3 text-sm outline-none placeholder:text-foreground/40"
+          className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
         />
         
         <button
           onClick={() => handleSend()}
-          disabled={loading || scanning || !input.trim()}
-          className="glass-button-primary p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Send message"
+          disabled={loading || scanning}
+          className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
           ) : (
-            <Send className="w-5 h-5" />
+            <Send className="w-5 h-5 text-primary-foreground" />
           )}
         </button>
       </div>

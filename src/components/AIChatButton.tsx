@@ -1,85 +1,56 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Chatbot } from "./Chatbot";
-import { useMediaQuery } from "@/hooks/use-mobile";
 
 export const AIChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 640px)");
-  
-  useEffect(() => {
-    // Initialize position based on screen size
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setPosition({
-        x: isMobile ? window.innerWidth - rect.width - 16 : (window.innerWidth - rect.width) / 2,
-        y: window.innerHeight - rect.height - 24
-      });
-    }
-  }, [isMobile]);
-
-  const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    
-    const startX = e.clientX - position.x;
-    const startY = e.clientY - position.y;
-    
-    const handleDrag = (e: MouseEvent) => {
-      setPosition({
-        x: Math.min(Math.max(0, e.clientX - startX), window.innerWidth - containerRef.current!.offsetWidth),
-        y: Math.min(Math.max(0, e.clientY - startY), window.innerHeight - containerRef.current!.offsetHeight)
-      });
-    };
-    
-    const handleDragEnd = () => {
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', handleDragEnd);
-    };
-    
-    document.addEventListener('mousemove', handleDrag);
-    document.addEventListener('mouseup', handleDragEnd);
-  };
 
   return (
-    <div
-      ref={containerRef}
-      className={`ai-chat-container ${isOpen ? 'expanded' : ''}`}
-      style={{ 
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        width: isOpen ? '384px' : 'auto',
-        height: isOpen ? '600px' : 'auto'
-      }}
-      onMouseDown={handleDragStart}
-      role="region"
-      aria-label="AI Chat"
-    >
-      {!isOpen ? (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="flex items-center gap-3 text-primary"
-          aria-expanded={isOpen}
+    <>
+      <div className="ai-chat-button-wrapper">
+        <button 
+          className="ai-chat-btn"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          <svg
-            className="w-5 h-5"
-            xmlns="http://www.w3.org/2000/svg"
+          <svg 
+            className="ai-chat-btn-svg" 
+            xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
           >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+            />
           </svg>
-          <span className="text-sm font-medium">Ask Terra AI...</span>
+
+          <div className="ai-chat-txt-wrapper">
+            <div className="ai-chat-txt-1">
+              <span className="ai-chat-btn-letter">A</span>
+              <span className="ai-chat-btn-letter">s</span>
+              <span className="ai-chat-btn-letter">k</span>
+              <span className="ai-chat-btn-letter"> </span>
+              <span className="ai-chat-btn-letter">A</span>
+              <span className="ai-chat-btn-letter">I</span>
+            </div>
+            <div className="ai-chat-txt-2">
+              <span className="ai-chat-btn-letter">C</span>
+              <span className="ai-chat-btn-letter">h</span>
+              <span className="ai-chat-btn-letter">a</span>
+              <span className="ai-chat-btn-letter">t</span>
+              <span className="ai-chat-btn-letter">t</span>
+              <span className="ai-chat-btn-letter">i</span>
+              <span className="ai-chat-btn-letter">n</span>
+              <span className="ai-chat-btn-letter">g</span>
+            </div>
+          </div>
         </button>
-      ) : (
-        <Chatbot onClose={() => setIsOpen(false)} />
+      </div>
+
+      {isOpen && (
+        <div className="fixed top-20 right-4 z-40 w-96 h-[600px] max-h-[calc(100vh-6rem)] shadow-2xl rounded-2xl overflow-hidden">
+          <Chatbot />
+        </div>
       )}
-    </div>
+    </>
   );
 };
-
-// Prevent the component from unmounting during transitions
-export default AIChatButton;

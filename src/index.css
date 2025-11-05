@@ -153,8 +153,8 @@ All colors MUST be HSL.
   }
 
   .glass-input {
-    @apply glass rounded-lg border-glass-border bg-transparent px-4 py-2 
-           focus:outline-none focus:ring-2 focus:ring-primary/20;
+    @apply glass rounded-lg border border-glass-border bg-transparent px-4 py-2 
+           focus:outline-none focus:ring-2 focus:ring-verdigris/20;
   }
 
   .glass-panel {
@@ -219,7 +219,44 @@ All colors MUST be HSL.
     }
   }
 
-  /* Reduced Motion */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  * {
+    @apply border-glass-border;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-glass dark:bg-glass-dark backdrop-blur-md;
+  }
+  
+  .glass-hover {
+    @apply hover:bg-glass/50 dark:hover:bg-glass-dark/50;
+  }
+  
+  .glass-glow {
+    @apply shadow-[0_0_15px_rgba(56,163,165,0.5)];
+  }
+}
+
+@layer utilities {
+  .glass-border {
+    @apply border-glass-border dark:border-glass-border-dark;
+  }
+  
+  .glass-glow-hover {
+    @apply hover:shadow-[0_0_15px_rgba(56,163,165,0.5)];
+  }
+}
+
+/* Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: 0.01ms !important;
@@ -228,13 +265,15 @@ All colors MUST be HSL.
       scroll-behavior: auto !important;
     }
   }
-}
+
+  /* Smooth Transitions */
+  * {
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   /* Default to dark mode */
-  html {
-    @apply dark;
+  :root {
+    color-scheme: dark;
   }
 }
 

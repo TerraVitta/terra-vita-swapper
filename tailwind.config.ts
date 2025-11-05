@@ -15,9 +15,16 @@ export default {
     },
     // Custom glass effect variants
     backdropBlur: {
-      'glass': 'blur(12px)',
-      'glass-sm': 'blur(8px)',
-      'glass-lg': 'blur(16px)',
+      'DEFAULT': '12px',
+      'sm': '8px',
+      'md': '12px',
+      'lg': '16px',
+      'xl': '24px',
+      '2xl': '32px',
+      '3xl': '48px',
+      'glass': '12px',
+      'glass-sm': '8px',
+      'glass-lg': '16px',
     },
     extend: {
       colors: {
@@ -27,13 +34,17 @@ export default {
         'light-green': '#80ED99',
         
         // Glass effect colors
-        glass: {
-          light: 'rgba(255, 255, 255, 0.1)',
+        'glass': {
+          DEFAULT: 'rgba(255, 255, 255, 0.1)',
           dark: 'rgba(0, 0, 0, 0.1)',
-          border: {
-            light: 'rgba(255, 255, 255, 0.2)',
-            dark: 'rgba(0, 0, 0, 0.2)',
-          }
+        },
+        'glass-border': {
+          DEFAULT: 'rgba(255, 255, 255, 0.2)',
+          dark: 'rgba(0, 0, 0, 0.2)',
+        },
+        'glass-ring': {
+          DEFAULT: 'rgba(56, 163, 165, 0.2)',
+          dark: 'rgba(56, 163, 165, 0.3)',
         },
         
         // System colors with glass effects

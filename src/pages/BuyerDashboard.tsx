@@ -162,7 +162,7 @@ const BuyerDashboard = () => {
                         filteredProducts.map((product) => (
                           <Card 
                             key={product.id} 
-                            className="card-hover cursor-pointer overflow-hidden transition-theme group"
+                            className="eco-border card-hover cursor-pointer overflow-hidden transition-theme group"
                             onClick={() => navigate(`/product/${product.id}`)}
                           >
                             <div className="aspect-square overflow-hidden">

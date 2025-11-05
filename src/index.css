@@ -139,6 +139,42 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
   }
 
+  /* Flowing green border animation */
+  .eco-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eco-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      45deg,
+      hsl(120, 100%, 25%),
+      hsl(120, 100%, 35%),
+      hsl(150, 100%, 30%),
+      hsl(120, 100%, 25%)
+    );
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: flow-border 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes flow-border {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
   /* Floating animation for cards */
   .card-float {
     animation: float 6s ease-in-out infinite;

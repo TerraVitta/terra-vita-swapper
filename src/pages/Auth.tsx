@@ -4,10 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Leaf, Mail, Lock } from "lucide-react";
-import FluidRibbons from "@/components/FluidRibbons";
+import { Recycle, Mail, Lock, User, ArrowRight } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
 
@@ -107,8 +105,21 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative">
-      <FluidRibbons />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Nature Background */}
+      <div className="nature-bg">
+        <div className="nature-gradient" />
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className="particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 15}s`,
+            }}
+          />
+        ))}
+      </div>
       
       {/* Theme Toggle and AI Chat Button */}
       <div className="fixed top-6 right-6 z-[100] flex items-center gap-3">
@@ -116,63 +127,70 @@ const Auth = () => {
         <AIChatButton />
       </div>
       
-      <Card className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden shadow-2xl relative z-10">
-        {/* Left side - Illustration */}
-        <div className="bg-gradient-to-br from-primary to-accent p-12 flex flex-col justify-center items-center text-primary-foreground">
+      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden relative z-10">
+        {/* Left side - Branding */}
+        <div className="glass-panel rounded-l-3xl md:rounded-r-none rounded-3xl md:rounded-l-3xl p-12 flex flex-col justify-center items-center bio-glow">
           <div className="mb-8">
-            <Leaf className="w-24 h-24 animate-pulse" />
+            <Recycle className="w-24 h-24 text-primary animate-pulse" />
           </div>
-          <h2 className="text-3xl font-bold mb-4 text-center">Ecomart</h2>
+          <h2 className="text-3xl font-bold mb-4 text-center">Terra-Vita Swapper</h2>
           <p className="text-center text-lg opacity-90 font-semibold">
-            Shop Clean. Live Green.
+            Swap Consciously. Live Sustainably.
           </p>
         </div>
 
         {/* Right side - Auth form */}
-        <div className="p-12 flex flex-col justify-center bg-card">
-          <h1 className="text-3xl font-bold mb-2 text-card-foreground">
-            {isAdminLogin ? "Admin Login" : isSignUp ? "Join Ecomart" : "Welcome Back"}
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            {isAdminLogin 
-              ? "Access the admin dashboard" 
-              : isSignUp 
-                ? "Start earning EcoPoints for sustainable choices" 
-                : "Continue your eco-friendly journey"}
-          </p>
+        <div className="glass-panel rounded-r-3xl md:rounded-l-none rounded-3xl md:rounded-r-3xl p-12 flex flex-col justify-center refract-hover">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">
+              {isAdminLogin ? "Admin Login" : isSignUp ? "Join the Movement" : "Welcome Back"}
+            </h1>
+            <p className="text-muted-foreground">
+              {isAdminLogin 
+                ? "Access the admin dashboard" 
+                : isSignUp 
+                  ? "Start swapping sustainably today" 
+                  : "Continue your eco-journey"}
+            </p>
+          </div>
 
           {isAdminLogin ? (
             <form onSubmit={handleAdminLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Username
+                </Label>
                 <Input
                   id="username"
                   type="text"
                   placeholder="admin"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  className="glass-panel border-0"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="adminPassword">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    id="adminPassword"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
-                </div>
+                <Label htmlFor="adminPassword" className="flex items-center gap-2">
+                  <Lock className="h-4 w-4" />
+                  Password
+                </Label>
+                <Input
+                  id="adminPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="glass-panel border-0"
+                  required
+                />
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full" size="lg">
+              <Button type="submit" disabled={loading} className="w-full btn-glow" size="lg">
                 {loading ? "Loading..." : "Admin Sign In"}
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </form>
           ) : (
@@ -180,52 +198,57 @@ const Auth = () => {
               <form onSubmit={handleEmailAuth} className="space-y-4">
                 {isSignUp && (
                   <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="fullName" className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Full Name
+                    </Label>
                     <Input
                       id="fullName"
                       type="text"
                       placeholder="Your name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
+                      className="glass-panel border-0"
                       required={isSignUp}
                     />
                   </div>
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
+                  <Label htmlFor="email" className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="glass-panel border-0"
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
+                  <Label htmlFor="password" className="flex items-center gap-2">
+                    <Lock className="h-4 w-4" />
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="glass-panel border-0"
+                    required
+                  />
                 </div>
 
-                <Button type="submit" disabled={loading} className="w-full" size="lg">
+                <Button type="submit" disabled={loading} className="w-full btn-glow" size="lg">
                   {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </form>
             </>
@@ -262,7 +285,7 @@ const Auth = () => {
             )}
           </p>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

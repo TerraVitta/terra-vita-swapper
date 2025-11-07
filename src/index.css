@@ -8,150 +8,194 @@ All colors MUST be HSL.
 
 @layer base {
   /* ========================================
-     TERRA VITTA LIQUID GLASS DESIGN SYSTEM
-     iOS-grade fluid glass with refraction
+     TERRA VITTA ULTRA-PREMIUM LIQUID GLASS
+     True iOS 18 Grade Design System
      ======================================== */
   
-  /* Light Mode - Soft Bluish Frost with Sunlight */
+  /* Light Mode - Crystal Clear with Depth */
   :root {
-    /* Base Glass Colors */
-    --background: 200 20% 98%;
-    --foreground: 220 15% 15%;
+    /* Base Colors */
+    --background: 210 25% 98%;
+    --foreground: 215 20% 12%;
     
-    --card: 200 30% 96%;
-    --card-foreground: 220 15% 15%;
+    --card: 210 30% 97%;
+    --card-foreground: 215 20% 12%;
     
-    --popover: 200 30% 99%;
-    --popover-foreground: 220 15% 15%;
+    --popover: 210 35% 99%;
+    --popover-foreground: 215 20% 12%;
     
-    /* Primary: Aqua Glass */
-    --primary: 180 65% 45%;
+    /* Primary: Refined Aqua */
+    --primary: 185 70% 48%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 180 75% 55%;
-    --primary-reflection: 180 80% 85%;
+    --primary-glow: 185 75% 58%;
+    --primary-reflection: 185 85% 88%;
     
-    /* Secondary: Silver Glass */
-    --secondary: 200 15% 65%;
-    --secondary-foreground: 220 15% 15%;
+    /* Secondary: Cool Platinum */
+    --secondary: 210 18% 68%;
+    --secondary-foreground: 215 20% 12%;
     
-    --muted: 200 20% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 210 22% 94%;
+    --muted-foreground: 215 12% 42%;
     
-    /* Accent: Leaf Green Reflection */
-    --accent: 140 50% 55%;
+    /* Accent: Living Green */
+    --accent: 145 55% 52%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 70% 55%;
+    --destructive: 0 72% 52%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 200 25% 88%;
-    --input: 200 25% 90%;
-    --ring: 180 65% 45%;
+    --border: 210 28% 90%;
+    --input: 210 28% 92%;
+    --ring: 185 70% 48%;
     
-    --radius: 1.25rem;
+    --radius: 1.5rem;
     
-    /* Liquid Glass System */
-    --glass-bg-light: rgba(255, 255, 255, 0.25);
-    --glass-bg-medium: rgba(255, 255, 255, 0.15);
-    --glass-bg-heavy: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.3);
+    /* Premium Glass Material System */
+    --glass-ultra-light: rgba(255, 255, 255, 0.7);
+    --glass-light: rgba(255, 255, 255, 0.4);
+    --glass-medium: rgba(255, 255, 255, 0.18);
+    --glass-heavy: rgba(255, 255, 255, 0.08);
+    
+    --glass-border-ultra: rgba(255, 255, 255, 0.8);
     --glass-border-strong: rgba(255, 255, 255, 0.5);
-    --glass-shadow: rgba(100, 150, 200, 0.15);
-    --glass-shadow-strong: rgba(100, 150, 200, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-border-soft: rgba(255, 255, 255, 0.12);
     
-    /* Specular Highlights */
-    --specular-light: rgba(255, 255, 255, 0.9);
-    --specular-medium: rgba(255, 255, 255, 0.6);
-    --specular-soft: rgba(255, 255, 255, 0.3);
+    /* Multi-layer Shadows (iOS uses 3-4 shadow layers) */
+    --shadow-xs: 0 1px 2px rgba(20, 40, 80, 0.04);
+    --shadow-sm: 0 2px 4px rgba(20, 40, 80, 0.06);
+    --shadow-md: 0 4px 8px rgba(20, 40, 80, 0.08), 
+                 0 2px 4px rgba(20, 40, 80, 0.04);
+    --shadow-lg: 0 8px 16px rgba(20, 40, 80, 0.1), 
+                 0 4px 8px rgba(20, 40, 80, 0.06),
+                 0 2px 4px rgba(20, 40, 80, 0.04);
+    --shadow-xl: 0 16px 32px rgba(20, 40, 80, 0.12),
+                 0 8px 16px rgba(20, 40, 80, 0.08),
+                 0 4px 8px rgba(20, 40, 80, 0.04);
+    --shadow-2xl: 0 24px 48px rgba(20, 40, 80, 0.15),
+                  0 16px 32px rgba(20, 40, 80, 0.1),
+                  0 8px 16px rgba(20, 40, 80, 0.06);
     
-    /* Refraction Colors */
-    --refract-aqua: rgba(100, 200, 220, 0.2);
-    --refract-gold: rgba(240, 200, 100, 0.15);
-    --refract-silver: rgba(200, 210, 220, 0.25);
+    /* Specular Highlights (simulates light on curved glass) */
+    --specular-ultra: rgba(255, 255, 255, 0.95);
+    --specular-strong: rgba(255, 255, 255, 0.7);
+    --specular-medium: rgba(255, 255, 255, 0.45);
+    --specular-soft: rgba(255, 255, 255, 0.25);
+    --specular-subtle: rgba(255, 255, 255, 0.12);
     
-    /* Depth & Blur */
-    --blur-light: 12px;
-    --blur-medium: 24px;
-    --blur-heavy: 40px;
+    /* Vibrancy & Refraction */
+    --vibrant-aqua: rgba(120, 210, 230, 0.25);
+    --vibrant-gold: rgba(245, 210, 130, 0.18);
+    --vibrant-silver: rgba(210, 220, 235, 0.3);
+    --vibrant-green: rgba(130, 210, 160, 0.2);
     
-    --sidebar-background: 200 30% 96%;
-    --sidebar-foreground: 220 15% 15%;
-    --sidebar-primary: 180 65% 45%;
+    /* Precise Blur Values (iOS uses specific blur radii) */
+    --blur-xs: 8px;
+    --blur-sm: 16px;
+    --blur-md: 28px;
+    --blur-lg: 44px;
+    --blur-xl: 64px;
+    
+    --sidebar-background: 210 30% 97%;
+    --sidebar-foreground: 215 20% 12%;
+    --sidebar-primary: 185 70% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 200 20% 92%;
-    --sidebar-accent-foreground: 220 15% 15%;
-    --sidebar-border: 200 25% 88%;
-    --sidebar-ring: 180 65% 45%;
+    --sidebar-accent: 210 22% 94%;
+    --sidebar-accent-foreground: 215 20% 12%;
+    --sidebar-border: 210 28% 90%;
+    --sidebar-ring: 185 70% 48%;
   }
 
-  /* Dark Mode - Obsidian Glass with Moonlight */
+  /* Dark Mode - Deep Obsidian with Luminosity */
   .dark {
-    /* Base Glass Colors */
-    --background: 220 30% 8%;
-    --foreground: 200 15% 95%;
+    /* Base Colors */
+    --background: 222 35% 7%;
+    --foreground: 210 18% 96%;
     
-    --card: 220 25% 12%;
-    --card-foreground: 200 15% 95%;
+    --card: 222 32% 10%;
+    --card-foreground: 210 18% 96%;
     
-    --popover: 220 30% 10%;
-    --popover-foreground: 200 15% 95%;
+    --popover: 222 35% 9%;
+    --popover-foreground: 210 18% 96%;
     
-    /* Primary: Moonlit Blue-Green */
-    --primary: 180 60% 35%;
+    /* Primary: Ethereal Cyan */
+    --primary: 188 65% 42%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 180 70% 45%;
-    --primary-reflection: 180 75% 25%;
+    --primary-glow: 188 72% 52%;
+    --primary-reflection: 188 78% 28%;
     
-    /* Secondary: Cool Silver */
-    --secondary: 210 20% 35%;
-    --secondary-foreground: 200 15% 95%;
+    /* Secondary: Moonlit Steel */
+    --secondary: 215 22% 38%;
+    --secondary-foreground: 210 18% 96%;
     
-    --muted: 220 20% 18%;
-    --muted-foreground: 200 10% 60%;
+    --muted: 222 22% 16%;
+    --muted-foreground: 210 12% 62%;
     
-    /* Accent: Emerald Glow */
-    --accent: 160 55% 40%;
+    /* Accent: Bioluminescent Teal */
+    --accent: 168 58% 45%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 60% 40%;
+    --destructive: 0 65% 45%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 20% 22%;
-    --input: 220 20% 20%;
-    --ring: 180 60% 35%;
+    --border: 222 22% 20%;
+    --input: 222 22% 18%;
+    --ring: 188 65% 42%;
     
-    /* Liquid Glass System - Dark */
-    --glass-bg-light: rgba(30, 40, 60, 0.3);
-    --glass-bg-medium: rgba(20, 30, 50, 0.4);
-    --glass-bg-heavy: rgba(10, 20, 40, 0.6);
-    --glass-border: rgba(100, 150, 200, 0.15);
-    --glass-border-strong: rgba(120, 180, 220, 0.25);
-    --glass-shadow: rgba(0, 0, 0, 0.4);
-    --glass-shadow-strong: rgba(0, 0, 0, 0.6);
+    /* Premium Glass Material System - Dark */
+    --glass-ultra-light: rgba(60, 75, 100, 0.5);
+    --glass-light: rgba(40, 55, 80, 0.35);
+    --glass-medium: rgba(25, 35, 55, 0.45);
+    --glass-heavy: rgba(15, 20, 35, 0.65);
+    
+    --glass-border-ultra: rgba(140, 180, 220, 0.35);
+    --glass-border-strong: rgba(120, 160, 200, 0.25);
+    --glass-border: rgba(100, 140, 180, 0.18);
+    --glass-border-soft: rgba(80, 120, 160, 0.1);
+    
+    /* Multi-layer Shadows - Dark */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4), 
+                 0 2px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45), 
+                 0 4px 8px rgba(0, 0, 0, 0.3),
+                 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.5),
+                 0 8px 16px rgba(0, 0, 0, 0.35),
+                 0 4px 8px rgba(0, 0, 0, 0.25);
+    --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.6),
+                  0 16px 32px rgba(0, 0, 0, 0.45),
+                  0 8px 16px rgba(0, 0, 0, 0.3);
     
     /* Specular Highlights - Dark */
-    --specular-light: rgba(150, 200, 240, 0.4);
-    --specular-medium: rgba(150, 200, 240, 0.25);
-    --specular-soft: rgba(150, 200, 240, 0.12);
+    --specular-ultra: rgba(180, 210, 240, 0.6);
+    --specular-strong: rgba(160, 195, 230, 0.4);
+    --specular-medium: rgba(140, 180, 220, 0.28);
+    --specular-soft: rgba(120, 165, 210, 0.18);
+    --specular-subtle: rgba(100, 150, 200, 0.1);
     
-    /* Refraction Colors - Dark */
-    --refract-aqua: rgba(80, 180, 200, 0.15);
-    --refract-gold: rgba(180, 150, 80, 0.1);
-    --refract-silver: rgba(120, 140, 160, 0.18);
+    /* Vibrancy & Refraction - Dark */
+    --vibrant-aqua: rgba(100, 190, 210, 0.2);
+    --vibrant-gold: rgba(200, 170, 100, 0.12);
+    --vibrant-silver: rgba(130, 150, 180, 0.22);
+    --vibrant-green: rgba(100, 180, 140, 0.16);
     
-    /* Depth & Blur */
-    --blur-light: 16px;
-    --blur-medium: 28px;
-    --blur-heavy: 48px;
+    /* Precise Blur Values */
+    --blur-xs: 12px;
+    --blur-sm: 20px;
+    --blur-md: 32px;
+    --blur-lg: 52px;
+    --blur-xl: 72px;
     
-    --sidebar-background: 220 25% 12%;
-    --sidebar-foreground: 200 15% 95%;
-    --sidebar-primary: 180 60% 35%;
+    --sidebar-background: 222 32% 10%;
+    --sidebar-foreground: 210 18% 96%;
+    --sidebar-primary: 188 65% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 18%;
-    --sidebar-accent-foreground: 200 15% 95%;
-    --sidebar-border: 220 20% 22%;
-    --sidebar-ring: 180 60% 35%;
+    --sidebar-accent: 222 22% 16%;
+    --sidebar-accent-foreground: 210 18% 96%;
+    --sidebar-border: 222 22% 20%;
+    --sidebar-ring: 188 65% 42%;
   }
 }
 
@@ -186,180 +230,199 @@ All colors MUST be HSL.
 
 @layer utilities {
   /* ========================================
-     LIQUID GLASS CORE EFFECTS
+     ULTRA-PREMIUM LIQUID GLASS MATERIALS
+     iOS 18 Control Center Grade
      ======================================== */
   
-  /* Liquid Glass Panels - Multi-layer depth */
+  /* Main Glass Panel - Triple layer system */
   .glass-panel {
-    background: var(--glass-bg-medium);
-    backdrop-filter: blur(var(--blur-medium)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur-medium)) saturate(180%);
+    background: var(--glass-medium);
+    backdrop-filter: blur(var(--blur-md)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur-md)) saturate(200%);
     border: 1px solid var(--glass-border);
     box-shadow: 
-      0 8px 32px var(--glass-shadow),
-      inset 0 1px 0 0 var(--specular-soft),
-      0 0 0 1px var(--glass-border);
+      var(--shadow-lg),
+      inset 0 1px 0 0 var(--specular-subtle),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
   }
   
-  /* Glass panel with specular highlight */
+  /* Top specular highlight bar */
   .glass-panel::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 40%;
+    height: 35%;
     background: linear-gradient(
       180deg,
-      var(--specular-soft) 0%,
+      var(--specular-subtle) 0%,
+      var(--specular-subtle) 20%,
       transparent 100%
     );
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 1;
+    mix-blend-mode: overlay;
   }
   
-  /* Glass panel with refraction edge glow */
+  /* Refined refraction rim */
   .glass-panel::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -1px;
     border-radius: inherit;
     padding: 1px;
     background: linear-gradient(
       135deg,
-      var(--refract-aqua) 0%,
-      var(--refract-silver) 50%,
-      var(--refract-gold) 100%
+      var(--vibrant-aqua) 0%,
+      var(--vibrant-silver) 35%,
+      transparent 50%,
+      var(--vibrant-gold) 75%,
+      var(--vibrant-green) 100%
     );
+    background-size: 200% 200%;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: 0.4;
+    opacity: 0.5;
     pointer-events: none;
+    animation: refract-shift 12s ease-in-out infinite;
   }
   
-  /* Light Glass - Top layer */
+  @keyframes refract-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  /* Ultra Light Glass - Toolbar/Header grade */
   .glass-light {
-    background: var(--glass-bg-light);
-    backdrop-filter: blur(var(--blur-light)) saturate(200%);
-    -webkit-backdrop-filter: blur(var(--blur-light)) saturate(200%);
+    background: var(--glass-light);
+    backdrop-filter: blur(var(--blur-sm)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(180%);
     border: 1px solid var(--glass-border-strong);
     box-shadow: 
-      0 4px 16px var(--glass-shadow),
-      inset 0 1px 0 0 var(--specular-medium);
+      var(--shadow-md),
+      inset 0 1px 0 0 var(--specular-medium),
+      inset 0 0 0 1px var(--glass-border-soft);
   }
   
-  /* Heavy Glass - Bottom anchor */
+  /* Heavy Glass - Modal/Card grade */
   .glass-heavy {
-    background: var(--glass-bg-heavy);
-    backdrop-filter: blur(var(--blur-heavy)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--blur-heavy)) saturate(160%);
-    border: 1px solid var(--glass-border);
+    background: var(--glass-heavy);
+    backdrop-filter: blur(var(--blur-lg)) saturate(170%);
+    -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(170%);
+    border: 1px solid var(--glass-border-soft);
     box-shadow: 
-      0 16px 48px var(--glass-shadow-strong),
-      inset 0 2px 0 0 var(--specular-soft);
+      var(--shadow-xl),
+      inset 0 2px 0 0 var(--specular-subtle),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.08);
   }
   
-  /* Glass Button */
+  /* Premium Glass Button - Spring animation */
   .glass-button {
-    background: var(--glass-bg-light);
-    backdrop-filter: blur(var(--blur-light)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur-light)) saturate(180%);
+    background: var(--glass-light);
+    backdrop-filter: blur(var(--blur-sm)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(180%);
     border: 1px solid var(--glass-border);
     box-shadow: 
-      0 4px 12px var(--glass-shadow),
-      inset 0 1px 0 0 var(--specular-medium);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      var(--shadow-sm),
+      inset 0 1px 0 0 var(--specular-soft),
+      inset 0 0 0 1px var(--glass-border-soft);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
   }
   
+  /* Liquid light sweep */
   .glass-button::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -50%;
     left: -100%;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 200%;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      var(--specular-light) 50%,
+      var(--specular-ultra) 50%,
       transparent 100%
     );
-    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: skewX(-20deg);
+    transition: left 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   
   .glass-button:hover {
-    background: var(--glass-bg-medium);
+    background: var(--glass-medium);
     border: 1px solid var(--glass-border-strong);
-    transform: translateY(-2px) scale(1.01);
+    transform: translateY(-1px) scale(1.008);
     box-shadow: 
-      0 8px 24px var(--glass-shadow-strong),
-      inset 0 2px 0 0 var(--specular-light);
+      var(--shadow-lg),
+      inset 0 2px 0 0 var(--specular-medium),
+      inset 0 0 0 1px var(--glass-border);
   }
   
   .glass-button:hover::before {
-    left: 100%;
+    left: 120%;
   }
   
   .glass-button:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0px) scale(0.992);
+    transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+      var(--shadow-xs),
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   }
   
   /* ========================================
-     LIQUID MOTION & PHYSICS
+     ULTRA-SMOOTH MOTION & PHYSICS
+     iOS Spring Animations
      ======================================== */
   
-  /* Smooth liquid transitions */
-  .transition-liquid {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Spring transitions (iOS signature easing) */
+  .transition-spring {
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   
-  /* Refraction hover - 3D glass tilt */
+  .transition-spring-fast {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  /* Liquid smooth */
+  .transition-liquid {
+    transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* 3D Glass tilt with depth */
   .refract-hover {
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
   }
   
   .refract-hover:hover {
-    transform: perspective(1200px) rotateX(1deg) rotateY(-1deg) translateZ(8px);
+    transform: perspective(1400px) rotateX(0.5deg) rotateY(-0.8deg) translateZ(12px);
   }
   
-  /* Card hover with liquid inertia */
+  /* Premium card hover with spring */
   .card-hover {
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center center;
   }
   
   .card-hover:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-10px) scale(1.018) translateZ(0);
     box-shadow: 
-      0 20px 60px var(--glass-shadow-strong),
-      0 0 0 1px var(--glass-border-strong);
+      var(--shadow-2xl),
+      0 0 0 1px var(--glass-border-ultra),
+      inset 0 1px 0 0 var(--specular-soft);
   }
   
-  /* Breathing glass animation */
-  .glass-breathe {
-    animation: breathe 4s ease-in-out infinite;
-  }
-  
-  @keyframes breathe {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.01);
-      opacity: 0.95;
-    }
-  }
-  
-  /* Smooth scroll with momentum */
+  /* Smooth momentum scroll */
   .smooth-scroll {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Flowing green border animation */
@@ -421,33 +484,39 @@ All colors MUST be HSL.
     background: var(--gradient-hover);
   }
 
-  /* Button with liquid glow */
+  /* Ultra-smooth button glow */
   .btn-glow {
     position: relative;
     box-shadow: 
-      0 0 20px hsl(var(--primary) / 0.3),
-      0 4px 12px var(--glass-shadow),
+      0 0 24px hsl(var(--primary) / 0.25),
+      var(--shadow-md),
       inset 0 1px 0 var(--specular-soft);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .btn-glow:hover {
     box-shadow: 
-      0 0 40px hsl(var(--primary) / 0.5),
-      0 8px 24px var(--glass-shadow-strong),
+      0 0 48px hsl(var(--primary) / 0.45),
+      0 0 80px hsl(var(--primary-glow) / 0.25),
+      var(--shadow-xl),
       inset 0 2px 0 var(--specular-medium);
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px) scale(1.012);
   }
   
   .btn-glow:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0px) scale(0.996);
+    transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+      0 0 16px hsl(var(--primary) / 0.2),
+      var(--shadow-sm),
+      inset 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 
   /* ========================================
-     SPECULAR HIGHLIGHTS & REFLECTIONS
+     PREMIUM SPECULAR & VIBRANCY SYSTEM
      ======================================== */
   
-  /* Specular light streak */
+  /* Dynamic specular sweep */
   .specular-streak {
     position: relative;
     overflow: hidden;
@@ -456,30 +525,33 @@ All colors MUST be HSL.
   .specular-streak::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent 30%,
-      var(--specular-soft) 50%,
-      transparent 70%
+    top: -60%;
+    left: -60%;
+    width: 220%;
+    height: 220%;
+    background: radial-gradient(
+      ellipse at center,
+      var(--specular-strong) 0%,
+      var(--specular-medium) 20%,
+      transparent 45%
     );
-    animation: specular-glide 8s linear infinite;
+    animation: specular-drift 10s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
     pointer-events: none;
+    mix-blend-mode: overlay;
   }
   
-  @keyframes specular-glide {
-    0% {
-      transform: translate(-100%, -100%) rotate(45deg);
+  @keyframes specular-drift {
+    0%, 100% {
+      transform: translate(-100%, -100%) scale(0.8);
+      opacity: 0.3;
     }
-    100% {
-      transform: translate(100%, 100%) rotate(45deg);
+    50% {
+      transform: translate(100%, 100%) scale(1.2);
+      opacity: 0.6;
     }
   }
   
-  /* Liquid reflection pool */
+  /* Liquid reflection pool effect */
   .liquid-reflect {
     position: relative;
   }
@@ -487,19 +559,41 @@ All colors MUST be HSL.
   .liquid-reflect::after {
     content: '';
     position: absolute;
-    bottom: -2px;
-    left: 10%;
-    right: 10%;
-    height: 40%;
+    bottom: -4px;
+    left: 8%;
+    right: 8%;
+    height: 45%;
     background: linear-gradient(
       180deg,
       transparent 0%,
-      var(--refract-aqua) 50%,
+      var(--vibrant-aqua) 40%,
+      var(--vibrant-silver) 70%,
       transparent 100%
     );
-    filter: blur(8px);
+    filter: blur(12px);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  
+  /* Vibrancy glow effect */
+  .vibrant-glow {
+    position: relative;
+  }
+  
+  .vibrant-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(
+      ellipse at center,
+      var(--vibrant-aqua) 0%,
+      var(--vibrant-green) 50%,
+      transparent 70%
+    );
+    filter: blur(40px);
     opacity: 0.3;
     pointer-events: none;
+    z-index: -1;
   }
 
   /* ========================================
@@ -578,45 +672,47 @@ All colors MUST be HSL.
     }
   }
 
-  /* Liquid light particles */
+  /* Ultra-refined light particles */
   .particle {
     position: absolute;
-    width: 3px;
-    height: 3px;
+    width: 2px;
+    height: 2px;
     background: radial-gradient(
       circle,
-      var(--specular-light) 0%,
-      hsl(var(--primary) / 0.4) 40%,
-      transparent 70%
+      var(--specular-ultra) 0%,
+      var(--specular-strong) 30%,
+      hsl(var(--primary) / 0.3) 50%,
+      transparent 75%
     );
     border-radius: 50%;
-    filter: blur(1px);
-    animation: float-particle 18s ease-in-out infinite;
+    filter: blur(0.5px);
+    animation: float-particle 22s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    box-shadow: 0 0 4px var(--specular-soft);
   }
 
   @keyframes float-particle {
     0% {
-      transform: translate(0, 0) scale(0.8);
+      transform: translate(0, 0) scale(0.6) rotate(0deg);
       opacity: 0;
     }
-    5% {
-      opacity: 0.6;
+    8% {
+      opacity: 0.7;
     }
     50% {
-      opacity: 0.8;
-      transform: translate(60px, -50vh) scale(1.2);
+      opacity: 0.9;
+      transform: translate(80px, -50vh) scale(1.4) rotate(180deg);
     }
-    95% {
-      opacity: 0.6;
+    92% {
+      opacity: 0.7;
     }
     100% {
-      transform: translate(120px, -100vh) scale(0.6);
+      transform: translate(160px, -100vh) scale(0.4) rotate(360deg);
       opacity: 0;
     }
   }
 
   /* ========================================
-     LIQUID RIPPLE & DISTORTION EFFECTS
+     PREMIUM RIPPLE & WARP EFFECTS
      ======================================== */
   
   .ripple-container {
@@ -628,128 +724,42 @@ All colors MUST be HSL.
 
   .ripple {
     position: absolute;
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
     background: radial-gradient(
-      circle,
-      var(--refract-aqua) 0%,
-      var(--refract-silver) 30%,
-      transparent 70%
+      circle at 35% 35%,
+      var(--vibrant-aqua) 0%,
+      var(--vibrant-silver) 25%,
+      var(--vibrant-green) 50%,
+      transparent 75%
     );
-    border: 1px solid var(--glass-border);
-    animation: ripple-expand 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    filter: blur(2px);
+    border: 2px solid var(--glass-border-soft);
+    animation: ripple-expand 10s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    filter: blur(3px);
+    box-shadow: 
+      inset 0 0 40px var(--specular-subtle),
+      0 0 60px var(--vibrant-aqua);
   }
 
   @keyframes ripple-expand {
     0% {
-      transform: scale(0.3) translateZ(0);
+      transform: scale(0.2) translateZ(0);
       opacity: 0;
     }
-    10% {
-      opacity: 0.4;
+    15% {
+      opacity: 0.5;
     }
-    90% {
-      opacity: 0.2;
+    85% {
+      opacity: 0.3;
     }
     100% {
-      transform: scale(2.5) translateZ(0);
+      transform: scale(3) translateZ(0);
       opacity: 0;
     }
   }
   
-  /* Liquid distortion on interaction */
-  .liquid-distort {
-    position: relative;
-    transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .liquid-distort:hover {
-    filter: url(#liquid-warp);
-  }
-
-  /* Fluid light ribbons with refraction */
-  .fluid-ribbon {
-    position: absolute;
-    width: 300%;
-    height: 300%;
-    background: linear-gradient(
-      120deg,
-      var(--refract-aqua) 0%,
-      var(--refract-silver) 25%,
-      var(--refract-gold) 50%,
-      var(--refract-silver) 75%,
-      var(--refract-aqua) 100%
-    );
-    background-size: 200% 200%;
-    animation: fluid-flow 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    opacity: 0.3;
-    z-index: 0;
-    filter: blur(120px);
-    mix-blend-mode: screen;
-  }
-
-  .fluid-ribbon-left {
-    top: -80%;
-    left: -120%;
-    transform: rotate(-20deg);
-  }
-
-  .fluid-ribbon-right {
-    bottom: -80%;
-    right: -120%;
-    transform: rotate(20deg);
-    animation-delay: -15s;
-  }
-
-  @keyframes fluid-flow {
-    0%, 100% {
-      transform: translateX(0) translateY(0) rotate(-20deg);
-      background-position: 0% 50%;
-    }
-    50% {
-      transform: translateX(80px) translateY(60px) rotate(-15deg);
-      background-position: 100% 50%;
-    }
-  }
-
-  /* ========================================
-     MICRO-ANIMATIONS & INTERACTIONS
-     ======================================== */
-  
-  /* Liquid shimmer loading */
-  .shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--specular-medium) 50%,
-      transparent 100%
-    );
-    animation: shimmer-flow 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-
-  @keyframes shimmer-flow {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 200%;
-    }
-  }
-  
-  /* Click ripple effect */
+  /* Click interaction ripple */
   .click-ripple {
     position: relative;
     overflow: hidden;
@@ -763,16 +773,22 @@ All colors MUST be HSL.
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: var(--refract-aqua);
+    background: radial-gradient(
+      circle,
+      var(--vibrant-aqua) 0%,
+      transparent 70%
+    );
     transform: translate(-50%, -50%);
     opacity: 0;
   }
   
   .click-ripple:active::after {
-    width: 300px;
-    height: 300px;
-    opacity: 1;
-    transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+    width: 400px;
+    height: 400px;
+    opacity: 0.6;
+    transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+                height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.8s ease-out;
   }
 
   /* Search bar focus effect */
@@ -798,68 +814,77 @@ All colors MUST be HSL.
     }
   }
 
-  /* Counter with pulsing liquid glow */
+  /* Premium counter glow */
   .counter-glow {
     position: relative;
-    animation: counter-pulse 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: counter-pulse 5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
   }
 
   @keyframes counter-pulse {
     0%, 100% {
       box-shadow: 
-        0 0 15px hsl(var(--primary) / 0.3),
-        0 4px 20px var(--glass-shadow);
+        0 0 18px hsl(var(--primary) / 0.25),
+        var(--shadow-md),
+        inset 0 1px 0 var(--specular-subtle);
     }
     50% {
       box-shadow: 
-        0 0 30px hsl(var(--primary) / 0.5),
-        0 8px 40px var(--glass-shadow-strong);
+        0 0 36px hsl(var(--primary) / 0.4),
+        0 0 60px hsl(var(--primary-glow) / 0.2),
+        var(--shadow-lg),
+        inset 0 2px 0 var(--specular-soft);
     }
   }
 
-  /* Bioluminescent glow (dark mode only) */
+  /* Bioluminescent dark mode glow */
   .dark .bio-glow {
     position: relative;
     box-shadow: 
-      0 0 40px hsl(var(--primary-glow) / 0.3),
-      0 0 80px hsl(var(--primary-glow) / 0.15),
-      inset 0 0 20px hsl(var(--primary-glow) / 0.1);
-    animation: bio-pulse 5s ease-in-out infinite;
+      0 0 48px hsl(var(--primary-glow) / 0.25),
+      0 0 96px hsl(var(--primary-glow) / 0.12),
+      inset 0 0 24px hsl(var(--primary-glow) / 0.08),
+      var(--shadow-lg);
+    animation: bio-pulse 6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
   }
   
   @keyframes bio-pulse {
     0%, 100% {
       box-shadow: 
-        0 0 40px hsl(var(--primary-glow) / 0.3),
-        0 0 80px hsl(var(--primary-glow) / 0.15),
-        inset 0 0 20px hsl(var(--primary-glow) / 0.1);
+        0 0 48px hsl(var(--primary-glow) / 0.25),
+        0 0 96px hsl(var(--primary-glow) / 0.12),
+        inset 0 0 24px hsl(var(--primary-glow) / 0.08),
+        var(--shadow-lg);
     }
     50% {
       box-shadow: 
-        0 0 60px hsl(var(--primary-glow) / 0.4),
-        0 0 120px hsl(var(--primary-glow) / 0.2),
-        inset 0 0 30px hsl(var(--primary-glow) / 0.15);
+        0 0 72px hsl(var(--primary-glow) / 0.35),
+        0 0 144px hsl(var(--primary-glow) / 0.18),
+        inset 0 0 36px hsl(var(--primary-glow) / 0.12),
+        var(--shadow-xl);
     }
   }
   
   /* ========================================
-     TYPOGRAPHY ON GLASS
+     PREMIUM TYPOGRAPHY ON GLASS
      ======================================== */
   
-  /* Etched glass text */
+  /* Etched glass text with depth */
   .text-glass {
     text-shadow: 
-      0 1px 2px var(--glass-shadow),
-      0 0 8px var(--specular-soft);
-    letter-spacing: 0.02em;
+      0 1px 3px var(--shadow-sm),
+      0 0 12px var(--specular-subtle);
+    letter-spacing: 0.015em;
+    font-weight: 500;
   }
   
-  /* Luminescent text */
+  /* Luminescent glowing text */
   .text-glow {
     text-shadow: 
-      0 0 10px hsl(var(--primary) / 0.5),
-      0 0 20px hsl(var(--primary) / 0.3),
-      0 1px 2px var(--glass-shadow);
+      0 0 12px hsl(var(--primary) / 0.6),
+      0 0 24px hsl(var(--primary) / 0.4),
+      0 0 36px hsl(var(--primary-glow) / 0.2),
+      0 2px 4px var(--shadow-xs);
+    font-weight: 600;
   }
   
   /* ========================================

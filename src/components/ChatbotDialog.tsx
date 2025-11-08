@@ -9,17 +9,17 @@ export const ChatbotDialog = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-primary hover:bg-primary/90 flex items-center justify-center transition-all hover:scale-110 shadow-lg"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 flex items-center justify-center transition-spring hover:scale-110 shadow-2xl glass-panel"
       >
         {isOpen ? (
-          <X className="w-6 h-6 text-primary-foreground" />
+          <X className="w-6 h-6 text-white" />
         ) : (
-          <MessageCircle className="w-6 h-6 text-primary-foreground" />
+          <MessageCircle className="w-6 h-6 text-white" />
         )}
       </button>
 
       {isOpen && (
-        <div className="fixed top-20 right-4 z-40 w-96 h-[600px] max-h-[calc(100vh-6rem)] shadow-2xl rounded-2xl overflow-hidden">
+        <div className="fixed bottom-24 right-6 z-40 w-[420px] h-[650px] max-h-[calc(100vh-8rem)] shadow-2xl rounded-3xl overflow-hidden glass-panel animate-scale-in">
           <Chatbot />
         </div>
       )}

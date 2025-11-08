@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Search, Sparkles, Leaf, ShoppingBag, Users, Recycle, ChevronDown, Sun, Moon, Target, Heart, Droplet, Globe, TrendingUp, Award } from "lucide-react";
+import { Search, Sparkles, Leaf, ShoppingBag, Users, Recycle, ChevronDown, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -78,8 +79,8 @@ const Landing = () => {
         <header className="container py-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Recycle className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Terra Vitta
+            <span className="text-2xl font-bold">
+              Terra-Vita Swapper
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -106,21 +107,21 @@ const Landing = () => {
             {/* Main Glass Panel */}
             <div className="glass-panel rounded-3xl p-8 md:p-12 space-y-8 animate-fade-in refract-hover">
               <div className="text-center space-y-6">
-                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-light text-sm font-semibold">
+                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-button text-sm font-medium">
                   <Sparkles className="h-4 w-4 text-primary" />
-                  <span>Building a Circular Future Together</span>
+                  <span>Swap Consciously. Live Sustainably.</span>
                 </div>
                 
-                <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-[1.1] tracking-tight">
-                  Trade Smart.
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  Welcome to
                   <br />
                   <span className="bg-gradient-primary bg-clip-text text-transparent">
-                    Live Green.
+                    Terra-Vita Swapper
                   </span>
                 </h1>
                 
-                <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
-                  Join a global community reducing waste through conscious exchanges. Every swap creates ripples of positive impact.
+                <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+                  Where sustainable living meets smart swapping. Every exchange helps our planet breathe a little easier.
                 </p>
 
                 {/* Live Impact Counters */}
@@ -226,87 +227,30 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* UN SDG Section */}
-        <section className="container pb-20">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 space-y-4">
-              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-light text-sm font-semibold">
-                <Globe className="h-4 w-4 text-primary" />
-                <span>Aligned with Global Goals</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold">UN Sustainable Development Goals</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Terra Vitta actively contributes to the United Nations' vision for a better world
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: <Target className="h-10 w-10" />,
-                  number: "SDG 12",
-                  title: "Responsible Consumption",
-                  description: "Promoting sustainable production and consumption patterns through peer-to-peer exchanges",
-                  color: "text-amber-500"
-                },
-                {
-                  icon: <TrendingUp className="h-10 w-10" />,
-                  number: "SDG 13",
-                  title: "Climate Action",
-                  description: "Reducing carbon footprint by extending product lifecycles and preventing waste",
-                  color: "text-green-500"
-                },
-                {
-                  icon: <Award className="h-10 w-10" />,
-                  number: "SDG 11",
-                  title: "Sustainable Communities",
-                  description: "Building inclusive local networks that strengthen circular economy principles",
-                  color: "text-blue-500"
-                }
-              ].map((goal, index) => (
-                <div
-                  key={goal.number}
-                  className="glass-panel rounded-3xl p-8 card-hover animate-fade-in space-y-4"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <div className={`h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center ${goal.color}`}>
-                    {goal.icon}
-                  </div>
-                  <div className="text-sm font-bold text-primary">{goal.number}</div>
-                  <h3 className="text-2xl font-bold">{goal.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{goal.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Why Sustainability Matters */}
         <section className="container pb-20">
           <div className="max-w-6xl mx-auto">
             <div className="glass-panel rounded-3xl p-12 md:p-16 text-center space-y-8">
               <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-primary/10 mx-auto mb-6">
-                <Heart className="h-10 w-10 text-primary" />
+                <Leaf className="h-10 w-10 text-primary" />
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-bold">Every Swap Matters</h2>
+              <h2 className="text-4xl font-bold">Why Sustainability Matters</h2>
               
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                By choosing to swap instead of buy new, you're part of a movement that saves resources, reduces emissions, and builds a circular economy where nothing is wasted.
+                Every item swapped instead of bought new saves resources, reduces waste, and lowers carbon emissions. 
+                Together, we're building a circular economy where nothing goes to waste.
               </p>
 
               <div className="grid md:grid-cols-3 gap-8 pt-8">
                 {[
-                  { value: "2.5M", label: "Items Saved from Landfills", icon: <Recycle className="h-5 w-5" /> },
-                  { value: "8.5K", label: "Tons of CO₂ Prevented", icon: <Droplet className="h-5 w-5" /> },
-                  { value: "50K+", label: "Active Community Members", icon: <Users className="h-5 w-5" /> }
+                  { value: "2.5M", label: "Items Saved from Landfills" },
+                  { value: "8.5K", label: "Tons of CO₂ Prevented" },
+                  { value: "50K+", label: "Active Community Members" }
                 ].map((stat, index) => (
-                  <div key={index} className="glass-light rounded-2xl p-6 space-y-3">
-                    <div className="flex items-center justify-center gap-2 text-primary">
-                      {stat.icon}
-                    </div>
-                    <div className="text-5xl font-bold text-primary">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+                  <div key={index} className="space-y-2">
+                    <div className="text-4xl font-bold text-primary">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -406,8 +350,8 @@ const Landing = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <Recycle className="h-6 w-6 text-primary" />
-              <span className="text-sm text-muted-foreground font-medium">
-                © 2025 Terra Vitta. Building a Circular Future.
+              <span className="text-sm text-muted-foreground">
+                © 2025 Terra-Vita Swapper. Swap Consciously.
               </span>
             </div>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">

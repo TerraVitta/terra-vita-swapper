@@ -133,24 +133,24 @@ const Auth = () => {
           <div className="mb-8">
             <Recycle className="w-24 h-24 text-primary animate-pulse" />
           </div>
-          <h2 className="text-4xl font-bold mb-4 text-center bg-gradient-primary bg-clip-text text-transparent">Terra Vitta</h2>
-          <p className="text-center text-xl opacity-90 font-light leading-relaxed">
-            Building a Circular Future Together
+          <h2 className="text-3xl font-bold mb-4 text-center">Terra-Vita Swapper</h2>
+          <p className="text-center text-lg opacity-90 font-semibold">
+            Swap Consciously. Live Sustainably.
           </p>
         </div>
 
         {/* Right side - Auth form */}
         <div className="glass-panel rounded-r-3xl md:rounded-l-none rounded-3xl md:rounded-r-3xl p-12 flex flex-col justify-center refract-hover">
-          <div className="text-center mb-10 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              {isAdminLogin ? "Admin Access" : isSignUp ? "Join the Movement" : "Welcome Back"}
-            </h2>
-            <p className="text-muted-foreground text-lg font-light">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">
+              {isAdminLogin ? "Admin Login" : isSignUp ? "Join the Movement" : "Welcome Back"}
+            </h1>
+            <p className="text-muted-foreground">
               {isAdminLogin 
-                ? "Secure dashboard access" 
+                ? "Access the admin dashboard" 
                 : isSignUp 
-                  ? "Start your sustainable journey today" 
-                  : "Sign in to continue your eco-journey"}
+                  ? "Start swapping sustainably today" 
+                  : "Continue your eco-journey"}
             </p>
           </div>
 
@@ -215,48 +215,39 @@ const Auth = () => {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-base font-semibold flex items-center gap-2">
+                  <Label htmlFor="email" className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />
-                    Email Address
+                    Email
                   </Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="glass-panel border-0 h-12 text-base transition-spring focus:scale-[1.01] focus:shadow-lg"
+                    className="glass-panel border-0"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-base font-semibold flex items-center gap-2">
+                  <Label htmlFor="password" className="flex items-center gap-2">
                     <Lock className="h-4 w-4" />
                     Password
                   </Label>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="Enter your password"
+                    placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="glass-panel border-0 h-12 text-base transition-spring focus:scale-[1.01] focus:shadow-lg"
+                    className="glass-panel border-0"
                     required
                   />
                 </div>
 
-                <Button type="submit" disabled={loading} className="w-full btn-glow h-12 text-base font-semibold transition-spring hover:scale-[1.02]" size="lg">
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <div className="h-4 w-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
-                      Processing...
-                    </span>
-                  ) : isSignUp ? (
-                    "Create Account"
-                  ) : (
-                    "Sign In"
-                  )}
+                <Button type="submit" disabled={loading} className="w-full btn-glow" size="lg">
+                  {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </form>

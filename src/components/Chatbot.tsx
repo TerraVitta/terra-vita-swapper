@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
-import { Send, Loader2, Camera, Sparkles } from "lucide-react";
+import { Send, Loader2, Camera, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
 interface Message {
+  id: number;
   text: string;
-  sender: 'user' | 'bot';
+  isBot: boolean;
   products?: any[];
 }
 
 export const Chatbot = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    { id: 1, text: "Hello! I'm ShopBuddy. Scan a receipt or ask me about sustainable products!", isBot: true }
+  ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [scanning, setScanning] = useState(false);
@@ -23,8 +25,9 @@ export const Chatbot = () => {
     if (!messageText.trim() || loading) return;
     
     const userMsg: Message = {
+      id: messages.length + 1,
       text: messageText,
-      sender: 'user'
+      isBot: false
     };
     
     setMessages(prev => [...prev, userMsg]);
@@ -55,8 +58,9 @@ export const Chatbot = () => {
 
       if (data?.success) {
         setMessages(prev => [...prev, {
+          id: prev.length + 1,
           text: data.reply,
-          sender: 'bot',
+          isBot: true,
           products: matchedProducts
         }]);
       } else {
@@ -66,8 +70,9 @@ export const Chatbot = () => {
       console.error('Chat error:', error);
       toast.error('Failed to get response. Please try again.');
       setMessages(prev => [...prev, {
+        id: prev.length + 1,
         text: "Sorry, I'm having trouble connecting. Please try again later.",
-        sender: 'bot'
+        isBot: true
       }]);
     } finally {
       setLoading(false);
@@ -112,12 +117,15 @@ export const Chatbot = () => {
         const result = await response.json();
         
         if (result.success) {
+          // Add user message about scanning
           const scanMsg: Message = {
+            id: messages.length + 1,
             text: `I scanned this receipt - please help me find matching products`,
-            sender: 'user'
+            isBot: false
           };
           setMessages(prev => [...prev, scanMsg]);
 
+          // Send to chatbot with matched products
           if (result.matchedProducts && result.matchedProducts.length > 0) {
             await handleSend(
               `I scanned a receipt and found ${result.totalMatches} matching products. Can you show me what you found?`,
@@ -125,8 +133,9 @@ export const Chatbot = () => {
             );
           } else {
             setMessages(prev => [...prev, {
+              id: prev.length + 2,
               text: "I couldn't find any matching products from your receipt in our store. Try asking me about specific items!",
-              sender: 'bot'
+              isBot: true
             }]);
           }
         } else {
@@ -149,118 +158,94 @@ export const Chatbot = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleSend();
-  };
-
   return (
-    <div className="flex flex-col h-full glass-heavy">
-      {/* Header */}
-      <div className="p-6 border-b glass-light backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h3 className="font-bold text-lg bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">Terra Vitta AI</h3>
-            <p className="text-sm text-muted-foreground font-medium">Your sustainability assistant</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        {messages.length === 0 && (
-          <div className="text-center text-muted-foreground py-12 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light text-sm font-semibold">
-              <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Welcome to Terra Vitta AI</span>
-            </div>
-            <p className="text-base font-medium">Ask me anything about sustainable products!</p>
-            <p className="text-sm">Or scan a receipt to get eco-friendly alternatives.</p>
-          </div>
-        )}
-        
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-          >
+    <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl p-5 border border-border/30 shadow-[0_0_25px_hsl(var(--primary)_/_0.3)]">
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        {messages.map((message) => (
+          <div key={message.id}>
             <div
-              className={`max-w-[85%] rounded-2xl px-5 py-3 shadow-sm ${
-                msg.sender === 'user'
-                  ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white'
-                  : 'glass-panel'
+              className={`p-3 rounded-lg max-w-[70%] ${
+                message.isBot
+                  ? "bg-muted/50 text-foreground self-start"
+                  : "bg-primary/20 text-foreground self-end ml-auto"
               }`}
             >
-              <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-              {msg.products && msg.products.length > 0 && (
-                <div className="mt-3 space-y-2">
-                  {msg.products.map((product: any) => (
-                    <div key={product.id} className="glass-light rounded-xl p-3 text-xs space-y-1">
-                      <p className="font-bold text-base">{product.name}</p>
-                      <p className="text-muted-foreground">${product.price}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {message.text}
             </div>
+            
+            {/* Show matched products if available */}
+            {message.products && message.products.length > 0 && (
+              <div className="mt-2 space-y-2">
+                {message.products.map((product: any) => (
+                  <div 
+                    key={product.id}
+                    className="bg-muted/30 rounded-lg p-3 flex items-center gap-3"
+                  >
+                    <img 
+                      src={product.image_url} 
+                      alt={product.name}
+                      className="w-12 h-12 rounded object-cover"
+                    />
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">{product.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        AED {product.price} د.إ | Eco-Score: {product.sustainability_score}/100
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
-
-        {loading && (
-          <div className="flex justify-start animate-fade-in">
-            <div className="glass-panel rounded-2xl px-5 py-3">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
-              </div>
-            </div>
+        {(loading || scanning) && (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="text-sm">{scanning ? 'Scanning receipt...' : 'Thinking...'}</span>
           </div>
         )}
       </div>
-
-      {/* Input */}
-      <div className="p-6 border-t glass-light backdrop-blur-xl">
-        <form onSubmit={handleSubmit} className="flex gap-3">
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileSelect}
-            accept="image/*"
-            className="hidden"
-          />
-          
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={handleScanReceipt}
-            disabled={loading || scanning}
-            className="shrink-0 glass-button h-12 w-12 rounded-xl transition-spring hover:scale-105"
-          >
-            <Camera className="w-5 h-5" />
-          </Button>
-
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything..."
-            disabled={loading || scanning}
-            className="flex-1 glass-panel h-12 text-base rounded-xl transition-spring focus:scale-[1.01]"
-          />
-
-          <Button
-            type="submit"
-            disabled={!input.trim() || loading}
-            size="icon"
-            className="shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-spring hover:scale-105"
-          >
-            <Send className="w-5 h-5" />
-          </Button>
-        </form>
+      
+      <div className="flex items-center gap-2 bg-muted/20 rounded-xl p-3 border border-primary/50 shadow-[0_0_20px_hsl(var(--primary)_/_0.3)]">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelect}
+          className="hidden"
+        />
+        
+        <Button
+          onClick={handleScanReceipt}
+          disabled={loading || scanning}
+          variant="ghost"
+          size="icon"
+          className="shrink-0"
+        >
+          <Camera className="w-5 h-5" />
+        </Button>
+        
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && !loading && !scanning && handleSend()}
+          placeholder="Ask about products or scan a receipt..."
+          disabled={loading || scanning}
+          className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+        />
+        
+        <button
+          onClick={() => handleSend()}
+          disabled={loading || scanning}
+          className="w-10 h-10 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {loading ? (
+            <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
+          ) : (
+            <Send className="w-5 h-5 text-primary-foreground" />
+          )}
+        </button>
       </div>
     </div>
   );

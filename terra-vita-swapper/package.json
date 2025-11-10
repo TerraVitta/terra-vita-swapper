@@ -1,0 +1,30 @@
+{
+  "name": "terra-vita-swapper",
+  "version": "1.0.0",
+  "description": "A modern liquid glass aesthetic swapper application with light and dark mode support.",
+  "main": "src/main.tsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "liquid glass",
+    "dark mode",
+    "light mode"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "vite": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}

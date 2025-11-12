@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecomart - Shop Clean. Live Green.</title>
+    <meta name="description" content="Your sustainable marketplace. Shop eco-friendly products, earn EcoPoints, and support green sellers.">
+    <meta name="author" content="Ecomart" />
+
+    
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ecomart" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+      <style>
+        :root {
+          /* Use HSL token formats to match the project's design system (index.css expects space-separated H S% L% values)
+             These mirror the dark-mode values defined in src/index.css :root so hsl(var(--...)) works correctly. */
+          --primary: 35 91% 53%;
+          --secondary: 96 20% 18%;
+          --background: 96 30% 8%;
+          --foreground: 42 47% 90%;
+          --text: hsl(42 47% 90%);
+          --surface: 96 25% 12%;
+        }
+        html, body {
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
+          background: var(--background);
+          color: var(--text);
+          font-family: 'Inter', sans-serif;
+          letter-spacing: 0.01em;
+          transition: background 0.5s;
+        }
+        #root {
+          min-height: 100vh;
+          background: transparent;
+          display: flex;
+          flex-direction: column;
+        }
+        ::selection {
+          background: var(--primary);
+          color: #fff;
+        }
+        a {
+          color: var(--primary);
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        a:hover {
+          color: var(--secondary);
+        }
+        /* Button base style for contrast */
+        button, .btn {
+          background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 0.6em 1.2em;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(127, 90, 240, 0.15);
+          transition: background 0.3s, box-shadow 0.3s;
+        }
+        button:hover, .btn:hover {
+          background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+          box-shadow: 0 4px 16px rgba(44, 182, 125, 0.18);
+        }
+        /* Input fields for contrast */
+        input, textarea, select {
+          background: var(--surface);
+          color: var(--text);
+          border: 1px solid var(--primary);
+          border-radius: 6px;
+          padding: 0.5em 1em;
+          margin-bottom: 1em;
+          font-size: 1em;
+          transition: border 0.2s;
+        }
+        input:focus, textarea:focus, select:focus {
+          border-color: var(--secondary);
+          outline: none;
+        }
+      </style>
+    <meta property="og:title" content="Ecomart - Shop Clean. Live Green.">
+  <meta name="twitter:title" content="Ecomart - Shop Clean. Live Green.">
+  <meta property="og:description" content="Your sustainable marketplace. Shop eco-friendly products, earn EcoPoints, and support green sellers.">
+  <meta name="twitter:description" content="Your sustainable marketplace. Shop eco-friendly products, earn EcoPoints, and support green sellers.">
+  <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/XkL04eRZzUTW6aT2tLMIZD0HlTS2/uploads/1762161615259-d8a4d64a-a82e-41f6-8fec-9a16fe9fe5c1-1_all_2645.jpg">
+</head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

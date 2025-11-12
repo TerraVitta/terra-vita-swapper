@@ -21,6 +21,8 @@ import {
   defaultUniforms,
   type ShaderUniforms,
 } from '@/lib/glassShader';
+import { TiltSpring, computeTiltFromPointer } from '@/utils/springPhysics';
+import { computeRefractiveDisplacement, PanelSlosh } from '@/utils/fluidPanelCoupling';
 
 export interface LiquidGlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Glass tint color override */
@@ -41,6 +43,17 @@ export interface LiquidGlassPanelProps extends React.HTMLAttributes<HTMLDivEleme
   enableParallax?: boolean;
   /** Enable physics animations */
   enablePhysics?: boolean;
+  /** Enable fluid coupling (panels affect fluid) */
+  enableFluidCoupling?: boolean;
+  /** Hover tilt max angle in degrees */
+  hoverTiltMax?: number;
+  /** Hover physics config */
+  hoverTiltStiffness?: number;
+  hoverTiltDamping?: number;
+  /** Callbacks */
+  onHoverStart?: (pointer: { x: number; y: number }) => void;
+  onHoverMove?: (pointer: { x: number; y: number }) => void;
+  onHoverEnd?: () => void;
   /** Children */
   children?: React.ReactNode;
 }
@@ -57,6 +70,13 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
       useWebGL,
       enableParallax = true,
       enablePhysics = true,
+      enableFluidCoupling = false,
+      hoverTiltMax = 8,
+      hoverTiltStiffness = 120,
+      hoverTiltDamping = 12,
+      onHoverStart,
+      onHoverMove,
+      onHoverEnd,
       className,
       children,
       style,
@@ -75,9 +95,14 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
     
     const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
     const [isHovered, setIsHovered] = useState(false);
+    const [hoverIntensity, setHoverIntensity] = useState(0);
     const frameRateMonitor = useRef(new FrameRateMonitor());
     const animationFrameId = useRef<number>();
     const uniformsRef = useRef<ShaderUniforms>({ ...defaultUniforms });
+    const tiltSpring = useRef<TiltSpring>(
+      new TiltSpring({ stiffness: hoverTiltStiffness, damping: hoverTiltDamping })
+    );
+    const slosh = useRef<PanelSlosh>(new PanelSlosh(16, 0.85, 40));
 
     // Performance-based settings
     const settings = getOptimizedShaderSettings(
@@ -160,7 +185,13 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         u_curlAmplitude: gl.getUniformLocation(program, 'u_curlAmplitude'),
         u_chromaticAberration: gl.getUniformLocation(program, 'u_chromaticAberration'),
         u_fresnelPower: gl.getUniformLocation(program, 'u_fresnelPower'),
+        u_fresnelBias: gl.getUniformLocation(program, 'u_fresnelBias'),
         u_lightDirection: gl.getUniformLocation(program, 'u_lightDirection'),
+        u_roughness: gl.getUniformLocation(program, 'u_roughness'),
+        u_specularIntensity: gl.getUniformLocation(program, 'u_specularIntensity'),
+        u_hoverIntensity: gl.getUniformLocation(program, 'u_hoverIntensity'),
+        u_hoverCenter: gl.getUniformLocation(program, 'u_hoverCenter'),
+        u_sloshAmplitude: gl.getUniformLocation(program, 'u_sloshAmplitude'),
       };
 
       // Render loop
@@ -179,6 +210,11 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         }
 
         const currentTime = (performance.now() - startTime) / 1000;
+        const dt = 1 / 60; // fixed timestep
+
+        // Update physics
+        const tilt = tiltSpring.current.update(dt);
+        slosh.current.update(dt);
         
         // Update uniforms
         const uniforms = uniformsRef.current;
@@ -191,6 +227,13 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         uniforms.u_curlSpeed = settings.curlSpeed;
         uniforms.u_curlAmplitude = settings.curlAmplitude;
         uniforms.u_chromaticAberration = settings.chromaticAberration;
+        uniforms.u_hoverIntensity = hoverIntensity;
+        uniforms.u_hoverCenter = [mousePosition.x, mousePosition.y];
+        
+        // Compute slosh amplitude from physics
+        const sloshHeights = slosh.current.getHeights();
+        const avgSlosh = sloshHeights.reduce((a, b) => a + Math.abs(b), 0) / sloshHeights.length;
+        uniforms.u_sloshAmplitude = avgSlosh * 0.1;
 
         // Set uniforms
         gl.uniform1f(uniformLocations.u_time, uniforms.u_time);
@@ -203,11 +246,17 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         gl.uniform1f(uniformLocations.u_curlAmplitude, uniforms.u_curlAmplitude);
         gl.uniform1f(uniformLocations.u_chromaticAberration, uniforms.u_chromaticAberration);
         gl.uniform1f(uniformLocations.u_fresnelPower, uniforms.u_fresnelPower);
+        gl.uniform1f(uniformLocations.u_fresnelBias, uniforms.u_fresnelBias);
         gl.uniform3f(uniformLocations.u_lightDirection, 
           uniforms.u_lightDirection[0],
           uniforms.u_lightDirection[1],
           uniforms.u_lightDirection[2]
         );
+        gl.uniform1f(uniformLocations.u_roughness, uniforms.u_roughness);
+        gl.uniform1f(uniformLocations.u_specularIntensity, uniforms.u_specularIntensity);
+        gl.uniform1f(uniformLocations.u_hoverIntensity, uniforms.u_hoverIntensity);
+        gl.uniform2f(uniformLocations.u_hoverCenter, uniforms.u_hoverCenter[0], uniforms.u_hoverCenter[1]);
+        gl.uniform1f(uniformLocations.u_sloshAmplitude, uniforms.u_sloshAmplitude);
 
         // Render
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -227,10 +276,10 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
       };
     }, [shouldUseWebGL, mousePosition, theme, refractionStrength, enableAnimations, settings]);
 
-    // Handle mouse/touch movement for parallax
+    // Handle mouse/touch movement for parallax and hover physics
     const handlePointerMove = useCallback(
       throttle((e: React.PointerEvent<HTMLDivElement>) => {
-        if (!interactive || !enableParallax) return;
+        if (!interactive) return;
 
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -239,9 +288,39 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         const y = (e.clientY - rect.top) / rect.height;
 
         setMousePosition({ x, y });
+
+        if (enableParallax && isHovered) {
+          // Compute tilt based on pointer position
+          const tilt = computeTiltFromPointer(x, y, 0.5, 0.5, hoverTiltMax);
+          tiltSpring.current.setTarget(tilt.pitch, tilt.yaw);
+
+          // Inject slosh impulse at pointer x
+          slosh.current.impulse(x, (x - 0.5) * 2);
+
+          onHoverMove?.({ x, y });
+        }
       }, 16),
-      [interactive, enableParallax]
+      [interactive, enableParallax, isHovered, hoverTiltMax, onHoverMove]
     );
+
+    // Handle hover enter
+    const handlePointerEnter = useCallback(() => {
+      setIsHovered(true);
+      setHoverIntensity(1);
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        onHoverStart?.({ x: 0.5, y: 0.5 });
+      }
+    }, [onHoverStart]);
+
+    // Handle hover leave
+    const handlePointerLeave = useCallback(() => {
+      setIsHovered(false);
+      setHoverIntensity(0);
+      setMousePosition({ x: 0.5, y: 0.5 });
+      tiltSpring.current.reset();
+      onHoverEnd?.();
+    }, [onHoverEnd]);
 
     // CSS fallback classes
     const variantClass = {
@@ -278,13 +357,11 @@ export const LiquidGlassPanel = React.forwardRef<HTMLDivElement, LiquidGlassPane
         )}
         style={customStyle}
         onPointerMove={handlePointerMove}
-        onPointerEnter={() => setIsHovered(true)}
-        onPointerLeave={() => {
-          setIsHovered(false);
-          setMousePosition({ x: 0.5, y: 0.5 });
-        }}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
         role={props.onClick ? 'button' : undefined}
         tabIndex={props.onClick ? 0 : undefined}
+        aria-label={props['aria-label']}
         {...props}
       >
         {/* WebGL Canvas (if enabled) */}

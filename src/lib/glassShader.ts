@@ -14,10 +14,16 @@ export interface ShaderUniforms {
   u_curlAmplitude: number;
   u_chromaticAberration: number;
   u_fresnelPower: number;
+  u_fresnelBias: number;
   u_lightDirection: [number, number, number];
+  u_roughness: number;
+  u_specularIntensity: number;
+  u_hoverIntensity: number; // 0-1 for hover state
+  u_hoverCenter: [number, number]; // normalized hover position
+  u_sloshAmplitude: number; // internal liquid flow
 }
 
-// Fragment shader for liquid glass effect
+// Fragment shader for liquid glass effect with advanced refraction and hover physics
 export const liquidGlassFragmentShader = `
 precision highp float;
 
@@ -31,9 +37,15 @@ uniform float u_curlSpeed;
 uniform float u_curlAmplitude;
 uniform float u_chromaticAberration;
 uniform float u_fresnelPower;
+uniform float u_fresnelBias;
 uniform vec3 u_lightDirection;
 uniform sampler2D u_bgTexture;
 uniform sampler2D u_normalMap;
+uniform float u_roughness;
+uniform float u_specularIntensity;
+uniform float u_hoverIntensity;
+uniform vec2 u_hoverCenter;
+uniform float u_sloshAmplitude;
 
 varying vec2 v_texCoord;
 
@@ -76,17 +88,36 @@ vec2 curlNoise(vec2 p, float t) {
   return vec2((n1 - n3) / (2.0 * eps), (n4 - n2) / (2.0 * eps)) * u_curlAmplitude;
 }
 
-// Fresnel effect
-float fresnel(vec3 normal, vec3 viewDir, float power) {
-  return pow(1.0 - max(dot(normal, viewDir), 0.0), power);
+// Fresnel effect with bias
+float fresnel(vec3 normal, vec3 viewDir, float power, float bias) {
+  float base = 1.0 - max(dot(normal, viewDir), 0.0);
+  return bias + (1.0 - bias) * pow(base, power);
+}
+
+// Smoothstep falloff for hover
+float smoothFalloff(float dist, float radius) {
+  float t = clamp(1.0 - (dist / radius), 0.0, 1.0);
+  return t * t * (3.0 - 2.0 * t);
 }
 
 void main() {
   vec2 uv = v_texCoord;
   vec2 pixelCoord = uv * u_resolution;
   
-  // Generate dynamic normal map using curl noise
+  // Hover-driven local displacement
+  vec2 toHover = uv - u_hoverCenter;
+  float hoverDist = length(toHover);
+  float hoverFalloff = smoothFalloff(hoverDist, 0.3) * u_hoverIntensity;
+  vec2 hoverDisplacement = normalize(toHover) * hoverFalloff * 0.035;
+  
+  // Generate dynamic normal map using curl noise + slosh
   vec2 curlOffset = curlNoise(uv * u_curlScale, u_time);
+  
+  // Add slosh perturbation (simulates internal liquid flow)
+  float sloshX = sin(uv.x * 10.0 + u_time * 2.0) * u_sloshAmplitude;
+  float sloshY = cos(uv.y * 10.0 + u_time * 2.0) * u_sloshAmplitude;
+  curlOffset += vec2(sloshX, sloshY) * 0.1;
+  
   vec3 perturbedNormal = normalize(vec3(curlOffset * 0.5, 1.0));
   
   // Mouse-driven parallax offset
@@ -95,14 +126,14 @@ void main() {
   // Calculate view direction (camera looking at surface)
   vec3 viewDir = normalize(vec3(0.0, 0.0, 1.0));
   
-  // Fresnel for edge highlighting
-  float fresnelTerm = fresnel(perturbedNormal, viewDir, u_fresnelPower);
+  // Fresnel for edge highlighting with bias
+  float fresnelTerm = fresnel(perturbedNormal, viewDir, u_fresnelPower, u_fresnelBias);
   
-  // Refraction with chromatic aberration
-  vec2 refractionOffset = perturbedNormal.xy * u_refraction + mouseOffset;
+  // Refraction with chromatic aberration and hover displacement
+  vec2 refractionOffset = perturbedNormal.xy * u_refraction + mouseOffset + hoverDisplacement;
   
-  // Sample background with chromatic dispersion
-  float aberration = u_chromaticAberration * fresnelTerm;
+  // Sample background with chromatic dispersion (stronger at edges)
+  float aberration = u_chromaticAberration * fresnelTerm * (1.0 + u_hoverIntensity * 0.5);
   vec2 uvR = uv + refractionOffset + vec2(aberration, 0.0);
   vec2 uvG = uv + refractionOffset;
   vec2 uvB = uv + refractionOffset - vec2(aberration, 0.0);
@@ -118,9 +149,10 @@ void main() {
   float b = texture2D(u_bgTexture, uvB).b;
   vec3 refractedColor = vec3(r, g, b);
   
-  // Specular highlight based on light direction
+  // Anisotropic specular highlight with roughness
   vec3 halfDir = normalize(u_lightDirection + viewDir);
-  float specular = pow(max(dot(perturbedNormal, halfDir), 0.0), 32.0);
+  float shininess = mix(64.0, 16.0, u_roughness);
+  float specular = pow(max(dot(perturbedNormal, halfDir), 0.0), shininess) * u_specularIntensity;
   
   // Edge rim light (Fresnel-based)
   vec3 rimLight = vec3(0.9, 0.95, 1.0) * fresnelTerm * 0.6;
@@ -179,7 +211,13 @@ export const defaultUniforms: ShaderUniforms = {
   u_curlAmplitude: 1.2,
   u_chromaticAberration: 0.003,
   u_fresnelPower: 3.5,
+  u_fresnelBias: 0.1,
   u_lightDirection: [0.5, 0.8, 1.0],
+  u_roughness: 0.2,
+  u_specularIntensity: 0.9,
+  u_hoverIntensity: 0,
+  u_hoverCenter: [0.5, 0.5],
+  u_sloshAmplitude: 0.5,
 };
 
 /**

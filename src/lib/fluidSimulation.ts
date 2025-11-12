@@ -39,6 +39,15 @@ export interface PointerData {
   color: [number, number, number];
 }
 
+export interface ExternalForce {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  radius: number;
+  strength: number;
+}
+
 export class FluidSimulation {
   private gl: WebGL2RenderingContext;
   private config: FluidSimConfig;

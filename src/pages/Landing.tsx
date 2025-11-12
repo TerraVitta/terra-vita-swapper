@@ -8,7 +8,6 @@ import GlassBlurToggle from "@/components/GlassBlurToggle";
 import { GlassIntensityControl } from "@/components/GlassIntensityControl";
 import { LiquidGlassPanel } from "@/components/LiquidGlassPanel";
 import { ParallaxGlass } from "@/components/ParallaxGlass";
-import { FluidBackground } from "@/components/FluidBackground";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -44,19 +43,43 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen text-foreground transition-theme relative overflow-hidden">
-      {/* Interactive Fluid Background */}
-      <FluidBackground
-        viscosity={0.001}
-        vorticityStrength={25}
-        interactive={true}
-        complexity="high"
-        resolutionScale={0.7}
-      />
-
       {/* Glass Controls */}
       <GlassBlurToggle />
       <GlassIntensityControl />
       
+      {/* Nature-inspired Background */}
+      <div className="nature-bg">
+        <div className="nature-gradient" />
+        
+        {/* Floating Particles */}
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 15}s`,
+              animationDuration: `${15 + Math.random() * 10}s`,
+            }}
+          />
+        ))}
+
+        {/* Ripple Effects */}
+        <div className="ripple-container">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="ripple"
+              style={{
+                left: `${20 + i * 30}%`,
+                top: `${30 + i * 20}%`,
+                animationDelay: `${i * 2}s`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* Main Content */}
       <main className="relative z-10">
         {/* Header */}

@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Recycle, Mail, Lock, User, ArrowRight } from "lucide-react";
+import { Recycle } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
-import { EdgeDoodles } from "@/components/EdgeDoodles";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -106,95 +105,69 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Edge Doodles */}
-      <EdgeDoodles position="all" opacity={0.25} animated={true} />
-      
-      {/* Nature Background */}
-      <div className="nature-bg">
-        <div className="nature-gradient" />
-        {Array.from({ length: 15 }).map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 15}s`,
-            }}
-          />
-        ))}
-      </div>
-      
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
       {/* Theme Toggle and AI Chat Button */}
-      <div className="fixed top-6 right-6 z-[100] flex items-center gap-3">
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
         <ThemeToggle />
         <AIChatButton />
       </div>
       
-      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden relative z-10">
-        {/* Left side - Branding */}
-        <div className="glass-panel rounded-l-3xl md:rounded-r-none rounded-3xl md:rounded-l-3xl p-12 flex flex-col justify-center items-center bio-glow">
-          <div className="mb-8">
-            <Recycle className="w-24 h-24 text-primary animate-pulse" />
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-12 space-y-4">
+          <div className="inline-flex h-12 w-12 rounded-lg bg-primary items-center justify-center">
+            <Recycle className="h-6 w-6 text-background" />
           </div>
-          <h2 className="text-4xl font-bold mb-4 text-center font-playfair text-primary">EcoMart</h2>
-          <p className="text-center text-xl opacity-90 font-light leading-relaxed">
-            Building a Circular Future Together
-          </p>
+          <h1 className="text-4xl font-bold font-playfair">EcoMart</h1>
+          <p className="text-foreground/60">Building a sustainable future</p>
         </div>
 
-        {/* Right side - Auth form */}
-        <div className="glass-panel rounded-r-3xl md:rounded-l-none rounded-3xl md:rounded-r-3xl p-12 flex flex-col justify-center refract-hover">
-          <div className="text-center mb-10 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              {isAdminLogin ? "Admin Access" : isSignUp ? "Join the Movement" : "Welcome Back"}
+        {/* Auth Card */}
+        <div className="border border-primary/10 rounded-lg p-8 bg-background/40 backdrop-blur-sm space-y-6">
+          {/* Title */}
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-bold font-playfair">
+              {isAdminLogin ? "Admin Access" : isSignUp ? "Create Account" : "Sign In"}
             </h2>
-            <p className="text-muted-foreground text-lg font-light">
+            <p className="text-sm text-foreground/60">
               {isAdminLogin 
                 ? "Secure dashboard access" 
                 : isSignUp 
-                  ? "Start your sustainable journey today" 
-                  : "Sign in to continue your eco-journey"}
+                  ? "Join the eco-movement" 
+                  : "Welcome back"}
             </p>
           </div>
 
           {isAdminLogin ? (
             <form onSubmit={handleAdminLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Username
-                </Label>
+                <Label htmlFor="username" className="text-sm font-medium">Username</Label>
                 <Input
                   id="username"
                   type="text"
                   placeholder="admin"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="glass-panel border-0"
+                  className="border border-primary/10 bg-background/40 h-10"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="adminPassword" className="flex items-center gap-2">
-                  <Lock className="h-4 w-4" />
-                  Password
-                </Label>
+                <Label htmlFor="adminPassword" className="text-sm font-medium">Password</Label>
                 <Input
                   id="adminPassword"
                   type="password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="glass-panel border-0"
+                  className="border border-primary/10 bg-background/40 h-10"
                   required
                 />
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full btn-glow" size="lg">
-                {loading ? "Loading..." : "Admin Sign In"}
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button type="submit" disabled={loading} className="w-full bg-primary text-background hover:bg-primary/90 font-semibold h-10">
+                {loading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           ) : (
@@ -202,101 +175,86 @@ const Auth = () => {
               <form onSubmit={handleEmailAuth} className="space-y-4">
                 {isSignUp && (
                   <div className="space-y-2">
-                    <Label htmlFor="fullName" className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      Full Name
-                    </Label>
+                    <Label htmlFor="fullName" className="text-sm font-medium">Full Name</Label>
                     <Input
                       id="fullName"
                       type="text"
                       placeholder="Your name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="glass-panel border-0"
+                      className="border border-primary/10 bg-background/40 h-10"
                       required={isSignUp}
                     />
                   </div>
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-base font-semibold flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    Email Address
-                  </Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="glass-panel border-0 h-12 text-base transition-spring focus:scale-[1.01] focus:shadow-lg"
+                    className="border border-primary/10 bg-background/40 h-10"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-base font-semibold flex items-center gap-2">
-                    <Lock className="h-4 w-4" />
-                    Password
-                  </Label>
+                  <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="Enter your password"
+                    placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="glass-panel border-0 h-12 text-base transition-spring focus:scale-[1.01] focus:shadow-lg"
+                    className="border border-primary/10 bg-background/40 h-10"
                     required
                   />
                 </div>
 
-                <Button type="submit" disabled={loading} className="w-full btn-glow h-12 text-base font-semibold transition-spring hover:scale-[1.02]" size="lg">
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <div className="h-4 w-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
-                      Processing...
-                    </span>
-                  ) : isSignUp ? (
-                    "Create Account"
-                  ) : (
-                    "Sign In"
-                  )}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button type="submit" disabled={loading} className="w-full bg-primary text-background hover:bg-primary/90 font-semibold h-10">
+                  {loading ? "Processing..." : isSignUp ? "Create Account" : "Sign In"}
                 </Button>
               </form>
             </>
           )}
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
+          {/* Footer Links */}
+          <div className="pt-4 text-center text-sm text-foreground/60 space-y-2">
             {isAdminLogin ? (
               <button
                 onClick={() => setIsAdminLogin(false)}
-                className="text-accent font-medium hover:underline"
+                className="block w-full text-primary font-medium hover:underline"
                 type="button"
               >
                 Back to user login
               </button>
             ) : (
               <>
-                {isSignUp ? "Already have an account? " : "Don't have an account? "}
-                <button
-                  onClick={() => setIsSignUp(!isSignUp)}
-                  className="text-accent font-medium hover:underline"
-                  type="button"
-                >
-                  {isSignUp ? "Sign in" : "Sign up"}
-                </button>
-                {" | "}
-                <button
-                  onClick={() => setIsAdminLogin(true)}
-                  className="text-accent font-medium hover:underline"
-                  type="button"
-                >
-                  Admin
-                </button>
+                <p>
+                  {isSignUp ? "Already have an account? " : "Don't have an account? "}
+                  <button
+                    onClick={() => setIsSignUp(!isSignUp)}
+                    className="text-primary font-medium hover:underline"
+                    type="button"
+                  >
+                    {isSignUp ? "Sign in" : "Sign up"}
+                  </button>
+                </p>
+                <p>
+                  <button
+                    onClick={() => setIsAdminLogin(true)}
+                    className="text-primary font-medium hover:underline"
+                    type="button"
+                  >
+                    Admin login
+                  </button>
+                </p>
               </>
             )}
-          </p>
+          </div>
         </div>
       </div>
     </div>

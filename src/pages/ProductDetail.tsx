@@ -1,10 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Award, Recycle, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import FluidBackground from "@/components/FluidBackground";
-import InteractiveGlassPanel from "@/components/InteractiveGlassPanel";
 import { useCart } from '@/hooks/useCart';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { CartDrawer } from '@/components/CartDrawer';
@@ -42,44 +39,28 @@ export default function ProductDetail() {
   };
 
   return (
-    <FluidBackground complexity="medium" interactive={true}>
-      <div className="min-h-screen text-foreground transition-theme relative overflow-hidden">
-        {/* Nature Background */}
-        <div className="nature-bg">
-        <div className="nature-gradient" />
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 15}s`,
-            }}
-          />
-          ))}
-        </div>
-
-        {/* Header */}
-        <header className="border-b sticky top-0 glass-panel z-50 transition-theme">
-          <div className="container flex items-center justify-between py-4">
-          <Button variant="ghost" onClick={() => navigate('/buyer')} className="glass-button">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-primary/10 backdrop-blur-sm sticky top-0 z-40">
+        <div className="container flex items-center justify-between py-4">
+          <Button variant="ghost" onClick={() => navigate('/buyer')} className="text-foreground hover:bg-foreground/10">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Shop
+            Back
           </Button>
           <div className="flex items-center gap-2">
             <CartDrawer />
             <ThemeToggle />
-            </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* Product Detail */}
-        <main className="container py-12 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12">
+      {/* Product Detail */}
+      <main className="container py-12">
+        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           {/* Product Image */}
-          <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-3xl glass-panel p-2">
-              <div className="aspect-square overflow-hidden rounded-2xl">
+          <div>
+            <div className="relative overflow-hidden rounded-lg border border-primary/10 bg-foreground/5">
+              <div className="aspect-square overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.title}
@@ -89,7 +70,7 @@ export default function ProductDetail() {
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute top-6 right-6 glass-button rounded-full"
+                className="absolute top-4 right-4 rounded-full bg-background/80 border-primary/10 hover:bg-background"
                 onClick={() => {
                   setIsFavorite(!isFavorite);
                   toast.success(isFavorite ? 'Removed from favorites' : 'Added to favorites');
@@ -97,7 +78,7 @@ export default function ProductDetail() {
               >
                 <Heart 
                   className={`h-5 w-5 transition-colors ${
-                    isFavorite ? 'fill-red-500 text-red-500' : ''
+                    isFavorite ? 'fill-primary text-primary' : 'text-foreground'
                   }`} 
                 />
               </Button>
@@ -106,70 +87,68 @@ export default function ProductDetail() {
 
           {/* Product Info */}
           <div className="space-y-6">
-            <InteractiveGlassPanel
-              variant="medium"
-              interactive={true}
-              focusable={true}
-              a11yLabel={product.title}
-              className="rounded-3xl p-8"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-button mb-4 text-sm">
+            {/* Title */}
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-primary/20 bg-primary/5 text-sm font-medium">
                 {product.category}
               </div>
-              <h1 className="text-4xl font-bold mb-2">{product.title}</h1>
-              <p className="text-muted-foreground text-lg">{product.short}</p>
-            </InteractiveGlassPanel>
+              <h1 className="text-4xl font-bold font-playfair">{product.title}</h1>
+              <p className="text-foreground/60 text-lg">{product.short}</p>
+            </div>
 
-            <InteractiveGlassPanel variant="light" interactive={true} className="rounded-3xl p-8">
+            {/* Price */}
+            <div className="border-t border-b border-primary/10 py-4">
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-bold text-primary">
                   {product.currency === 'INR' ? '₹' : 'AED'} {product.price.toFixed(2)}
                 </span>
-                <span className="text-muted-foreground">{product.currency}</span>
+                <span className="text-foreground/60">{product.currency}</span>
               </div>
-            </InteractiveGlassPanel>
+            </div>
 
-            <InteractiveGlassPanel variant="medium" interactive={true} className="rounded-3xl p-8 bio-glow">
+            {/* Sustainability Score */}
+            <div className="border border-primary/10 rounded-lg p-6 bg-background/40 backdrop-blur-sm">
               <div className="flex items-center gap-2 mb-4">
-                <Award className="h-6 w-6 text-primary" />
-                <h3 className="text-xl font-bold">Sustainability Score</h3>
+                <Award className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold">Sustainability Score</h3>
               </div>
               <div className="flex items-center gap-4">
-                <div className="text-5xl font-bold text-primary">{product.eco_score}</div>
+                <div className="text-4xl font-bold text-primary">{product.eco_score}</div>
                 <div className="flex-1">
-                  <div className="h-4 glass-panel rounded-full overflow-hidden">
+                  <div className="h-3 border border-primary/20 rounded-full overflow-hidden bg-foreground/5">
                     <div
-                      className="h-full bg-gradient-primary transition-all duration-500"
+                      className="h-full bg-primary transition-all duration-500"
                       style={{ width: `${product.eco_score}%` }}
                     />
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="text-sm text-foreground/60 mt-2">
                     {product.eco_score >= 90
-                      ? 'Excellent eco-friendly choice!'
+                      ? 'Excellent choice!'
                       : product.eco_score >= 80
-                      ? 'Great sustainable option'
-                      : 'Good eco-conscious pick'}
+                      ? 'Great option'
+                      : 'Good choice'}
                   </p>
                 </div>
               </div>
-            </InteractiveGlassPanel>
+            </div>
 
-            <InteractiveGlassPanel variant="light" interactive={true} className="rounded-3xl p-8 refract-hover">
-              <div className="flex items-center gap-2 mb-4">
-                <Recycle className="h-6 w-6 text-primary" />
-                <h3 className="text-xl font-bold">Why It's Eco-Friendly</h3>
+            {/* Why Eco-Friendly */}
+            <div className="border border-primary/10 rounded-lg p-6 bg-background/40 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <Recycle className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold">Why It's Eco-Friendly</h3>
               </div>
-              <p className="text-foreground/90 leading-relaxed">{product.eco_reason}</p>
-            </InteractiveGlassPanel>
+              <p className="text-foreground/70 leading-relaxed">{product.eco_reason}</p>
+            </div>
 
-            <Button onClick={handleAddToCart} size="lg" className="w-full btn-glow bio-glow rounded-2xl">
+            {/* Add to Cart Button */}
+            <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-background hover:bg-primary/90 font-semibold h-12 rounded-lg">
               <ShoppingCart className="mr-2 h-5 w-5" />
               Add to Cart
             </Button>
           </div>
         </div>
       </main>
-      </div>
-    </FluidBackground>
+    </div>
   );
 }

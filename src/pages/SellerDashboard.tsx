@@ -14,36 +14,21 @@ const SellerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 relative overflow-hidden">
-      {/* Nature Background */}
-      <div className="nature-bg">
-        <div className="nature-gradient" />
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 15}s`,
-            }}
-          />
-        ))}
-      </div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-6xl mx-auto p-6">
         {/* Header */}
-        <div className="glass-panel rounded-3xl p-8 mb-8 refract-hover">
-          <div className="flex justify-between items-center">
+        <div className="border-b border-primary/10 pb-8 mb-8">
+          <div className="flex justify-between items-start">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <Recycle className="h-8 w-8 text-primary" />
-                <h1 className="text-4xl font-bold">
-                  Seller Dashboard
-                </h1>
+                <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
+                  <Recycle className="h-6 w-6 text-background" />
+                </div>
+                <h1 className="text-3xl font-bold font-playfair">Seller Dashboard</h1>
               </div>
-              <p className="text-muted-foreground text-lg">List. Deliver. Earn.</p>
+              <p className="text-foreground/60">List. Deliver. Earn.</p>
             </div>
-            <Button variant="outline" onClick={handleSignOut} className="glass-button">
+            <Button variant="outline" onClick={handleSignOut} className="text-foreground border-primary/20 hover:bg-foreground/10">
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </Button>
@@ -52,65 +37,64 @@ const SellerDashboard = () => {
 
         {/* Stats Grid */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="glass-panel rounded-2xl p-6 counter-glow">
-            <p className="text-muted-foreground text-sm mb-1">Active Listings</p>
+          <div className="border border-primary/10 rounded-lg p-6 bg-background/40 backdrop-blur-sm">
+            <p className="text-foreground/60 text-sm mb-2">Active Listings</p>
             <p className="text-4xl font-bold text-primary">0</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-6 counter-glow">
-            <p className="text-muted-foreground text-sm mb-1">Pending Orders</p>
+          <div className="border border-primary/10 rounded-lg p-6 bg-background/40 backdrop-blur-sm">
+            <p className="text-foreground/60 text-sm mb-2">Pending Orders</p>
             <p className="text-4xl font-bold text-primary">0</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-6 counter-glow">
-            <p className="text-muted-foreground text-sm mb-1">Points Earned</p>
+          <div className="border border-primary/10 rounded-lg p-6 bg-background/40 backdrop-blur-sm">
+            <p className="text-foreground/60 text-sm mb-2">Points Earned</p>
             <p className="text-4xl font-bold text-primary">0</p>
           </div>
         </div>
 
         {/* Main Actions */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="glass-panel rounded-3xl p-8 refract-hover cursor-pointer bio-glow">
+          <div className="border border-primary/10 rounded-lg p-8 bg-background/40 backdrop-blur-sm hover:border-primary/20 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 glass-button rounded-full">
+              <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg">
                 <Plus className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold">Create Listing</h3>
+              <h3 className="text-xl font-bold font-playfair">Create Listing</h3>
             </div>
-            <p className="text-muted-foreground mb-6">
-              Add a new eco-friendly product to the marketplace
+            <p className="text-foreground/60 mb-6">
+              Add a new eco-friendly product
             </p>
-            <Button className="w-full btn-glow" size="lg">
+            <Button className="w-full bg-primary text-background hover:bg-primary/90 font-semibold h-10">
               New Product
             </Button>
           </div>
 
-          <div className="glass-panel rounded-3xl p-8 refract-hover cursor-pointer">
+          <div className="border border-primary/10 rounded-lg p-8 bg-background/40 backdrop-blur-sm hover:border-primary/20 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 glass-button rounded-full">
+              <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg">
                 <ShoppingBag className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold">Browse Suggestions</h3>
+              <h3 className="text-xl font-bold font-playfair">Browse Suggestions</h3>
             </div>
-            <p className="text-muted-foreground mb-6">
-              See items suggested by buyer scans
+            <p className="text-foreground/60 mb-6">
+              See items suggested by scans
             </p>
-            <Button variant="outline" className="w-full glass-button" size="lg">
+            <Button variant="outline" className="w-full border-primary/20 text-foreground hover:bg-foreground/10 font-semibold h-10">
               View Suggestions
             </Button>
           </div>
         </div>
 
         {/* My Listings */}
-        <div className="glass-panel rounded-3xl p-8">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="border border-primary/10 rounded-lg p-8 bg-background/40 backdrop-blur-sm">
+          <div className="flex items-center gap-3 mb-8">
             <Package className="w-6 h-6 text-primary" />
-            <h3 className="text-2xl font-bold">My Listings</h3>
+            <h3 className="text-2xl font-bold font-playfair">My Listings</h3>
           </div>
-          <p className="text-muted-foreground mb-8">Manage your active products</p>
-          <div className="text-center py-12 text-muted-foreground">
-            <Package className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>No listings yet. Create your first eco-friendly product!</p>
+          <div className="text-center py-12 text-foreground/60">
+            <Package className="w-12 h-12 mx-auto mb-4 opacity-30" />
+            <p>No listings yet. Create your first product!</p>
           </div>
         </div>
       </div>

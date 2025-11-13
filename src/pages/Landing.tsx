@@ -9,6 +9,7 @@ import { GlassIntensityControl } from "@/components/GlassIntensityControl";
 import { LiquidGlassPanel } from "@/components/LiquidGlassPanel";
 import { ParallaxGlass } from "@/components/ParallaxGlass";
 import { FluidBackground } from "@/components/FluidBackground";
+import { EdgeDoodles } from "@/components/EdgeDoodles";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -44,6 +45,9 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen text-foreground transition-theme relative overflow-hidden">
+      {/* Edge Doodles */}
+      <EdgeDoodles position="all" opacity={0.3} animated={true} />
+      
       {/* Interactive Fluid Background */}
       <FluidBackground
         viscosity={0.001}
@@ -63,8 +67,8 @@ const Landing = () => {
         <header className="container py-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Recycle className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Terra Vitta
+            <span className="text-2xl font-bold font-playfair text-primary">
+              EcoMart
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -230,7 +234,7 @@ const Landing = () => {
               </div>
               <h2 className="text-4xl md:text-5xl font-bold">UN Sustainable Development Goals</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Terra Vitta actively contributes to the United Nations' vision for a better world
+                EcoMart actively contributes to the United Nations' vision for a better world
               </p>
             </div>
             
@@ -401,7 +405,7 @@ const Landing = () => {
             <div className="flex items-center gap-3">
               <Recycle className="h-6 w-6 text-primary" />
               <span className="text-sm text-muted-foreground font-medium">
-                © 2025 Terra Vitta. Building a Circular Future.
+                © 2025 EcoMart. Building a Circular Future.
               </span>
             </div>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">

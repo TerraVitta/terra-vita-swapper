@@ -101,8 +101,8 @@ const BuyerDashboard = () => {
                 <Recycle className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">Terra Vitta</h1>
-                <p className="text-sm text-muted-foreground font-medium">EcoPoints: <span className="text-emerald-600 dark:text-emerald-400 font-bold">{points}</span></p>
+                <h1 className="text-2xl font-bold font-playfair text-primary">EcoMart</h1>
+                <p className="text-sm text-muted-foreground font-medium">EcoPoints: <span className="text-primary font-bold">{points}</span></p>
               </div>
             </div>
             
@@ -254,7 +254,7 @@ const BuyerDashboard = () => {
                   <Recycle className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-sm text-muted-foreground font-medium">
-                  © 2025 Terra Vitta. Building a sustainable future together.
+                  © 2025 EcoMart. Building a sustainable future together.
                 </span>
               </div>
               <div className="flex items-center gap-6 text-sm text-muted-foreground font-medium">

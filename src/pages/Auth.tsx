@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Recycle, Mail, Lock, User, ArrowRight } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
+import { EdgeDoodles } from "@/components/EdgeDoodles";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -106,6 +107,9 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Edge Doodles */}
+      <EdgeDoodles position="all" opacity={0.25} animated={true} />
+      
       {/* Nature Background */}
       <div className="nature-bg">
         <div className="nature-gradient" />
@@ -133,7 +137,7 @@ const Auth = () => {
           <div className="mb-8">
             <Recycle className="w-24 h-24 text-primary animate-pulse" />
           </div>
-          <h2 className="text-4xl font-bold mb-4 text-center bg-gradient-primary bg-clip-text text-transparent">Terra Vitta</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center font-playfair text-primary">EcoMart</h2>
           <p className="text-center text-xl opacity-90 font-light leading-relaxed">
             Building a Circular Future Together
           </p>

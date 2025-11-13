@@ -8,96 +8,96 @@ All colors MUST be HSL.
 
 @layer base {
   /* ========================================
-     TERRA VITTA LIQUID CRYSTAL GLASS
-     Molten, Luminous, Photorealistic
+     ECOMART PURE BLACK PREMIUM DESIGN
+     Sophisticated, Professional, Refined
      ======================================== */
   
-  /* Light Mode - Crystal Clear Liquid Glass */
+  /* Light Mode - Pure Black Professional Design */
   :root {
-    /* Base Colors - Pure Crystalline Palette */
-    --background: 190 45% 98%;
-    --foreground: 220 20% 15%;
+    /* Base Colors - Pure OLED Black & Premium Sage Green */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 95%;
     
     /* Dynamic Glass Blur Control */
     --blur-enabled: 1;
     --blur-multiplier: calc(var(--blur-enabled) * 1);
-    --chromatic-aberration: 2px;
-    --internal-glow-intensity: 0.6;
-    --specular-intensity: 0.9;
+    --chromatic-aberration: 1px;
+    --internal-glow-intensity: 0.3;
+    --specular-intensity: 0.5;
     --glass-complexity: 1;
     
-    --card: 190 35% 97%;
-    --card-foreground: 220 20% 15%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 95%;
     
-    --popover: 190 40% 96%;
-    --popover-foreground: 220 20% 15%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 95%;
     
-    /* Primary: Liquid Aqua */
-    --primary: 175 55% 55%;
-    --primary-foreground: 220 15% 15%;
-    --primary-glow: 175 65% 65%;
-    --primary-reflection: 175 75% 85%;
+    /* Primary: Premium Sage Green #50B498 */
+    --primary: 164 48% 53%;
+    --primary-foreground: 0 0% 95%;
+    --primary-glow: 164 48% 60%;
+    --primary-reflection: 164 48% 40%;
     
-    /* Secondary: Cool Platinum */
-    --secondary: 270 30% 88%;
-    --secondary-foreground: 220 20% 15%;
+    /* Secondary: Dark Gray */
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 95%;
     
-    --muted: 190 25% 92%;
-    --muted-foreground: 220 15% 40%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
     
-    /* Accent: Luminous Teal */
-    --accent: 170 50% 82%;
-    --accent-foreground: 220 20% 15%;
+    /* Accent: Sage Green */
+    --accent: 164 48% 53%;
+    --accent-foreground: 0 0% 95%;
     
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 190 30% 85%;
-    --input: 190 30% 90%;
-    --ring: 175 55% 55%;
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --ring: 164 48% 53%;
     
     --radius: 1.5rem;
     
-    /* Liquid Crystal Glass Colors - Ultra Bright */
-    --glass-luminescence-primary: 175 65% 80%;
-    --glass-luminescence-secondary: 200 55% 85%;
-    --glass-aberration-warm: 25 75% 88%;
-    --glass-aberration-cool: 185 65% 80%;
+    /* Metallic Glass Colors - Subtle Sage Accents */
+    --glass-luminescence-primary: 164 48% 53%;
+    --glass-luminescence-secondary: 164 48% 60%;
+    --glass-aberration-warm: 164 48% 50%;
+    --glass-aberration-cool: 164 48% 55%;
     --glass-specular: 0 0% 100%;
-    --glass-surface: 190 35% 95%;
+    --glass-surface: 0 0% 3%;
     
-    /* Premium Glass Material System - Crystal Clear */
-    --glass-ultra-light: rgba(255, 255, 255, 0.85);
-    --glass-light: rgba(255, 255, 255, 0.6);
-    --glass-medium: rgba(255, 255, 255, 0.35);
-    --glass-heavy: rgba(255, 255, 255, 0.18);
+    /* Premium Glass Material System - Pure Black */
+    --glass-ultra-light: rgba(80, 180, 152, 0.08);
+    --glass-light: rgba(80, 180, 152, 0.05);
+    --glass-medium: rgba(80, 180, 152, 0.03);
+    --glass-heavy: rgba(80, 180, 152, 0.02);
     
-    --glass-border-ultra: rgba(255, 255, 255, 0.8);
-    --glass-border-strong: rgba(255, 255, 255, 0.5);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --glass-border-soft: rgba(255, 255, 255, 0.12);
+    --glass-border-ultra: rgba(80, 180, 152, 0.15);
+    --glass-border-strong: rgba(80, 180, 152, 0.1);
+    --glass-border: rgba(80, 180, 152, 0.06);
+    --glass-border-soft: rgba(80, 180, 152, 0.03);
     
-    /* Multi-layer Shadows */
-    --shadow-xs: 0 1px 2px rgba(20, 40, 80, 0.04);
-    --shadow-sm: 0 2px 4px rgba(20, 40, 80, 0.06);
-    --shadow-md: 0 4px 8px rgba(20, 40, 80, 0.08), 
-                 0 2px 4px rgba(20, 40, 80, 0.04);
-    --shadow-lg: 0 8px 16px rgba(20, 40, 80, 0.1), 
-                 0 4px 8px rgba(20, 40, 80, 0.06),
-                 0 2px 4px rgba(20, 40, 80, 0.04);
-    --shadow-xl: 0 16px 32px rgba(20, 40, 80, 0.12),
-                 0 8px 16px rgba(20, 40, 80, 0.08),
-                 0 4px 8px rgba(20, 40, 80, 0.04);
-    --shadow-2xl: 0 24px 48px rgba(20, 40, 80, 0.15),
-                  0 16px 32px rgba(20, 40, 80, 0.1),
-                  0 8px 16px rgba(20, 40, 80, 0.06);
+    /* Multi-layer Shadows - Black Background */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.65), 
+                 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.7), 
+                 0 4px 8px rgba(0, 0, 0, 0.6),
+                 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.75),
+                 0 8px 16px rgba(0, 0, 0, 0.65),
+                 0 4px 8px rgba(0, 0, 0, 0.55);
+    --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.8),
+                  0 16px 32px rgba(0, 0, 0, 0.7),
+                  0 8px 16px rgba(0, 0, 0, 0.6);
     
-    /* Specular Highlights */
-    --specular-ultra: rgba(255, 255, 255, 0.95);
-    --specular-strong: rgba(255, 255, 255, 0.7);
-    --specular-medium: rgba(255, 255, 255, 0.45);
-    --specular-soft: rgba(255, 255, 255, 0.25);
-    --specular-subtle: rgba(255, 255, 255, 0.12);
+    /* Specular Highlights - Minimal */
+    --specular-ultra: rgba(255, 255, 255, 0.3);
+    --specular-strong: rgba(255, 255, 255, 0.2);
+    --specular-medium: rgba(255, 255, 255, 0.12);
+    --specular-soft: rgba(255, 255, 255, 0.08);
+    --specular-subtle: rgba(255, 255, 255, 0.04);
     
     /* Precise Blur Values */
     --blur-xs: calc(8px * var(--blur-multiplier));
@@ -110,100 +110,100 @@ All colors MUST be HSL.
     --glass-shimmer-speed: 8;
     --glass-refraction-intensity: 1;
     
-    --sidebar-background: 180 25% 95%;
-    --sidebar-foreground: 220 15% 20%;
-    --sidebar-primary: 175 55% 55%;
-    --sidebar-primary-foreground: 220 15% 15%;
-    --sidebar-accent: 180 20% 90%;
-    --sidebar-accent-foreground: 220 15% 20%;
-    --sidebar-border: 180 25% 80%;
-    --sidebar-ring: 175 55% 55%;
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 164 48% 53%;
+    --sidebar-primary-foreground: 0 0% 95%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 164 48% 53%;
   }
 
-  /* Dark Mode - Deep Liquid Glass */
+  /* Dark Mode - Pure Black Premium Design (Default) */
   .dark {
-    /* Base Colors */
-    --background: 220 20% 10%;
-    --foreground: 180 10% 90%;
+    /* Base Colors - Pure Black */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 95%;
     
     /* Dynamic Glass Blur Control */
     --blur-enabled: 1;
     --blur-multiplier: calc(var(--blur-enabled) * 1);
-    --chromatic-aberration: 2px;
-    --internal-glow-intensity: 0.5;
-    --specular-intensity: 0.7;
+    --chromatic-aberration: 1px;
+    --internal-glow-intensity: 0.3;
+    --specular-intensity: 0.5;
     --glass-complexity: 1;
     
-    --card: 220 18% 12%;
-    --card-foreground: 180 10% 90%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 95%;
     
-    --popover: 220 20% 14%;
-    --popover-foreground: 180 10% 90%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 95%;
     
-    /* Primary: Ethereal Cyan */
-    --primary: 175 60% 50%;
-    --primary-foreground: 180 10% 90%;
-    --primary-glow: 175 70% 60%;
-    --primary-reflection: 175 50% 30%;
+    /* Primary: Premium Sage Green #50B498 */
+    --primary: 164 48% 53%;
+    --primary-foreground: 0 0% 95%;
+    --primary-glow: 164 48% 60%;
+    --primary-reflection: 164 48% 40%;
     
-    /* Secondary: Moonlit Steel */
-    --secondary: 270 20% 20%;
-    --secondary-foreground: 180 10% 90%;
+    /* Secondary: Dark Gray */
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 95%;
     
-    --muted: 220 15% 15%;
-    --muted-foreground: 180 8% 60%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
     
-    /* Accent: Bioluminescent Teal */
-    --accent: 160 35% 25%;
-    --accent-foreground: 180 10% 90%;
+    /* Accent: Sage Green */
+    --accent: 164 48% 53%;
+    --accent-foreground: 0 0% 95%;
     
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 15% 25%;
-    --input: 220 15% 22%;
-    --ring: 175 60% 50%;
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --ring: 164 48% 53%;
     
-    /* Liquid Crystal Glass Colors - Dark Mode */
-    --glass-luminescence-primary: 170 50% 40%;
-    --glass-luminescence-secondary: 200 45% 35%;
-    --glass-aberration-warm: 20 60% 50%;
-    --glass-aberration-cool: 185 50% 45%;
+    /* Metallic Glass Colors - Subtle Sage Accents */
+    --glass-luminescence-primary: 164 48% 53%;
+    --glass-luminescence-secondary: 164 48% 60%;
+    --glass-aberration-warm: 164 48% 50%;
+    --glass-aberration-cool: 164 48% 55%;
     --glass-specular: 0 0% 100%;
-    --glass-surface: 220 20% 15%;
+    --glass-surface: 0 0% 3%;
     
-    /* Premium Glass Material System - Dark */
-    --glass-ultra-light: rgba(60, 75, 100, 0.5);
-    --glass-light: rgba(40, 55, 80, 0.35);
-    --glass-medium: rgba(25, 35, 55, 0.45);
-    --glass-heavy: rgba(15, 20, 35, 0.65);
+    /* Premium Glass Material System - Pure Black */
+    --glass-ultra-light: rgba(80, 180, 152, 0.08);
+    --glass-light: rgba(80, 180, 152, 0.05);
+    --glass-medium: rgba(80, 180, 152, 0.03);
+    --glass-heavy: rgba(80, 180, 152, 0.02);
     
-    --glass-border-ultra: rgba(140, 180, 220, 0.35);
-    --glass-border-strong: rgba(120, 160, 200, 0.25);
-    --glass-border: rgba(100, 140, 180, 0.18);
-    --glass-border-soft: rgba(80, 120, 160, 0.1);
+    --glass-border-ultra: rgba(80, 180, 152, 0.15);
+    --glass-border-strong: rgba(80, 180, 152, 0.1);
+    --glass-border: rgba(80, 180, 152, 0.06);
+    --glass-border-soft: rgba(80, 180, 152, 0.03);
     
-    /* Multi-layer Shadows - Dark */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4), 
-                 0 2px 4px rgba(0, 0, 0, 0.25);
-    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45), 
-                 0 4px 8px rgba(0, 0, 0, 0.3),
-                 0 2px 4px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.5),
-                 0 8px 16px rgba(0, 0, 0, 0.35),
-                 0 4px 8px rgba(0, 0, 0, 0.25);
-    --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.6),
-                  0 16px 32px rgba(0, 0, 0, 0.45),
-                  0 8px 16px rgba(0, 0, 0, 0.3);
+    /* Multi-layer Shadows - Black Background */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.7);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.75);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.8), 
+                 0 2px 4px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.85), 
+                 0 4px 8px rgba(0, 0, 0, 0.75),
+                 0 2px 4px rgba(0, 0, 0, 0.65);
+    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.9),
+                 0 8px 16px rgba(0, 0, 0, 0.8),
+                 0 4px 8px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.92),
+                  0 16px 32px rgba(0, 0, 0, 0.85),
+                  0 8px 16px rgba(0, 0, 0, 0.75);
     
-    /* Specular Highlights - Dark */
-    --specular-ultra: rgba(180, 210, 240, 0.6);
-    --specular-strong: rgba(160, 195, 230, 0.4);
-    --specular-medium: rgba(140, 180, 220, 0.28);
-    --specular-soft: rgba(120, 165, 210, 0.18);
-    --specular-subtle: rgba(100, 150, 200, 0.1);
+    /* Specular Highlights - Minimal for Black */
+    --specular-ultra: rgba(255, 255, 255, 0.3);
+    --specular-strong: rgba(255, 255, 255, 0.2);
+    --specular-medium: rgba(255, 255, 255, 0.12);
+    --specular-soft: rgba(255, 255, 255, 0.08);
+    --specular-subtle: rgba(255, 255, 255, 0.04);
     
     /* Precise Blur Values */
     --blur-xs: calc(12px * var(--blur-multiplier));
@@ -216,14 +216,14 @@ All colors MUST be HSL.
     --glass-shimmer-speed: 10;
     --glass-refraction-intensity: 1;
     
-    --sidebar-background: 220 18% 12%;
-    --sidebar-foreground: 180 10% 90%;
-    --sidebar-primary: 175 60% 50%;
-    --sidebar-primary-foreground: 180 10% 90%;
-    --sidebar-accent: 220 15% 15%;
-    --sidebar-accent-foreground: 180 10% 90%;
-    --sidebar-border: 220 15% 25%;
-    --sidebar-ring: 175 60% 50%;
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 164 48% 53%;
+    --sidebar-primary-foreground: 0 0% 95%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 164 48% 53%;
   }
 }
 
@@ -234,11 +234,16 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     letter-spacing: 0.01em;
     transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
                 color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
   }
   
   /* Default to dark mode */
@@ -257,33 +262,35 @@ All colors MUST be HSL.
 
 @layer utilities {
   /* ========================================
-     MOLTEN LIQUID CRYSTAL GLASS
-     Photorealistic with Chromatic Aberration
+     ECOMART PREMIUM BLACK GLASS SYSTEM
+     Minimal, Sophisticated, Professional
      ======================================== */
   
-  /* Main Glass Panel - Liquid Crystal with Internal Luminescence */
+  /* Main Glass Panel - Professional Minimal Design */
   .glass-panel {
     background: linear-gradient(
       135deg,
-      hsl(var(--glass-surface) / 0.75) 0%,
-      hsl(var(--glass-surface) / 0.65) 100%
+      hsl(var(--glass-surface) / 0.5) 0%,
+      hsl(var(--glass-surface) / 0.35) 100%
     );
-    backdrop-filter: blur(calc(var(--blur-lg) * var(--blur-multiplier))) saturate(180%) brightness(1.15);
-    -webkit-backdrop-filter: blur(calc(var(--blur-lg) * var(--blur-multiplier))) saturate(180%) brightness(1.15);
-    border: 2px solid transparent;
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid hsl(var(--primary) / 0.15);
     background-clip: padding-box;
     box-shadow: 
-      0 0 0 1.5px hsl(var(--glass-aberration-cool) / 0.5),
-      0 0 0 3.5px hsl(var(--glass-aberration-warm) / 0.4),
-      0 16px 48px -10px hsl(var(--primary) / 0.18),
-      inset 0 2px 4px 0 hsl(var(--glass-specular) / calc(0.4 * var(--specular-intensity))),
-      inset 0 -2px 4px 0 hsl(var(--glass-luminescence-primary) / calc(0.25 * var(--internal-glow-intensity))),
-      0 4px 8px 0 hsl(var(--foreground) / 0.06);
+      0 8px 24px -3px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 0 hsl(var(--primary) / 0.1);
     position: relative;
-    transition: backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
+  }
+  
+  .glass-panel:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 
+      0 12px 32px -4px rgba(80, 180, 152, 0.15),
+      inset 0 1px 0 0 hsl(var(--primary) / 0.15),
+      0 0 20px -8px hsl(var(--primary) / 0.2);
   }
   
   /* Internal Luminescence Layer */
@@ -293,8 +300,8 @@ All colors MUST be HSL.
     inset: 0;
     background: radial-gradient(
       ellipse at 30% 20%,
-      hsl(var(--glass-luminescence-primary) / calc(0.25 * var(--internal-glow-intensity))) 0%,
-      hsl(var(--glass-luminescence-secondary) / calc(0.15 * var(--internal-glow-intensity))) 40%,
+      hsl(var(--primary) / 0.08) 0%,
+      hsl(var(--primary) / 0.04) 40%,
       transparent 70%
     );
     pointer-events: none;
@@ -367,22 +374,20 @@ All colors MUST be HSL.
       inset 0 -2px 3px 0 hsl(var(--glass-luminescence-primary) / 0.25);
   }
   
-  /* Glass Button with Internal Glow */
+  /* Glass Button with Internal Glow - Professional Morph */
   .glass-button {
     background: linear-gradient(
       135deg,
-      hsl(var(--glass-luminescence-primary) / 0.8) 0%,
-      hsl(var(--glass-luminescence-secondary) / 0.7) 100%
+      hsl(var(--primary) / 0.1) 0%,
+      hsl(var(--primary) / 0.05) 100%
     );
-    backdrop-filter: blur(calc(var(--blur-sm) * var(--blur-multiplier))) saturate(180%);
-    -webkit-backdrop-filter: blur(calc(var(--blur-sm) * var(--blur-multiplier))) saturate(180%);
-    border: 1.5px solid transparent;
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid hsl(var(--primary) / 0.2);
     box-shadow: 
-      0 0 0 1.5px hsl(var(--glass-aberration-cool) / 0.6),
-      0 0 0 3px hsl(var(--glass-aberration-warm) / 0.5),
-      0 8px 24px -3px hsl(var(--primary) / 0.28),
-      inset 0 2px 2px 0 hsl(var(--glass-specular) / 0.5);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      0 4px 12px -2px hsl(var(--primary) / 0.1),
+      inset 0 1px 2px 0 hsl(var(--primary) / 0.1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
   }
@@ -404,12 +409,12 @@ All colors MUST be HSL.
   }
   
   .glass-button:hover {
-    transform: translateY(-2px) scale(1.03);
+    transform: translateY(-2px) scale(1.05);
+    border-color: hsl(var(--primary) / 0.4);
     box-shadow: 
-      0 0 0 2px hsl(var(--glass-aberration-cool) / 0.7),
-      0 0 0 4px hsl(var(--glass-aberration-warm) / 0.6),
-      0 16px 40px -6px hsl(var(--primary) / 0.38),
-      inset 0 3px 3px 0 hsl(var(--glass-specular) / 0.6);
+      0 8px 24px -2px hsl(var(--primary) / 0.2),
+      inset 0 1px 2px 0 hsl(var(--primary) / 0.2),
+      0 0 20px -5px hsl(var(--primary) / 0.3);
   }
   
   .glass-button:hover::before {
@@ -456,14 +461,16 @@ All colors MUST be HSL.
   .card-hover {
     transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-origin: center center;
+    border: 1px solid hsl(var(--primary) / 0.1);
   }
   
   .card-hover:hover {
-    transform: translateY(-10px) scale(1.018) translateZ(0);
+    transform: translateY(-8px) scale(1.02);
+    border-color: hsl(var(--primary) / 0.25);
     box-shadow: 
-      var(--shadow-2xl),
-      0 0 0 1px var(--glass-border-ultra),
-      inset 0 1px 0 0 var(--specular-soft);
+      0 12px 32px -4px rgba(80, 180, 152, 0.12),
+      inset 0 1px 0 0 hsl(var(--primary) / 0.1),
+      0 0 16px -6px hsl(var(--primary) / 0.15);
   }
   
   .smooth-scroll {
@@ -522,42 +529,41 @@ All colors MUST be HSL.
   .btn-glow {
     position: relative;
     box-shadow: 
-      0 0 24px hsl(var(--primary) / 0.25),
-      var(--shadow-md),
-      inset 0 1px 0 var(--specular-soft);
+      0 4px 12px -2px hsl(var(--primary) / 0.15),
+      inset 0 1px 0 hsl(var(--primary) / 0.1);
+    border: 1px solid hsl(var(--primary) / 0.2);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .btn-glow:hover {
     box-shadow: 
-      0 0 48px hsl(var(--primary) / 0.45),
-      0 0 80px hsl(var(--primary-glow) / 0.25),
-      var(--shadow-xl),
-      inset 0 2px 0 var(--specular-medium);
-    transform: translateY(-2px) scale(1.012);
+      0 8px 24px -2px hsl(var(--primary) / 0.25),
+      0 0 16px -4px hsl(var(--primary) / 0.2),
+      inset 0 1px 0 hsl(var(--primary) / 0.15);
+    border-color: hsl(var(--primary) / 0.4);
+    transform: translateY(-2px) scale(1.05);
   }
   
   .btn-glow:active {
-    transform: translateY(0px) scale(0.996);
+    transform: translateY(0px) scale(0.98);
     transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 
-      0 0 16px hsl(var(--primary) / 0.2),
-      var(--shadow-sm),
-      inset 0 1px 3px rgba(0, 0, 0, 0.15);
+      0 2px 6px hsl(var(--primary) / 0.1),
+      inset 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   /* ========================================
-     LUMINOUS BACKGROUNDS
+     BACKGROUNDS & GRADIENTS
      ======================================== */
   
   .nature-bg {
     background: linear-gradient(
       135deg,
-      hsl(185 55% 97%) 0%,
-      hsl(200 50% 96%) 25%,
-      hsl(270 40% 97%) 50%,
-      hsl(165 45% 96%) 75%,
-      hsl(190 50% 98%) 100%
+      hsl(0 0% 0%) 0%,
+      hsl(0 0% 2%) 25%,
+      hsl(0 0% 1%) 50%,
+      hsl(0 0% 2%) 75%,
+      hsl(0 0% 0%) 100%
     );
     position: relative;
   }
@@ -568,12 +574,12 @@ All colors MUST be HSL.
     inset: 0;
     background: radial-gradient(
       ellipse at 20% 30%,
-      hsl(var(--glass-luminescence-primary) / 0.15) 0%,
+      hsl(var(--primary) / 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       ellipse at 80% 70%,
-      hsl(var(--glass-luminescence-secondary) / 0.12) 0%,
+      hsl(var(--primary) / 0.06) 0%,
       transparent 50%
     );
     pointer-events: none;
@@ -594,9 +600,9 @@ All colors MUST be HSL.
   .nature-gradient {
     background: linear-gradient(
       to bottom,
-      hsl(185 60% 97%) 0%,
-      hsl(200 55% 96%) 50%,
-      hsl(270 45% 97%) 100%
+      hsl(0 0% 0%) 0%,
+      hsl(0 0% 1%) 50%,
+      hsl(0 0% 0%) 100%
     );
   }
 
@@ -1068,3 +1074,121 @@ All colors MUST be HSL.
     transform: scale(2);
   }
 }
+
+/* ========================================
+   MORPH ANIMATIONS - PROFESSIONAL POLISH
+   Smooth, Organic, Next-Level Transitions
+   ======================================== */
+
+@keyframes morph-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes morph-scale-strong {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes morph-rotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes morph-blur-glow {
+  0%, 100% {
+    filter: blur(0px);
+    box-shadow: 0 0 0 0 rgba(80, 180, 152, 0);
+  }
+  50% {
+    filter: blur(1px);
+    box-shadow: 0 0 24px 0 rgba(80, 180, 152, 0.25);
+  }
+}
+
+@keyframes morph-slide-up {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes morph-slide-down {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes morph-shape-shift {
+  0%, 100% {
+    border-radius: 1.5rem;
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    border-radius: 1.2rem;
+    transform: scaleX(1.02) scaleY(0.98);
+  }
+}
+
+@keyframes morph-border-glow {
+  0%, 100% {
+    border-color: rgba(80, 180, 152, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(80, 180, 152, 0.2);
+  }
+  50% {
+    border-color: rgba(80, 180, 152, 0.5);
+    box-shadow: inset 0 0 12px 0 rgba(80, 180, 152, 0.15),
+                0 0 20px 0 rgba(80, 180, 152, 0.15);
+  }
+}
+
+@keyframes morph-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes morph-fade-glow {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Morph utility classes */
+.morph-on-hover:hover {
+  animation: morph-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.morph-border-glow:hover {
+  animation: morph-border-glow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.morph-continuous {
+  animation: morph-scale 2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+

@@ -18,17 +18,16 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
       <style>
         :root {
-          /* Use HSL token formats to match the project's design system (index.css expects space-separated H S% L% values)
-             These mirror the dark-mode values defined in src/index.css :root so hsl(var(--...)) works correctly. */
-          --primary: 35 91% 53%;
-          --secondary: 96 20% 18%;
-          --background: 96 30% 8%;
-          --foreground: 42 47% 90%;
-          --text: hsl(42 47% 90%);
-          --surface: 96 25% 12%;
+          /* Pure Black Theme with #50B498 Sage Green Accent */
+          --primary: 164 48% 53%;
+          --secondary: 0 0% 8%;
+          --background: 0 0% 0%;
+          --foreground: 0 0% 95%;
+          --text: hsl(0 0% 95%);
+          --surface: 0 0% 4%;
         }
         html, body {
           margin: 0;
@@ -36,9 +35,13 @@
           min-height: 100vh;
           background: var(--background);
           color: var(--text);
-          font-family: 'Inter', sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           letter-spacing: 0.01em;
           transition: background 0.5s;
+        }
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Playfair Display', serif;
+          font-weight: 700;
         }
         #root {
           min-height: 100vh;

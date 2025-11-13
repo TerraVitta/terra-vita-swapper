@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { EdgeDoodles } from "@/components/EdgeDoodles";
+import LiquidEther from "@/components/LiquidEther";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -39,6 +40,27 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-black text-foreground relative overflow-hidden">
+      {/* Liquid Ether Background */}
+      <div className="fixed inset-0 -z-20 opacity-60">
+        <LiquidEther
+          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+          mouseForce={6}
+          cursorSize={100}
+          isViscous={true}
+          viscous={30}
+          iterationsViscous={52}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={true}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
+      </div>
+
       {/* Minimal Edge Doodles */}
       <EdgeDoodles position="all" opacity={0.15} animated={false} />
       

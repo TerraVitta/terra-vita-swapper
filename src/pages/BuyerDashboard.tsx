@@ -10,6 +10,63 @@ import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 
+const fallbackProducts = [
+  {
+    id: '1',
+    name: 'Bamboo Toothbrush Set',
+    price: 299,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1585412459556-6b5e3b3d8f5a?w=500&h=500&fit=crop',
+    tags: ['personal-care'],
+    sustainability_score: 95
+  },
+  {
+    id: '2',
+    name: 'Eco Water Bottle',
+    price: 1299,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1602143407151-7e36dd5f7746?w=500&h=500&fit=crop',
+    tags: ['accessories'],
+    sustainability_score: 90
+  },
+  {
+    id: '3',
+    name: 'Organic Cotton T-Shirt',
+    price: 599,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop',
+    tags: ['clothing'],
+    sustainability_score: 88
+  },
+  {
+    id: '4',
+    name: 'Solar Phone Charger',
+    price: 1999,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=500&h=500&fit=crop',
+    tags: ['tech'],
+    sustainability_score: 92
+  },
+  {
+    id: '5',
+    name: 'Compostable Phone Case',
+    price: 399,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1574531446910-a100fec00891?w=500&h=500&fit=crop',
+    tags: ['tech'],
+    sustainability_score: 87
+  },
+  {
+    id: '6',
+    name: 'Reusable Lunch Container',
+    price: 499,
+    currency: 'INR',
+    image_url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop',
+    tags: ['kitchen'],
+    sustainability_score: 93
+  }
+];
+
 const BuyerDashboard = () => {
   const navigate = useNavigate();
   const [points, setPoints] = useState(50);
@@ -21,22 +78,30 @@ const BuyerDashboard = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data, error } = await (supabase as any)
-        .from('products')
-        .select('*')
-        .eq('is_active', true);
-      
-      if (error) {
-        console.error('Error fetching products:', error);
-        toast.error('Failed to load products');
-      } else {
-        setProducts(data || []);
+      try {
+        const { data, error } = await (supabase as any)
+          .from('products')
+          .select('*')
+          .eq('is_active', true);
+        
+        if (error || !data || data.length === 0) {
+          console.error('Error fetching products:', error);
+          // Use fallback products
+          setProducts(fallbackProducts);
+        } else {
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setProducts(fallbackProducts);
       }
       setLoading(false);
     };
 
     fetchProducts();
   }, []);
+
+
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();

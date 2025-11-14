@@ -3,6 +3,7 @@ import { Users, ShoppingBag, TrendingUp, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import LiquidEther from "@/components/LiquidEther";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -14,7 +15,11 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Background effect */}
+      <div className="fixed inset-0 -z-20 opacity-40">
+        <LiquidEther colors={['#50B498', '#B19EEF', '#FF9FFC']} />
+      </div>
       <div className="max-w-6xl mx-auto p-6">
         {/* Header */}
         <div className="border-b border-primary/10 pb-8 mb-8">

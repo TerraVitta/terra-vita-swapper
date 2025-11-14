@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import LiquidEther from "@/components/LiquidEther";
 
 const fallbackProducts = [
   {
@@ -132,7 +133,11 @@ const BuyerDashboard = () => {
     : products.filter(p => p.tags?.includes(activeTab));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      {/* Background effect */}
+      <div className="fixed inset-0 -z-20 opacity-40">
+        <LiquidEther colors={['#50B498', '#FF9FFC', '#B19EEF']} />
+      </div>
       <div className="relative overflow-hidden">
         {/* Minimal background */}
         <div className="fixed inset-0 -z-10 bg-background" />

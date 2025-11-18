@@ -4,9 +4,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
 import { useCart } from '@/hooks/useCart';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export function CartDrawer() {
+  const navigate = useNavigate();
   const { items, updateQuantity, removeItem, clearCart, total, itemCount } = useCart();
 
   const handleCheckout = () => {
@@ -14,7 +16,7 @@ export function CartDrawer() {
       toast.error('Your cart is empty');
       return;
     }
-    toast.success('Checkout feature coming soon!');
+    navigate('/checkout');
   };
 
   return (

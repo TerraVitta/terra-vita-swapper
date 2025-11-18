@@ -7,7 +7,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { CartDrawer } from '@/components/CartDrawer';
 import productsData from '@/data/products.json';
 import { useState } from 'react';
-import LiquidEther from '@/components/LiquidEther';
+// LiquidEther is rendered globally via the app layout
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -42,9 +42,7 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background effect */}
-      <div className="fixed inset-0 -z-20 opacity-40">
-        <LiquidEther colors={['#B19EEF', '#FF9FFC', '#50B498']} />
-      </div>
+      {/* Background is provided globally */}
       {/* Header */}
       <header className="border-b border-primary/10 backdrop-blur-sm sticky top-0 z-40">
         <div className="container flex items-center justify-between py-4">

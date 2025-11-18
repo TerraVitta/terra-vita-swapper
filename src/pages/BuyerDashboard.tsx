@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useCart } from "@/hooks/useCart";
-import LiquidEther from "@/components/LiquidEther";
+// LiquidEther is rendered globally via the app layout
 
 const fallbackProducts = [
   {
@@ -134,10 +134,7 @@ const BuyerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      {/* Background effect */}
-      <div className="fixed inset-0 -z-20 opacity-40">
-        <LiquidEther colors={['#50B498', '#FF9FFC', '#B19EEF']} />
-      </div>
+      {/* Background is provided globally */}
       <div className="relative overflow-hidden">
         {/* Minimal background */}
         <div className="fixed inset-0 -z-10 bg-background" />

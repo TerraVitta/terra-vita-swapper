@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Recycle } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
-import LiquidEther from "@/components/LiquidEther";
+// LiquidEther is rendered globally via the app layout
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -107,10 +107,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background relative overflow-hidden">
-      {/* Background effect */}
-      <div className="fixed inset-0 -z-20 opacity-40">
-        <LiquidEther colors={['#FF9FFC', '#5227FF', '#50B498']} />
-      </div>
+      {/* Background is provided globally */}
       {/* Theme Toggle and AI Chat Button */}
       <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
         <ThemeToggle />

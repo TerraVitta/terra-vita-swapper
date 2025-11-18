@@ -291,6 +291,7 @@ All colors MUST be HSL.
   /* Z-INDEX SYSTEM */
   .z-base { z-index: 0; }
   .z-content { z-index: 10; }
+    .site-content { position: relative; z-index: 10; }
   .z-dropdown { z-index: 20; }
   .z-sticky { z-index: 30; }
   .z-modal { z-index: 40; }

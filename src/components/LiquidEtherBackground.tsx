@@ -123,7 +123,8 @@ export default function LiquidEther({
     const lightColors = ['#EAF9F2', '#CFFCEB', '#B8F7DF'];
     const paletteTex = makePaletteTexture(theme === 'dark' ? darkColors : ['#D7C8FF', '#FFE6F2', '#D6D1FF']);
     // Adjust background alpha depending on theme—slightly stronger on dark
-    const bgAlpha = theme === 'dark' ? 0.08 : 0.03;
+    // Make empty canvas areas fully transparent by default
+    const bgAlpha = 0;
     const bgVec4 = new THREE.Vector4(0, 0, 0, bgAlpha);
 
     class CommonClass {
@@ -474,7 +475,8 @@ export default function LiquidEther({
     float lenv = clamp(length(vel), 0.0, 1.0);
     vec3 c = texture2D(palette, vec2(lenv, 0.5)).rgb;
     vec3 outRGB = mix(bgColor.rgb, c, lenv);
-    float outA = mix(bgColor.a, 1.0, lenv);
+    // Use flow intensity for alpha so empty areas are fully transparent
+    float outA = lenv;
     gl_FragColor = vec4(outRGB, outA);
 }
 `;
@@ -1198,7 +1200,8 @@ export default function LiquidEther({
     if (!outputMesh) return;
     const isDark = theme === 'dark';
     const newPalette = makePaletteTexture(isDark ? colors : ['#D7C8FF', '#FFE6F2', '#D6D1FF']);
-    const bgAlpha = isDark ? 0.06 : 0.02;
+    // Ensure background alpha is zero so the canvas is fully transparent where there is no fluid
+    const bgAlpha = 0;
     const material = outputMesh.material as THREE.RawShaderMaterial;
     if (material && material.uniforms) {
       material.uniforms.palette.value = newPalette;

@@ -297,7 +297,9 @@ const colorFragmentShader = `
     float speed = length(velocity);
     vec3 color = mix(uColor1, uColor2, speed * 2.0);
     color = mix(color, uColor3, speed * 4.0);
-    gl_FragColor = vec4(color * (1.0 - speed * 0.5), 0.8);
+    // Use velocity magnitude as alpha so pixels with no movement remain transparent
+    float a = clamp(speed, 0.0, 1.0);
+    gl_FragColor = vec4(color * (1.0 - speed * 0.5), a);
   }
 `;
 

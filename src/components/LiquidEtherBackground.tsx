@@ -53,7 +53,8 @@ interface LiquidEtherWebGL {
   dispose: () => void;
 }
 
-const defaultColors = ['#5227FF', '#FF9FFC', '#B19EEF'];
+// Default Liquid Ether palette — use brand green tones to match the app
+const defaultColors = ['#50B498', '#7EE8BF', '#BFF7E2'];
 
 export default function LiquidEther({
   mouseForce = 20,
@@ -118,10 +119,10 @@ export default function LiquidEther({
 
     // theme-aware palette
     const darkColors = colors;
-    const lightColors = ['#D7C8FF', '#FFE6F2', '#D6D1FF'];
+    const lightColors = ['#EAF9F2', '#CFFCEB', '#B8F7DF'];
     const paletteTex = makePaletteTexture(theme === 'dark' ? darkColors : ['#D7C8FF', '#FFE6F2', '#D6D1FF']);
     // Adjust background alpha depending on theme—slightly stronger on dark
-    const bgAlpha = theme === 'dark' ? 0.06 : 0.02;
+    const bgAlpha = theme === 'dark' ? 0.08 : 0.03;
     const bgVec4 = new THREE.Vector4(0, 0, 0, bgAlpha);
 
     class CommonClass {
@@ -1243,7 +1244,7 @@ export default function LiquidEther({
     <div
       ref={mountRef}
       className={`w-full h-full fixed inset-0 pointer-events-none touch-none ${className || ''}`}
-      style={style}
+      style={{ ...style, zIndex: -5 }}
     />
   );
 }

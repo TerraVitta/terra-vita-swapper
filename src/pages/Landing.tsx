@@ -39,7 +39,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Liquid Ether Background is provided globally */}
 
       {/* Minimal Edge Doodles */}
@@ -261,7 +261,7 @@ const Landing = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-primary/10 py-12 bg-black/50 backdrop-blur-sm">
+      <footer className="border-t border-primary/10 py-12 bg-background/50 backdrop-blur-sm">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">

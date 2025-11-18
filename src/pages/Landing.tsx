@@ -40,10 +40,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-black text-foreground relative overflow-hidden">
-      {/* Liquid Ether Background */}
-      <div className="fixed inset-0 -z-20 opacity-60">
-        {/* Background is provided globally */}
-      </div>
+      {/* Liquid Ether Background is provided globally */}
 
       {/* Minimal Edge Doodles */}
       <EdgeDoodles position="all" opacity={0.15} animated={false} />

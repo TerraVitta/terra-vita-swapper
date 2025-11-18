@@ -136,8 +136,7 @@ const BuyerDashboard = () => {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Background is provided globally */}
       <div className="relative overflow-hidden">
-        {/* Minimal background */}
-        <div className="fixed inset-0 -z-10 bg-background" />
+        {/* Background is provided globally via App.tsx and CSS variables */}
 
         <div className="relative z-40">
         {/* Header */}

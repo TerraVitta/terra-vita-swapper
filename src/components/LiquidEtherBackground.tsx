@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import * as THREE from 'three';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -1240,11 +1241,16 @@ export default function LiquidEther({
   }, [mouseForce, cursorSize, isViscous, viscous, iterationsViscous, iterationsPoisson, dt, BFECC, resolution, isBounce, autoDemo, autoSpeed, autoIntensity, takeoverDuration, autoResumeDelay, autoRampDuration, theme]);
 
   const themeStyle = theme === 'dark' ? {} : { opacity: 0.45 };
-  return (
-    <div
-      ref={mountRef}
-      className={`w-full h-full fixed inset-0 pointer-events-none touch-none ${className || ''}`}
-      style={{ ...style, zIndex: -5 }}
-    />
-  );
+  // Render the canvas container as a portal into document.body to avoid stacking context issues
+  if (typeof document !== 'undefined') {
+    return createPortal(
+      <div
+        ref={mountRef}
+        className={`w-full h-full fixed inset-0 pointer-events-none touch-none ${className || ''}`}
+        style={{ ...style, zIndex: 0 }}
+      />,
+      document.body
+    );
+  }
+  return null;
 }

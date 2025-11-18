@@ -2,13 +2,13 @@ const FluidRibbons = () => {
   return (
     <>
       {/* Main fluid ribbons */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
         <div className="fluid-ribbon fluid-ribbon-left" aria-hidden="true" />
         <div className="fluid-ribbon fluid-ribbon-right" aria-hidden="true" />
       </div>
       
       {/* Additional ambient light orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
         <div 
           className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
           style={{

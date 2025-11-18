@@ -112,8 +112,7 @@ const Landing = () => {
                 <div className="text-3xl font-bold text-primary mb-2">{ecoImpact.toLocaleString()}</div>
                 <div className="text-sm text-foreground/60">kg CO₂ Saved</div>
               </div>
-            </div>
-
+              </div>
             {/* Search Bar */}
             <form onSubmit={handleSearch} className="max-w-xl mx-auto">
               <div className="relative">

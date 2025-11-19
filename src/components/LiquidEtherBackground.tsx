@@ -59,7 +59,7 @@ const defaultColors = ['#50B498', '#7EE8BF', '#BFF7E2'];
 
 export default function LiquidEther({
   mouseForce = 9,
-  cursorSize = 55,
+  cursorSize = 20,
   isViscous = false,
   viscous = 30,
   iterationsViscous = 77,
@@ -72,8 +72,8 @@ export default function LiquidEther({
   style = {},
   className = '',
   autoDemo = true,
-  autoSpeed = 0.5,
-  autoIntensity = 2.2,
+  autoSpeed = 1,
+  autoIntensity = 4,
   takeoverDuration = 0.25,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6

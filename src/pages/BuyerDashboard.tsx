@@ -133,7 +133,7 @@ const BuyerDashboard = () => {
     : products.filter(p => p.tags?.includes(activeTab));
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-foreground relative overflow-hidden">
       {/* Background is provided globally */}
       <div className="relative overflow-hidden">
         {/* Background is provided globally via App.tsx and CSS variables */}

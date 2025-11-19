@@ -255,12 +255,29 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    /* Keep foreground text colors but make the body itself transparent so WebGL backgrounds show through. */
+    @apply bg-transparent text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     letter-spacing: 0.01em;
     transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
                 color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-x: hidden;
+  }
+
+  /* Fallback background when WebGL is not available or fails to initialize.
+     This sits behind the canvas and content. Using a pseudo-element avoids
+     introducing additional DOM nodes. */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: hsl(var(--background));
+    z-index: -100; /* Put it underneath all page content */
+    pointer-events: none;
+    will-change: opacity;
   }
 
   h1, h2, h3, h4, h5, h6 {

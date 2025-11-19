@@ -1248,10 +1248,30 @@ export default function LiquidEther({
   if (typeof document !== 'undefined') {
     return createPortal(
       <div
-        ref={mountRef}
         className={`w-full h-full fixed inset-0 pointer-events-none touch-none ${className || ''}`}
-        style={{ ...style, zIndex: 0 }}
-      />,
+        style={{ zIndex: 0 }}
+      >
+        {/* Fallback background behind the canvas but above body */}
+        <div
+          aria-hidden={true}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            pointerEvents: 'none',
+            zIndex: -1,
+            background: 'hsl(var(--background))'
+          }}
+        />
+        {/* Canvas container where WebGL will inject the canvas */}
+        <div
+          ref={mountRef}
+          className="w-full h-full"
+          style={{ ...style, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}
+        />
+      </div>,
       document.body
     );
   }

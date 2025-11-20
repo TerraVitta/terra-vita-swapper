@@ -106,7 +106,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-background relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden">
       {/* Background is provided globally */}
       {/* Theme Toggle and AI Chat Button */}
       <div className="fixed top-4 right-4 z-50 flex items-center gap-2">

@@ -39,7 +39,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-foreground relative overflow-hidden">
       {/* Liquid Ether Background is provided globally */}
 
       {/* Minimal Edge Doodles */}

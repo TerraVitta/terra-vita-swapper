@@ -40,7 +40,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-transparent relative overflow-hidden">
       {/* Background effect */}
       {/* Background is provided globally */}
       {/* Header */}

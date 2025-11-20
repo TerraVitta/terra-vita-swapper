@@ -58,22 +58,22 @@ interface LiquidEtherWebGL {
 const defaultColors = ['#50B498', '#7EE8BF', '#BFF7E2'];
 
 export default function LiquidEther({
-  mouseForce = 20,
-  cursorSize = 100,
+  mouseForce = 9,
+  cursorSize = 20,
   isViscous = false,
   viscous = 30,
-  iterationsViscous = 32,
-  iterationsPoisson = 32,
+  iterationsViscous = 77,
+  iterationsPoisson = 58,
   dt = 0.014,
   BFECC = true,
-  resolution = 0.5,
-  isBounce = false,
+  resolution = 0.2,
+  isBounce = true,
   colors = defaultColors,
   style = {},
   className = '',
-  autoDemo = true,
-  autoSpeed = 0.5,
-  autoIntensity = 2.2,
+  autoDemo = false,
+  autoSpeed = 1,
+  autoIntensity = 4,
   takeoverDuration = 0.25,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6
@@ -123,7 +123,8 @@ export default function LiquidEther({
     const lightColors = ['#EAF9F2', '#CFFCEB', '#B8F7DF'];
     const paletteTex = makePaletteTexture(theme === 'dark' ? darkColors : ['#D7C8FF', '#FFE6F2', '#D6D1FF']);
     // Adjust background alpha depending on theme—slightly stronger on dark
-    const bgAlpha = theme === 'dark' ? 0.08 : 0.03;
+    // Make empty canvas areas fully transparent by default
+    const bgAlpha = 0;
     const bgVec4 = new THREE.Vector4(0, 0, 0, bgAlpha);
 
     class CommonClass {
@@ -474,7 +475,8 @@ export default function LiquidEther({
     float lenv = clamp(length(vel), 0.0, 1.0);
     vec3 c = texture2D(palette, vec2(lenv, 0.5)).rgb;
     vec3 outRGB = mix(bgColor.rgb, c, lenv);
-    float outA = mix(bgColor.a, 1.0, lenv);
+    // Use flow intensity for alpha so empty areas are fully transparent
+    float outA = lenv;
     gl_FragColor = vec4(outRGB, outA);
 }
 `;
@@ -1198,7 +1200,8 @@ export default function LiquidEther({
     if (!outputMesh) return;
     const isDark = theme === 'dark';
     const newPalette = makePaletteTexture(isDark ? colors : ['#D7C8FF', '#FFE6F2', '#D6D1FF']);
-    const bgAlpha = isDark ? 0.06 : 0.02;
+    // Ensure background alpha is zero so the canvas is fully transparent where there is no fluid
+    const bgAlpha = 0;
     const material = outputMesh.material as THREE.RawShaderMaterial;
     if (material && material.uniforms) {
       material.uniforms.palette.value = newPalette;
@@ -1245,10 +1248,30 @@ export default function LiquidEther({
   if (typeof document !== 'undefined') {
     return createPortal(
       <div
-        ref={mountRef}
         className={`w-full h-full fixed inset-0 pointer-events-none touch-none ${className || ''}`}
-        style={{ ...style, zIndex: 0 }}
-      />,
+        style={{ zIndex: 0 }}
+      >
+        {/* Fallback background behind the canvas but above body */}
+        <div
+          aria-hidden={true}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            pointerEvents: 'none',
+            zIndex: -1,
+            background: 'hsl(var(--background))'
+          }}
+        />
+        {/* Canvas container where WebGL will inject the canvas */}
+        <div
+          ref={mountRef}
+          className="w-full h-full"
+          style={{ ...style, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}
+        />
+      </div>,
       document.body
     );
   }

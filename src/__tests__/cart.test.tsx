@@ -9,7 +9,7 @@ function TestComponent() {
   return (
     <div>
       <div data-testid="count">{itemCount}</div>
-      <button onClick={() => addItem({ id: 'test', title: 'Test', price: 1, currency: 'INR', image: '' })}>Add</button>
+      <button onClick={() => addItem({ id: 'test', title: 'Test', price: 1, currency: 'AED', image: '' })}>Add</button>
       <ul>
         {items.map(i => (
           <li key={i.id}>{i.title}</li>

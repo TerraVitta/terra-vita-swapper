@@ -59,7 +59,7 @@ export function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold truncate mb-1">{item.title}</h3>
                     <p className="text-sm text-primary font-bold mb-2">
-                      {item.currency === 'INR' ? '₹' : 'AED'} {item.price.toFixed(2)}
+                      د.إ {item.price.toFixed(2)}
                     </p>
                     <div className="flex items-center gap-2">
                       <Button
@@ -105,13 +105,13 @@ export function CartDrawer() {
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-semibold">
-                  {items[0]?.currency === 'INR' ? '₹' : 'AED'} {total.toFixed(2)}
+                  د.إ {total.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
                 <span className="text-primary">
-                  {items[0]?.currency === 'INR' ? '₹' : 'AED'} {total.toFixed(2)}
+                  د.إ {total.toFixed(2)}
                 </span>
               </div>
             </div>

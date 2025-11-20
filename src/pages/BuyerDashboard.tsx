@@ -12,56 +12,56 @@ import { useCart } from "@/hooks/useCart";
 // LiquidEther is rendered globally via the app layout
 
 const fallbackProducts = [
-  {
+    {
     id: '1',
     name: 'Bamboo Toothbrush Set',
     price: 299,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1585412459556-6b5e3b3d8f5a?w=500&h=500&fit=crop',
     tags: ['personal-care'],
     sustainability_score: 95
   },
-  {
+    {
     id: '2',
     name: 'Eco Water Bottle',
     price: 1299,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1602143407151-7e36dd5f7746?w=500&h=500&fit=crop',
     tags: ['accessories'],
     sustainability_score: 90
   },
-  {
+    {
     id: '3',
     name: 'Organic Cotton T-Shirt',
     price: 599,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop',
     tags: ['clothing'],
     sustainability_score: 88
   },
-  {
+    {
     id: '4',
     name: 'Solar Phone Charger',
     price: 1999,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=500&h=500&fit=crop',
     tags: ['tech'],
     sustainability_score: 92
   },
-  {
+    {
     id: '5',
     name: 'Compostable Phone Case',
     price: 399,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1574531446910-a100fec00891?w=500&h=500&fit=crop',
     tags: ['tech'],
     sustainability_score: 87
   },
-  {
+    {
     id: '6',
     name: 'Reusable Lunch Container',
     price: 499,
-    currency: 'INR',
+      currency: 'AED',
     image_url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop',
     tags: ['kitchen'],
     sustainability_score: 93
@@ -142,10 +142,10 @@ const BuyerDashboard = () => {
         {/* Header */}
         <header className="border-b border-primary/10 backdrop-blur-sm">
           <div className="container py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-                <Recycle className="h-5 w-5 text-background" />
-              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
+                  <img src="https://storage.googleapis.com/gpt-engineer-file-uploads/XkL04eRZzUTW6aT2tLMIZD0HlTS2/uploads/1762161615259-d8a4d64a-a82e-41f6-8fec-9a16fe9fe5c1-1_all_2645.jpg" alt="Terra Vitta icon" className="h-5 w-5 rounded-md" />
+                </div>
               <div>
                 <h1 className="text-xl font-bold font-playfair text-foreground">EcoMart</h1>
                 <p className="text-xs text-foreground/60">EcoPoints: <span className="text-primary font-semibold">{points}</span></p>
@@ -263,9 +263,9 @@ const BuyerDashboard = () => {
                               </div>
                             </div>
                             
-                            <div className="flex items-center justify-between pt-2 border-t border-primary/10">
+                              <div className="flex items-center justify-between pt-2 border-t border-primary/10">
                               <span className="text-2xl font-bold text-foreground">
-                                {product.currency === 'INR' ? '₹' : 'د.إ'} {product.price.toFixed(2)}
+                                د.إ {product.price.toFixed(2)}
                               </span>
                               <Button 
                                 onClick={() => handleAddToCart(product)}
@@ -290,19 +290,36 @@ const BuyerDashboard = () => {
         <footer className="border-t border-primary/10 py-8">
           <div className="container">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-                  <Recycle className="h-5 w-5 text-background" />
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
+                    <Recycle className="h-5 w-5 text-background" />
+                  </div>
+                  {/* removed trademark footer text */}
                 </div>
-                <span className="text-sm text-foreground/60 font-medium">
-                  © 2025 EcoMart. Sustainable future together.
-                </span>
-              </div>
               <div className="flex items-center gap-6 text-sm text-foreground/60 font-medium">
-                <button className="hover:text-foreground transition-colors">About</button>
-                <button className="hover:text-foreground transition-colors">Sustainability</button>
-                <button className="hover:text-foreground transition-colors">Community</button>
-                <button className="hover:text-foreground transition-colors">Contact</button>
+                <button
+                  onClick={() => window.location.href = '/landing#about'}
+                  className="hover:text-foreground transition-colors"
+                >
+                  About
+                </button>
+                <button
+                  onClick={() => window.location.href = '/landing#impact'}
+                  className="hover:text-foreground transition-colors"
+                >
+                  Sustainability
+                </button>
+                <button
+                  className="hover:text-foreground transition-colors"
+                >
+                  Community
+                </button>
+                <button
+                  onClick={() => window.location.href = '/landing#contact'}
+                  className="hover:text-foreground transition-colors"
+                >
+                  Contact
+                </button>
               </div>
             </div>
           </div>

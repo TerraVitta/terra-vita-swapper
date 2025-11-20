@@ -50,11 +50,11 @@ const Landing = () => {
         {/* Header - Simple and Clean */}
         <header className="border-b border-primary/10 backdrop-blur-sm">
           <div className="container py-6 flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <Recycle className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold font-playfair text-primary">
-                EcoMart
-              </span>
+              <div className="flex items-center gap-3">
+                <img src="https://storage.googleapis.com/gpt-engineer-file-uploads/XkL04eRZzUTW6aT2tLMIZD0HlTS2/uploads/1762161615259-d8a4d64a-a82e-41f6-8fec-9a16fe9fe5c1-1_all_2645.jpg" alt="Terra Vitta icon" className="h-8 w-8 rounded-full" />
+                <span className="text-2xl font-bold font-playfair text-primary">
+                  EcoMart
+                </span>
             </div>
             <div className="flex items-center gap-4">
               <Button
@@ -83,7 +83,7 @@ const Landing = () => {
         </header>
 
         {/* Hero Section - Minimalist */}
-        <section className="container py-24 md:py-32">
+        <section id="home" className="container py-24 md:py-32">
           <div className="max-w-3xl mx-auto text-center space-y-12">
             {/* Main Heading */}
             <div className="space-y-6">
@@ -151,7 +151,7 @@ const Landing = () => {
         </section>
 
         {/* How It Works Section */}
-        <section className="border-t border-primary/10 py-20">
+        <section id="about" className="border-t border-primary/10 py-20">
           <div className="container max-w-3xl mx-auto">
             <h2 className="text-4xl font-bold font-playfair text-center mb-16">How It Works</h2>
             
@@ -186,7 +186,7 @@ const Landing = () => {
         </section>
 
         {/* Impact Section */}
-        <section className="border-t border-primary/10 py-20 bg-primary/5">
+        <section id="impact" className="border-t border-primary/10 py-20 bg-primary/5">
           <div className="container max-w-3xl mx-auto text-center space-y-12">
             <div>
               <h2 className="text-4xl font-bold font-playfair mb-6">Your Impact Matters</h2>
@@ -209,7 +209,7 @@ const Landing = () => {
         </section>
 
         {/* Testimonials/Features Section */}
-        <section className="border-t border-primary/10 py-20">
+        <section id="contact" className="border-t border-primary/10 py-20">
           <div className="container max-w-3xl mx-auto">
             <h2 className="text-4xl font-bold font-playfair text-center mb-16">Why EcoMart?</h2>
             
@@ -263,16 +263,29 @@ const Landing = () => {
       <footer className="border-t border-primary/10 py-12 bg-background/50 backdrop-blur-sm">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <Recycle className="h-6 w-6 text-primary" />
-              <span className="text-sm text-foreground/60">
-                © 2025 EcoMart. Building a Circular Future.
-              </span>
-            </div>
+              <div className="flex items-center gap-3">
+                <Recycle className="h-6 w-6 text-primary" />
+                {/* Footer trademark removed as requested */}
+              </div>
             <div className="flex items-center gap-6 text-sm text-foreground/60">
-              <button className="hover:text-primary transition-colors">About</button>
-              <button className="hover:text-primary transition-colors">Impact</button>
-              <button className="hover:text-primary transition-colors">Contact</button>
+              <button
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="hover:text-primary transition-colors"
+              >
+                About
+              </button>
+              <button
+                onClick={() => document.getElementById('impact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="hover:text-primary transition-colors"
+              >
+                Impact
+              </button>
+              <button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="hover:text-primary transition-colors"
+              >
+                Contact
+              </button>
             </div>
           </div>
         </div>

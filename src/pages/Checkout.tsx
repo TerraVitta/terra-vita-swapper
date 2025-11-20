@@ -59,7 +59,7 @@ export default function Checkout() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Items ({itemCount})</span>
-                <span className="font-semibold">{items[0]?.currency === 'INR' ? '₹' : 'AED'} {total.toFixed(2)}</span>
+                <span className="font-semibold">د.إ {total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Payment Method</span>

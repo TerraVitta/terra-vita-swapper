@@ -123,8 +123,8 @@ All colors MUST be HSL.
   /* Light Mode Overrides */
   .light {
     /* Base Colors - White/Light Gray */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 10%;
+    --background: 0 0% 100%; /* brighter for pure white */
+    --foreground: 0 0% 12%; /* ensure larger contrast for body text */
     
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
@@ -135,11 +135,31 @@ All colors MUST be HSL.
     --secondary: 0 0% 95%;
     --secondary-foreground: 0 0% 10%;
     
-    --muted: 0 0% 80%;
-    --muted-foreground: 0 0% 30%;
+    --muted: 0 0% 86%;
+    --muted-foreground: 0 0% 36%;
     
-    --border: 0 0% 85%;
-    --input: 0 0% 95%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --primary-foreground: 0 0% 18%; /* ensure primary text is readable on light buttons */
+  }
+
+  /* Improve glass contrast specifically for light theme */
+  .light .glass-panel {
+    background: rgba(255,255,255,0.82); /* a frosty white to keep separation */
+    color: hsl(var(--foreground));
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  }
+
+  .light .glass-button {
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  }
+
+  .light .glass-light {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(15, 23, 42, 0.06);
   }
 
   /* Dark Mode - Pure Black Premium Design (Default) */

@@ -103,9 +103,9 @@ export default function ProductDetail() {
             <div className="border-t border-b border-primary/10 py-4">
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-bold text-primary">
-                  {product.currency === 'INR' ? '₹' : 'AED'} {product.price.toFixed(2)}
+                  د.إ {product.price.toFixed(2)}
                 </span>
-                <span className="text-foreground/60">{product.currency}</span>
+                <span className="text-foreground/60">AED</span>
               </div>
             </div>
 

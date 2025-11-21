@@ -1,6 +1,8 @@
 .text-type {
   display: inline-block;
-  white-space: pre-wrap;
+  /* Keep the typed text on a single line */
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .text-type__content {

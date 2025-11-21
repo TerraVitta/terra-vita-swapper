@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Recycle, Loader2, Leaf, ChevronDown } from "lucide-react";
+import { Recycle, Loader2, ChevronDown } from "lucide-react";
+import TextType from "@/components/ui/TextType";
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
@@ -172,16 +173,14 @@ const BuyerDashboard = () => {
           {/* Hero Section */}
           <section className="py-12 text-center space-y-6 mb-16">
             <div className="space-y-4 max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-sm font-medium">
-                <Leaf className="h-4 w-4 text-primary" />
-                <span>Sustainable Marketplace</span>
-              </div>
+              {/* Removed 'Sustainable Marketplace' badge */}
               
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight font-playfair">
-                Shop with
-                <br />
-                <span className="text-primary">Purpose</span>
-              </h2>
+              <TextType
+                as="h2"
+                className="text-5xl md:text-6xl font-bold leading-tight font-playfair"
+                text={["Shop with Purpose"]}
+                showCursor={false}
+              />
               
               <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
                 Every purchase supports sustainability. Discover eco-friendly products and earn EcoPoints.

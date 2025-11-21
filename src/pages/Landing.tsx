@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { EdgeDoodles } from "@/components/EdgeDoodles";
+import TextType from "@/components/ui/TextType";
 // LiquidEther is rendered globally via the app layout
 
 const Landing = () => {
@@ -91,11 +92,15 @@ const Landing = () => {
                 <span className="text-sm font-semibold text-primary">Sustainable Marketplace</span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-playfair leading-tight">
-                Shop with
-                <br />
-                <span className="text-primary">Purpose</span>
-              </h1>
+              <TextType
+                as="h1"
+                className="text-5xl md:text-6xl lg:text-7xl font-bold font-playfair leading-tight"
+                text={["Shop with Purpose", "Make Every Purchase Count", "Better Shopping, Better Planet"]}
+                typingSpeed={75}
+                pauseDuration={1500}
+                showCursor={true}
+                cursorCharacter="|"
+              />
               
               <p className="text-xl text-foreground/70 max-w-2xl mx-auto leading-relaxed">
                 Every purchase supports sustainability. Discover eco-friendly products and earn EcoPoints for making conscious choices.

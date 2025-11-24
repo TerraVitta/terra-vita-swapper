@@ -26,3 +26,8 @@ Security recommendations:
 
 If you'd like, I can help further by moving admin-only flows to an authenticated server endpoint or by wiring a secure signed upload flow for receipt images.
 
+Deployment note for Vercel:
+- This repo contains Supabase Deno edge functions under `supabase/functions/`. Vercel's build may attempt to process those files and fail because they are not Node-based server code.
+- We added a `.vercelignore` to prevent Vercel from deploying or building the `supabase/functions` directory. Keep Supabase functions deployed via Supabase or a separate Deno-compatible runner.
+
+

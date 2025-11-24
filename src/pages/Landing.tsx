@@ -311,16 +311,18 @@ const Landing = () => {
           </div>
         </div>
       </footer>
+
+      {/* Image preview modal must be inside the root returned element */}
+      {previewSrc && (
+        <ImagePreview
+          src={previewSrc}
+          alt={previewCaption}
+          isOpen={previewOpen}
+          onClose={() => setPreviewOpen(false)}
+          caption={previewCaption}
+        />
+      )}
     </div>
-    {previewSrc && (
-      <ImagePreview
-        src={previewSrc}
-        alt={previewCaption}
-        isOpen={previewOpen}
-        onClose={() => setPreviewOpen(false)}
-        caption={previewCaption}
-      />
-    )}
   );
 };
 

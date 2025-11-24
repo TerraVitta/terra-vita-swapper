@@ -38,7 +38,8 @@ export const Chatbot = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'x-function-secret': import.meta.env.VITE_FUNCTION_SECRET
           },
           body: JSON.stringify({ 
             message: messageText,
@@ -103,7 +104,8 @@ export const Chatbot = () => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+              'x-function-secret': import.meta.env.VITE_FUNCTION_SECRET
             },
             body: JSON.stringify({ imageBase64: base64Image })
           }

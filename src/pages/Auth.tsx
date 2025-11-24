@@ -50,7 +50,10 @@ const Auth = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('admin-login', {
-        body: { username, password }
+        body: { username, password },
+        headers: {
+          'x-function-secret': import.meta.env.VITE_FUNCTION_SECRET
+        }
       });
 
       if (error) throw error;

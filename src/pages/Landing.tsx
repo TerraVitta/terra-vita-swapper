@@ -3,6 +3,7 @@ import { Search, Leaf, ShoppingBag, Users, Recycle, Sun, Moon, Heart, Globe } fr
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
+import ImagePreview from '@/components/ImagePreview';
 import { useTheme } from "@/hooks/useTheme";
 import { EdgeDoodles } from "@/components/EdgeDoodles";
 // LiquidEther is rendered globally via the app layout
@@ -11,6 +12,9 @@ const Landing = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const { theme, toggleTheme } = useTheme();
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState<string | null>(null);
+  const [previewCaption, setPreviewCaption] = useState<string | undefined>(undefined);
   const [swapCount, setSwapCount] = useState(0);
   const [ecoImpact, setEcoImpact] = useState(0);
 
@@ -147,6 +151,23 @@ const Landing = () => {
                 Join Community
               </Button>
             </div>
+          </div>
+          {/* Featured images — click to preview (embedded on landing page) */}
+          <div className="mt-12 grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+            {[
+              'https://images.unsplash.com/photo-1585412459556-6b5e3b3d8f5a?w=1200&h=800&fit=crop',
+              'https://images.unsplash.com/photo-1602143407151-7e36dd5f7746?w=1200&h=800&fit=crop',
+              'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&h=800&fit=crop'
+            ].map((src, idx) => (
+              <button
+                key={src}
+                onClick={() => { setPreviewSrc(src); setPreviewCaption(`Featured product ${idx + 1}`); setPreviewOpen(true); }}
+                className="overflow-hidden rounded-lg w-full h-36 block bg-foreground/5 hover:scale-105 transition-transform shadow-sm"
+                aria-label={`Preview image ${idx + 1}`}
+              >
+                <img src={src} alt={`Featured ${idx + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
           </div>
         </section>
 
@@ -291,6 +312,15 @@ const Landing = () => {
         </div>
       </footer>
     </div>
+    {previewSrc && (
+      <ImagePreview
+        src={previewSrc}
+        alt={previewCaption}
+        isOpen={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        caption={previewCaption}
+      />
+    )}
   );
 };
 

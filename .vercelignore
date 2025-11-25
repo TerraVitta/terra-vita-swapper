@@ -1,7 +1,0 @@
-# Ignore Supabase edge functions and migrations — these run under Deno/Supabase and should not be deployed to Vercel
-supabase/functions/**
-supabase/migrations/**
-
-# Ignore local env, secrets, and other non-app files
-.env*
-*.local

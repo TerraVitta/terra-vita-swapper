@@ -26,6 +26,29 @@ type SplitTextProps = {
   onLetterAnimationComplete?: () => void;
 };
 
+/**
+ * Compute an inline style object that matches the `from` animation values
+ * so that elements begin in the same visual state before GSAP runs. This
+ * prevents a flash of unanimated text (commonly visible in Firefox).
+ */
+const getInitialInlineStyle = (from: Record<string, any> = {}): React.CSSProperties => {
+  const style: React.CSSProperties = {};
+
+  // opacity
+  if (typeof from.opacity !== 'undefined') style.opacity = from.opacity as any;
+
+  // build transform from available shorthands (x, y, z)
+  const parts: string[] = [];
+  if (typeof from.x !== 'undefined') parts.push(typeof from.x === 'number' ? `translateX(${from.x}px)` : `translateX(${from.x})`);
+  if (typeof from.y !== 'undefined') parts.push(typeof from.y === 'number' ? `translateY(${from.y}px)` : `translateY(${from.y})`);
+  if (typeof from.z !== 'undefined') parts.push(typeof from.z === 'number' ? `translateZ(${from.z}px)` : `translateZ(${from.z})`);
+
+  if (parts.length) style.transform = parts.join(' ');
+
+  style.willChange = 'transform, opacity';
+  return style;
+};
+
 const SplitText: React.FC<SplitTextProps> = ({
   text,
   className = '',
@@ -151,12 +174,12 @@ const SplitText: React.FC<SplitTextProps> = ({
         if (splitType.includes('chars')) {
           // create a sequence of character spans
           const chars = Array.from(line).map((ch, i) => (
-            <span key={`c-${lineIndex}-${i}`} className="split-char inline-block" aria-hidden>
+            <span key={`c-${lineIndex}-${i}`} className="split-char inline-block" aria-hidden style={getInitialInlineStyle(from)}>
               {ch === ' ' ? '\u00A0' : ch}
             </span>
           ));
           return (
-            <span key={`line-${lineIndex}`} className="split-line block whitespace-pre-wrap">
+            <span key={`line-${lineIndex}`} className="split-line block whitespace-pre-wrap" style={getInitialInlineStyle(from)}>
               {chars}
             </span>
           );
@@ -164,12 +187,12 @@ const SplitText: React.FC<SplitTextProps> = ({
 
         if (splitType.includes('words')) {
           const wordNodes = words.map((w, i) => (
-            <span key={`w-${lineIndex}-${i}`} className="split-word inline-block">
+            <span key={`w-${lineIndex}-${i}`} className="split-word inline-block" style={getInitialInlineStyle(from)}>
               {w}
             </span>
           ));
           return (
-            <span key={`line-${lineIndex}`} className="split-line block">
+            <span key={`line-${lineIndex}`} className="split-line block" style={getInitialInlineStyle(from)}>
               {wordNodes}
             </span>
           );
@@ -177,12 +200,12 @@ const SplitText: React.FC<SplitTextProps> = ({
 
         // default to words
         const defaultNodes = words.map((w, i) => (
-          <span key={`d-${lineIndex}-${i}`} className="split-word inline-block">
+          <span key={`d-${lineIndex}-${i}`} className="split-word inline-block" style={getInitialInlineStyle(from)}>
             {w}
           </span>
         ));
         return (
-          <span key={`line-${lineIndex}`} className="split-line block">
+          <span key={`line-${lineIndex}`} className="split-line block" style={getInitialInlineStyle(from)}>
             {defaultNodes}
           </span>
         );

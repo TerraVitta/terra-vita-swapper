@@ -395,3 +395,12 @@
 .read-the-docs {
   color: #888;
 }
+
+/* GSAP SplitText fallback: ensure split pieces are hidden before animation kicks in (fixes flash in Firefox) */
+.split-parent .split-char,
+.split-parent .split-word,
+.split-parent .split-line {
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: transform, opacity;
+}

@@ -1,23 +1,36 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Sparkles } from "lucide-react";
-import { formatCurrency } from '@/lib/utils';
+import { Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import "./Chatbot.css";
 
 interface Message {
   text: string;
   sender: 'user' | 'bot';
-  products?: any[];
 }
 
 const GEMINI_API_KEY = "AIzaSyDbME4-8Tjj3tODyQPbdCKDCGr00s6zsIM";
 
-export const Chatbot = () => {
+interface ChatbotProps {
+  onClose?: () => void;
+}
+
+export const Chatbot = ({ onClose }: ChatbotProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const callGeminiAPI = async (userMessage: string): Promise<string | null> => {
     try {
@@ -72,9 +85,9 @@ export const Chatbot = () => {
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
   };
 
-  const handleSend = async (userMessage?: string, matchedProducts?: any[]) => {
-    const messageText = userMessage || input;
-    if (!messageText.trim() || loading) return;
+  const handleSend = async () => {
+    const messageText = input.trim();
+    if (!messageText || loading) return;
     
     const userMsg: Message = {
       text: messageText,
@@ -97,8 +110,7 @@ export const Chatbot = () => {
 
       setMessages(prev => [...prev, {
         text: reply!,
-        sender: 'bot',
-        products: matchedProducts
+        sender: 'bot'
       }]);
     } catch (error) {
       console.error('Chat error:', error);
@@ -109,6 +121,7 @@ export const Chatbot = () => {
       }]);
     } finally {
       setLoading(false);
+      inputRef.current?.focus();
     }
   };
 
@@ -117,99 +130,90 @@ export const Chatbot = () => {
     handleSend();
   };
 
-  useEffect(() => {
-    console.debug('Chatbot mounted');
-    if (inputRef.current) {
-      try { inputRef.current.focus(); } catch (err) { /* ignore */ }
-    }
-    return () => { console.debug('Chatbot unmounted'); };
-  }, []);
+  if (isMinimized) {
+    return (
+      <div className="terminal-minimized">
+        <button 
+          onClick={() => setIsMinimized(false)}
+          className="terminal-minimize-button"
+        >
+          Terra Vitta AI
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col h-full glass-heavy">
-      <div className="p-6 border-b glass-light backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <h3 className="font-bold text-lg bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">Terra Vitta AI</h3>
-            <p className="text-sm text-muted-foreground font-medium">Your sustainability assistant</p>
-          </div>
+    <div className="terminal-container glass">
+      {/* Toolbar */}
+      <div className="terminal_toolbar">
+        <div className="butt">
+          <button className="btn btn-red" onClick={onClose} title="Close"></button>
+          <button className="btn btn-yellow" onClick={() => setIsMinimized(true)} title="Minimize"></button>
+          <button className="btn btn-green" title="Maximize"></button>
+        </div>
+        <p className="user">Terra Vitta AI</p>
+        <div className="add_tab">+</div>
+      </div>
+
+      {/* Body with Messages */}
+      <div className="terminal_body">
+        <div className="messages-container">
+          {messages.length === 0 ? (
+            <div className="terminal_promt">
+              <span className="terminal_user">shopbuddy@ecomart:</span>
+              <span className="terminal_location">~</span>
+              <span className="terminal_bling">$ ask me anything about sustainable products</span>
+            </div>
+          ) : (
+            messages.map((msg, idx) => (
+              <div key={idx} className="message-line">
+                {msg.sender === 'user' ? (
+                  <>
+                    <span className="terminal_user">you@ecomart:</span>
+                    <span className="terminal_bling"> {msg.text}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="terminal_user">shopbuddy@ecomart:</span>
+                    <span className="terminal_location"> {msg.text}</span>
+                  </>
+                )}
+              </div>
+            ))
+          )}
+          {loading && (
+            <div className="terminal_promt">
+              <span className="terminal_user">shopbuddy@ecomart:</span>
+              <span className="terminal_cursor"></span>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        {messages.length === 0 && (
-          <div className="text-center text-muted-foreground py-12 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light text-sm font-semibold">
-              <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Welcome to Terra Vitta AI</span>
-            </div>
-            <p className="text-base font-medium">Ask me anything about sustainable products!</p>
-            <p className="text-sm">Or scan a receipt to get eco-friendly alternatives.</p>
-          </div>
-        )}
-        
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-          >
-            <div
-              className={`max-w-[85%] rounded-2xl px-5 py-3 shadow-sm ${
-                msg.sender === 'user'
-                  ? 'bg-gradient-to-br from-emerald-500 to-green-600 dark:text-white text-background'
-                  : 'glass-panel'
-              }`}
-            >
-              <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-              {msg.products && msg.products.length > 0 && (
-                <div className="mt-3 space-y-2">
-                  {msg.products.map((product: any) => (
-                    <div key={product.id} className="glass-light rounded-xl p-3 text-xs space-y-1">
-                      <p className="font-bold text-base">{product.name}</p>
-                      <p className="text-muted-foreground">د.إ {formatCurrency(product.price)}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-
-        {loading && (
-          <div className="flex justify-start animate-fade-in">
-            <div className="glass-panel rounded-2xl px-5 py-3">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="p-6 border-t glass-light backdrop-blur-xl">
-        <form onSubmit={handleSubmit} className="flex gap-3">
+      {/* Input Footer */}
+      <div className="terminal_input_footer">
+        <form onSubmit={handleSubmit} className="input-form">
+          <span className="terminal_user">you@ecomart:</span>
+          <span className="terminal_location">~</span>
+          <span className="terminal_bling">$</span>
           <Input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything..."
-            disabled={loading || scanning}
-            className="flex-1 glass-panel h-12 text-base rounded-xl transition-spring focus:scale-[1.01]"
+            placeholder=" Type your question..."
+            disabled={loading}
+            className="terminal-input"
             autoFocus
           />
-
           <Button
             type="submit"
             disabled={!input.trim() || loading}
-            size="icon"
-            className="shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-spring hover:scale-105"
+            size="sm"
+            className="terminal-send-btn"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4" />
           </Button>
         </form>
       </div>

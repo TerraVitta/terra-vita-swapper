@@ -23,11 +23,11 @@ export const AIChatButton = ({ floating = true }: { floating?: boolean }) => {
       {isOpen && createPortal(
         (floating ? (
           <div className={`fixed bottom-20 right-6 z-[110] ${panelFloatingClass}`}>
-            <Chatbot />
+            <Chatbot onClose={() => setIsOpen(false)} />
           </div>
         ) : (
           <div className={`fixed bottom-20 right-6 z-[110] ${panelFloatingClass}`}>
-            <Chatbot />
+            <Chatbot onClose={() => setIsOpen(false)} />
           </div>
         )), document.body
       )}

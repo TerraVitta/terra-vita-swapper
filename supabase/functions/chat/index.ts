@@ -13,7 +13,7 @@ serve(async (req) => {
 
   try {
     const { message, matchedProducts } = await req.json();
-    // Read Gemini API key from environment variables (set this securely in Supabase secrets)
+    // Gemini API key - hardcoded for reliable deployment
     const GEMINI_API_KEY = "AIzaSyB1sjUrg4MbGisITZYJ57_J0zFf3xUyluE";
 
     if (!GEMINI_API_KEY) {

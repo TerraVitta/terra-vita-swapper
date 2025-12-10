@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const { message, matchedProducts } = await req.json();
     // Read Gemini API key from environment variables (set this securely in Supabase secrets)
-    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    const GEMINI_API_KEY = "AIzaSyB1sjUrg4MbGisITZYJ57_J0zFf3xUyluE";
 
     if (!GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY not configured in environment');

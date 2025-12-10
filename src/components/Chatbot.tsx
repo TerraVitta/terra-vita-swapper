@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Send, Loader2, Camera, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatCurrency } from '@/lib/utils';
@@ -18,6 +18,7 @@ export const Chatbot = () => {
   const [loading, setLoading] = useState(false);
   const [scanning, setScanning] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSend = async (userMessage?: string, matchedProducts?: any[]) => {
     const messageText = userMessage || input;
@@ -33,6 +34,7 @@ export const Chatbot = () => {
     setLoading(true);
     
     try {
+      console.debug('Chatbot: invoking chat with payload', { message: messageText, matchedProducts });
       // Use the Supabase Functions SDK to invoke the 'chat' function.
       // Add retry logic (up to 3 attempts with exponential backoff)
       let attempt = 0;
@@ -72,6 +74,7 @@ export const Chatbot = () => {
       }
     } catch (error) {
       console.error('Chat error:', error);
+      console.debug('Chat error detail', error?.message ?? error);
       toast.error('Failed to get response. Please try again.');
       setMessages(prev => [...prev, {
         text: "Sorry, I'm having trouble connecting. Please try again later.",
@@ -99,6 +102,7 @@ export const Chatbot = () => {
     setScanning(true);
     
     try {
+      console.debug('Chatbot: scanning receipt file selected');
       // Convert image to base64
       const reader = new FileReader();
       reader.onloadend = async () => {
@@ -151,6 +155,14 @@ export const Chatbot = () => {
     e.preventDefault();
     handleSend();
   };
+
+  useEffect(() => {
+    console.debug('Chatbot mounted');
+    if (inputRef.current) {
+      try { inputRef.current.focus(); } catch (err) { /* ignore */ }
+    }
+    return () => { console.debug('Chatbot unmounted'); };
+  }, []);
 
   return (
     <div className="flex flex-col h-full glass-heavy">
@@ -243,11 +255,13 @@ export const Chatbot = () => {
           </Button>
 
           <Input
+            ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything..."
             disabled={loading || scanning}
             className="flex-1 glass-panel h-12 text-base rounded-xl transition-spring focus:scale-[1.01]"
+            autoFocus
           />
 
           <Button

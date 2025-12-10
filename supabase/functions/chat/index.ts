@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const { message, matchedProducts } = await req.json();
     // Gemini API key - hardcoded for reliable deployment
-    const GEMINI_API_KEY = "AIzaSyAehIpr_xshjrQnhOIAcMyZIsp49CUaNm0";
+    const GEMINI_API_KEY = "AIzaSyDbME4-8Tjj3tODyQPbdCKDCGr00s6zsIM";
 
     if (!GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY not configured in environment');

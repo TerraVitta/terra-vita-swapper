@@ -21,8 +21,17 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(true);
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(100);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isResizing = useRef(false);
+  const startX = useRef(0);
+  const startY = useRef(0);
+  const startWidth = useRef(0);
+  const startHeight = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -85,6 +94,41 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isResizing.current = true;
+    startX.current = e.clientX;
+    startY.current = e.clientY;
+    startWidth.current = width;
+    startHeight.current = height;
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing.current) return;
+      
+      const deltaX = e.clientX - startX.current;
+      const deltaY = e.clientY - startY.current;
+      
+      const newWidth = Math.max(40, startWidth.current + (deltaX / window.innerWidth) * 100);
+      const newHeight = Math.max(30, startHeight.current + (deltaY / window.innerHeight) * 100);
+      
+      setWidth(Math.min(100, newWidth));
+      setHeight(Math.min(100, newHeight));
+    };
+
+    const handleMouseUp = () => {
+      isResizing.current = false;
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [width, height]);
+
   const handleSend = async () => {
     const messageText = input.trim();
     if (!messageText || loading) return;
@@ -143,14 +187,35 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
     );
   }
 
+  const containerStyle = isFullscreen ? {
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 9999,
+  } : {
+    position: 'fixed' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: `${width}vw`,
+    height: `${height}vh`,
+    zIndex: 9999,
+  };
+
   return (
-    <div className="terminal-container glass">
+    <div 
+      ref={containerRef}
+      className="terminal-container glass"
+      style={containerStyle}
+    >
       {/* Toolbar */}
       <div className="terminal_toolbar">
         <div className="butt">
           <button className="btn btn-red" onClick={onClose} title="Close"></button>
           <button className="btn btn-yellow" onClick={() => setIsMinimized(true)} title="Minimize"></button>
-          <button className="btn btn-green" title="Maximize"></button>
+          <button className="btn btn-green" onClick={() => setIsFullscreen(!isFullscreen)} title={isFullscreen ? "Windowed" : "Fullscreen"}></button>
         </div>
         <p className="user">Terra Vitta AI</p>
         <div className="add_tab">+</div>
@@ -217,6 +282,16 @@ export const Chatbot = ({ onClose }: ChatbotProps) => {
           </Button>
         </form>
       </div>
+
+      {/* Resize Handle */}
+      {!isFullscreen && (
+        <div 
+          className="resize-handle"
+          onMouseDown={handleMouseDown}
+          title="Drag to resize"
+        />
+      )}
     </div>
   );
 };
+

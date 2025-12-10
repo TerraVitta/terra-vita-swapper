@@ -6,7 +6,6 @@ import { MessageSquare } from 'lucide-react';
 export const AIChatButton = ({ floating = true }: { floating?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperClass = floating ? 'fixed bottom-6 right-6 z-50' : 'relative inline-block';
-  const panelFloatingClass = 'w-80 sm:w-96 h-[70vh] max-h-[calc(100vh-6rem)] shadow-2xl rounded-2xl overflow-hidden pointer-events-auto';
 
   return (
     <div className={wrapperClass}>
@@ -21,15 +20,8 @@ export const AIChatButton = ({ floating = true }: { floating?: boolean }) => {
           <div className="hidden md:block text-sm font-medium text-foreground/80">Ask AI</div>
         </button>
       {isOpen && createPortal(
-        (floating ? (
-          <div className={`fixed bottom-20 right-6 z-[110] ${panelFloatingClass}`}>
-            <Chatbot onClose={() => setIsOpen(false)} />
-          </div>
-        ) : (
-          <div className={`fixed bottom-20 right-6 z-[110] ${panelFloatingClass}`}>
-            <Chatbot onClose={() => setIsOpen(false)} />
-          </div>
-        )), document.body
+        <Chatbot onClose={() => setIsOpen(false)} />,
+        document.body
       )}
     </div>
   );

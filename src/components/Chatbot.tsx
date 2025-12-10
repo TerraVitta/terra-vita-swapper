@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Camera, Sparkles } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { formatCurrency } from '@/lib/utils';
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -17,8 +17,6 @@ export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [scanning, setScanning] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const callGeminiAPI = async (userMessage: string): Promise<string | null> => {
@@ -114,51 +112,6 @@ export const Chatbot = () => {
     }
   };
 
-  const handleScanReceipt = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
-      return;
-    }
-
-    setScanning(true);
-    
-    try {
-      console.debug('Chatbot: scanning receipt file selected');
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const scanMsg: Message = {
-          text: `I scanned this receipt - please help me find matching products`,
-          sender: 'user'
-        };
-        setMessages(prev => [...prev, scanMsg]);
-
-        await handleSend(
-          "I just scanned a receipt. Can you help me find eco-friendly alternatives for the products I purchased?",
-          undefined
-        );
-        
-        setScanning(false);
-      };
-      
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error('Scan error:', error);
-      toast.error('Failed to scan receipt');
-      setScanning(false);
-    }
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSend();
@@ -240,25 +193,6 @@ export const Chatbot = () => {
 
       <div className="p-6 border-t glass-light backdrop-blur-xl">
         <form onSubmit={handleSubmit} className="flex gap-3">
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileSelect}
-            accept="image/*"
-            className="hidden"
-          />
-          
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={handleScanReceipt}
-            disabled={loading || scanning}
-            className="shrink-0 glass-button h-12 w-12 rounded-xl transition-spring hover:scale-105"
-          >
-            <Camera className="w-5 h-5" />
-          </Button>
-
           <Input
             ref={inputRef}
             value={input}

@@ -35,33 +35,20 @@ export const Chatbot = () => {
     
     try {
       console.debug('Chatbot: invoking chat with payload', { message: messageText, matchedProducts });
-      // Use the Supabase Functions SDK to invoke the 'chat' function.
-      // Add retry logic (up to 3 attempts with exponential backoff)
-      let attempt = 0;
-      let result: any = null;
-      const maxAttempts = 3;
+      
       const payload = { message: messageText, matchedProducts: matchedProducts || undefined };
 
-      while (attempt < maxAttempts) {
-        try {
-          const { data, error } = await supabase.functions.invoke('chat', {
-            body: JSON.stringify(payload),
-          });
+      // Single attempt - backend handles retries
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: JSON.stringify(payload),
+      });
 
-          if (error) throw error;
-          result = data;
-          break; // success
-        } catch (err) {
-          attempt += 1;
-          const delay = Math.pow(2, attempt) * 150;
-          console.warn(`Chat attempt ${attempt} failed. Retrying in ${delay}ms`, err);
-          await new Promise(res => setTimeout(res, delay));
-        }
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
       }
 
-      if (!result) {
-        throw new Error('Failed to get response from chat function after retries');
-      }
+      const result = data;
 
       if (result?.success) {
         setMessages(prev => [...prev, {

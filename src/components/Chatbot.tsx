@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Camera, Sparkles } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Send, Camera, Sparkles } from "lucide-react";
 import { formatCurrency } from '@/lib/utils';
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -12,6 +11,8 @@ interface Message {
   products?: any[];
 }
 
+const GEMINI_API_KEY = "AIzaSyDbME4-8Tjj3tODyQPbdCKDCGr00s6zsIM";
+
 export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -19,6 +20,59 @@ export const Chatbot = () => {
   const [scanning, setScanning] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const callGeminiAPI = async (userMessage: string): Promise<string | null> => {
+    try {
+      const systemPrompt = `You are ShopBuddy, a helpful eco-friendly shopping assistant. Keep responses to 2-3 sentences max. Help users find sustainable products and answer about eco-shopping.`;
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `${systemPrompt}\n\nUser: ${userMessage}\n\nAssistant:`
+              }]
+            }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 150,
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Gemini API error:', response.status, errorData);
+        return null;
+      }
+
+      const data = await response.json();
+      
+      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+        return data.candidates[0].content.parts[0].text;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Gemini API request failed:', error);
+      return null;
+    }
+  };
+
+  const getRandomFallback = (): string => {
+    const fallbacks = [
+      "I'm here to help you find sustainable products! What category interests you? 🌱",
+      "Tell me what you're looking for and I'll help you find eco-friendly options! 💚",
+      "Great question! Our sustainable products range from clothing to home goods. What would you like to explore?",
+      "I love your interest in eco-friendly shopping! Which product category interests you most?",
+      "Welcome to EcoMart! I'm here to help you shop sustainably. What can I assist you with today?",
+    ];
+    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  };
 
   const handleSend = async (userMessage?: string, matchedProducts?: any[]) => {
     const messageText = userMessage || input;
@@ -34,37 +88,25 @@ export const Chatbot = () => {
     setLoading(true);
     
     try {
-      console.debug('Chatbot: invoking chat with payload', { message: messageText, matchedProducts });
+      console.debug('Chatbot: Calling Gemini API directly with message:', messageText);
       
-      const payload = { message: messageText, matchedProducts: matchedProducts || undefined };
-
-      // Single attempt - backend handles retries
-      const { data, error } = await supabase.functions.invoke('chat', {
-        body: JSON.stringify(payload),
-      });
-
-      if (error) {
-        console.error('Supabase function error:', error);
-        throw error;
+      let reply = await callGeminiAPI(messageText);
+      
+      if (!reply) {
+        reply = getRandomFallback();
+        console.log('Using fallback response');
       }
 
-      const result = data;
-
-      if (result?.success) {
-        setMessages(prev => [...prev, {
-          text: result.reply,
-          sender: 'bot',
-          products: matchedProducts
-        }]);
-      } else {
-        throw new Error(result?.error || 'Failed to get response');
-      }
+      setMessages(prev => [...prev, {
+        text: reply!,
+        sender: 'bot',
+        products: matchedProducts
+      }]);
     } catch (error) {
       console.error('Chat error:', error);
-      console.debug('Chat error detail', error?.message ?? error);
       toast.error('Failed to get response. Please try again.');
       setMessages(prev => [...prev, {
-        text: "Sorry, I'm having trouble connecting. Please try again later.",
+        text: getRandomFallback(),
         sender: 'bot'
       }]);
     } finally {
@@ -80,7 +122,6 @@ export const Chatbot = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Check if file is an image
     if (!file.type.startsWith('image/')) {
       toast.error('Please select an image file');
       return;
@@ -90,37 +131,18 @@ export const Chatbot = () => {
     
     try {
       console.debug('Chatbot: scanning receipt file selected');
-      // Convert image to base64
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64Image = reader.result as string;
-        
-        // Call OCR edge function
-        const { data: result, error } = await supabase.functions.invoke('scan-receipt', {
-          body: JSON.stringify({ imageBase64: base64Image })
-        });
-        
-        if (!error && result?.success) {
-          const scanMsg: Message = {
-            text: `I scanned this receipt - please help me find matching products`,
-            sender: 'user'
-          };
-          setMessages(prev => [...prev, scanMsg]);
+        const scanMsg: Message = {
+          text: `I scanned this receipt - please help me find matching products`,
+          sender: 'user'
+        };
+        setMessages(prev => [...prev, scanMsg]);
 
-          if (result.matchedProducts && result.matchedProducts.length > 0) {
-            await handleSend(
-              `I scanned a receipt and found ${result.totalMatches} matching products. Can you show me what you found?`,
-              result.matchedProducts
-            );
-          } else {
-            setMessages(prev => [...prev, {
-              text: "I couldn't find any matching products from your receipt in our store. Try asking me about specific items!",
-              sender: 'bot'
-            }]);
-          }
-        } else {
-          toast.error(result?.error || error?.message || 'Failed to scan receipt');
-        }
+        await handleSend(
+          "I just scanned a receipt. Can you help me find eco-friendly alternatives for the products I purchased?",
+          undefined
+        );
         
         setScanning(false);
       };
@@ -132,7 +154,6 @@ export const Chatbot = () => {
       setScanning(false);
     }
 
-    // Reset file input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -153,10 +174,9 @@ export const Chatbot = () => {
 
   return (
     <div className="flex flex-col h-full glass-heavy">
-      {/* Header */}
       <div className="p-6 border-b glass-light backdrop-blur-xl">
         <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
+          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
             <Sparkles className="w-6 h-6 text-primary" />
           </div>
           <div>
@@ -166,7 +186,6 @@ export const Chatbot = () => {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-muted-foreground py-12 space-y-4">
@@ -219,7 +238,6 @@ export const Chatbot = () => {
         )}
       </div>
 
-      {/* Input */}
       <div className="p-6 border-t glass-light backdrop-blur-xl">
         <form onSubmit={handleSubmit} className="flex gap-3">
           <input

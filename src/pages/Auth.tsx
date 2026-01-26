@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Recycle } from "lucide-react";
+// Recycle icon replaced with logo.svg in the auth header (brand mark used as image)
+// Recycle icon previously used in the auth header (brand mark removed)
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatButton } from "@/components/AIChatButton";
 import AccountMenu from '@/components/AccountMenu';
@@ -119,9 +120,6 @@ const Auth = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-12 space-y-4">
-          <div className="inline-flex h-12 w-12 rounded-lg bg-primary items-center justify-center">
-            <Recycle className="h-6 w-6 text-background" />
-          </div>
           <h1 className="text-4xl font-bold font-playfair">EcoMart</h1>
           <p className="text-foreground/60">Building a sustainable future</p>
         </div>

@@ -53,7 +53,6 @@ const Landing = () => {
         <header className="border-b border-primary/10 backdrop-blur-sm">
           <div className="container py-6 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <img src="/placeholder.svg" alt="Terra Vitta icon" className="h-8 w-8 rounded-full" />
                 <span className="text-2xl font-bold font-playfair text-primary">
                   EcoMart
                 </span>
@@ -130,13 +129,15 @@ const Landing = () => {
                 Start Shopping
               </Button>
               <Button 
+                asChild
                 size="lg" 
                 variant="outline"
                 className="glass-button px-8 h-12 font-semibold pop-in"
-                onClick={() => navigate("/buyer")}
               >
-                <Users className="mr-2 h-5 w-5" />
-                Join Community
+                <a href="https://ecomart-seller-ui.vercel.app" target="_blank" rel="noopener noreferrer">
+                  <Users className="mr-2 h-5 w-5" />
+                  Join Community
+                </a>
               </Button>
             </div>
           </div>
@@ -251,37 +252,7 @@ const Landing = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-primary/10 py-12 bg-background/50 backdrop-blur-sm">
-        <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-3">
-                <Recycle className="h-6 w-6 text-primary" />
-                {/* Footer trademark removed as requested */}
-              </div>
-            <div className="flex items-center gap-6 text-sm text-foreground/60">
-              <button
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                className="hover:text-primary transition-colors"
-              >
-                About
-              </button>
-              <button
-                onClick={() => document.getElementById('impact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="hover:text-primary transition-colors"
-              >
-                Impact
-              </button>
-              <button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="hover:text-primary transition-colors"
-              >
-                Contact
-              </button>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Footer removed as requested (no footer in landing sections) */}
     </div>
   );
 };

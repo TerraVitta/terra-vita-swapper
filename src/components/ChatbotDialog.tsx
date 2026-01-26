@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from 'react-dom';
 import { MessageCircle, X } from "lucide-react";
 import { Chatbot } from "./Chatbot";
 
@@ -18,10 +19,10 @@ export const ChatbotDialog = () => {
         )}
       </button>
 
-      {isOpen && (
-        <div className="fixed bottom-24 right-6 z-40 w-[420px] h-[650px] max-h-[calc(100vh-8rem)] shadow-2xl rounded-3xl overflow-hidden glass-panel animate-scale-in">
+      {isOpen && createPortal(
+        <div className="fixed bottom-24 right-6 z-[110] w-[420px] h-[650px] max-h-[calc(100vh-8rem)] shadow-2xl rounded-3xl overflow-hidden glass-panel animate-scale-in pointer-events-auto">
           <Chatbot />
-        </div>
+        </div>, document.body
       )}
     </>
   );

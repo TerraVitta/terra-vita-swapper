@@ -1,0 +1,318 @@
+/* Terminal UI Styling */
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
+
+.terminal-container {
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  max-height: 600px;
+  font-family: "Fira Code", monospace;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(33, 33, 33, 0.75);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.terminal-container[style*="position: fixed"] {
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+}
+
+.terminal-container[style*="position: fixed"][style*="top: 50%"] {
+  max-width: none;
+  max-height: none;
+  border-radius: 8px;
+}
+
+.terminal_toolbar {
+  display: flex;
+  height: 35px;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+  justify-content: space-between;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.butt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 8px;
+  height: 12px;
+  width: 12px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 100%;
+  background: radial-gradient(circle at 30% 30%, #6c6c6c, #3b3b3b);
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0px 0px 1px 0px #41403a,
+    0px 1px 1px 0px #474642;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1.15);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn-red {
+  background: radial-gradient(circle at 30% 30%, #ff5f56, #bf2e2e);
+}
+
+.btn-yellow {
+  background: radial-gradient(circle at 30% 30%, #ffbd2e, #b4820e);
+}
+
+.btn-green {
+  background: radial-gradient(circle at 30% 30%, #27c93f, #199f2c);
+}
+
+.add_tab {
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0 6px;
+  border-radius: 4px 4px 0 0;
+  border-bottom: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+  font-size: 12px;
+}
+
+.add_tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user {
+  color: #d5d0ce;
+  margin: 0;
+  font-size: 13px;
+  line-height: 15px;
+  flex: 1;
+  text-align: center;
+}
+
+.terminal_body {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.terminal_promt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+}
+
+.terminal_promt span {
+  margin: 0;
+}
+
+.message-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  word-break: break-word;
+}
+
+.terminal_user {
+  color: #00ffae;
+  text-shadow: 0 0 4px #00ffae;
+  white-space: nowrap;
+}
+
+.terminal_location {
+  color: #3d9df6;
+  text-shadow: 0 0 4px #3d9df6;
+  white-space: nowrap;
+}
+
+.terminal_bling {
+  color: #ffffff;
+  text-shadow: 0 0 3px #ffffff;
+  word-break: break-word;
+}
+
+.terminal_cursor {
+  display: inline-block;
+  height: 12px;
+  width: 4px;
+  margin-left: 4px;
+  background: #ffffff;
+  animation: curbl 800ms steps(2) infinite;
+  border-radius: 1px;
+  vertical-align: text-bottom;
+}
+
+@keyframes curbl {
+  0%,
+  49% {
+    background: #ffffff;
+  }
+  60%,
+  99% {
+    background: transparent;
+  }
+  100% {
+    background: #ffffff;
+  }
+}
+
+.terminal_input_footer {
+  background: rgba(0, 0, 0, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.input-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-family: "Fira Code", monospace;
+  font-size: 12px !important;
+  padding: 0 !important;
+  height: auto !important;
+  outline: none;
+}
+
+.terminal-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.terminal-input:disabled {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.terminal-send-btn {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #00ffae !important;
+  padding: 4px 8px !important;
+  height: auto !important;
+  min-width: auto !important;
+  font-size: 12px !important;
+}
+
+.terminal-send-btn:hover:not(:disabled) {
+  background: rgba(0, 255, 174, 0.1) !important;
+  border-color: #00ffae !important;
+}
+
+.terminal-minimized {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 40;
+}
+
+.terminal-minimize-button {
+  padding: 8px 16px;
+  background: rgba(33, 33, 33, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #00ffae;
+  font-family: "Fira Code", monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 4px #00ffae;
+}
+
+.terminal-minimize-button:hover {
+  background: rgba(33, 33, 33, 1);
+  border-color: #00ffae;
+  box-shadow: 0 0 10px rgba(0, 255, 174, 0.3);
+  transform: scale(1.05);
+}
+
+/* Scrollbar Styling */
+.terminal_body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal_body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.terminal_body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+
+.terminal_body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Glass effect */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Resize Handle */
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: se-resize;
+  background: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.3) 50%);
+  border-radius: 0 0 8px 0;
+  transition: background 0.2s;
+}
+
+.resize-handle:hover {
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 174, 0.5) 50%);
+}
+
